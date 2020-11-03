@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package rpc;
+
+option go_package = "internal/ping/domain/rpc";
+
+service Metadata {
+  rpc Ping(PingMetaRequest) returns(PingMetaResponse) {}
+  rpc Pong(PongMetaRequest) returns(PongMetaResponse) {}
+}
+
+message PingMetaRequest {
+  string Id = 1;
+}
+
+message PingMetaResponse {
+  string Id = 1;
+}
+
+message PongMetaRequest {
+  string Id = 1;
+}
+
+message PongMetaResponse {
+  string Id = 1;
+}

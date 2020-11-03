@@ -1,5 +1,16 @@
 # GO TASKS =====================================================================
 
+generate: ## Code generation
+	# proto generation metadata entity
+	@protoc -I/usr/local/include -I. \
+		--go_out=Minternal/ping/domain/ping.proto=.:. \
+		--go-grpc_out=Minternal/ping/domain/ping.proto=.:. \
+		--go_opt=paths=source_relative \
+		--go-grpc_opt=paths=source_relative \
+		internal/ping/domain/ping.proto
+
+	@make fmt
+
 .PHONY: fmt
 fmt: ## Format source using gofmt
 	# Apply go fmt

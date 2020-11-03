@@ -1,6 +1,7 @@
 # microservice-template
 
 Example use practices for robovoice.
+As example ping-pong service.
 
 ### Getting Started
 
