@@ -49,12 +49,39 @@ func InitializeAPIService(ctx context.Context) (*Service, func(), error) {
 	}, nil
 }
 
+func InitializeUserService(ctx context.Context) (*Service, func(), error) {
+	logger, err := InitLogger(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+	tracer, cleanup, err := InitTracer(ctx, logger)
+	if err != nil {
+		return nil, nil, err
+	}
+	rpcServer, cleanup2, err := runGRPCServer(logger, tracer)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	service, err := NewUserService(logger, rpcServer)
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	return service, func() {
+		cleanup2()
+		cleanup()
+	}, nil
+}
+
 // wire.go:
 
 // Service - heplers
 type Service struct {
 	Log       *zap.Logger
 	ClientRPC *grpc.ClientConn
+	ServerRPC *RPCServer
 }
 
 type RPCServer struct {
@@ -160,5 +187,15 @@ func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*Service, error
 	return &Service{
 		Log:       log,
 		ClientRPC: clientRPC,
+	}, nil
+}
+
+// UserService =========================================================================================================
+var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService)
+
+func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
+	return &Service{
+		Log:       log,
+		ServerRPC: serverRPC,
 	}, nil
 }

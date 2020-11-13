@@ -13,5 +13,5 @@ type API struct { // nolint unused
 	ctx context.Context
 	Log *zap.Logger
 
-	UserService user_rpc.UserServiceClient
+	UserService user_rpc.UserRPCClient
 }

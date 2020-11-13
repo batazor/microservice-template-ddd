@@ -29,6 +29,7 @@ import (
 type Service struct {
 	Log       *zap.Logger
 	ClientRPC *grpc.ClientConn
+	ServerRPC *RPCServer
 }
 
 type RPCServer struct {
@@ -173,4 +174,18 @@ func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*Service, error
 
 func InitializeAPIService(ctx context.Context) (*Service, func(), error) {
 	panic(wire.Build(APISet))
+}
+
+// UserService =========================================================================================================
+var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService)
+
+func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
+	return &Service{
+		Log:       log,
+		ServerRPC: serverRPC,
+	}, nil
+}
+
+func InitializeUserService(ctx context.Context) (*Service, func(), error) {
+	panic(wire.Build(UserSet))
 }

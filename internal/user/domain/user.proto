@@ -4,15 +4,15 @@ package user_rpc;
 
 option go_package = "internal/user/domain/user_rpc";
 
+service UserRPC {
+  rpc Get(GetRequest) returns(GetResponse) {}
+}
+
 message User {
   string Login = 1;
   string Password = 2;
   string Email = 3;
   bool   IsActive = 4;
-}
-
-service UserService {
-  rpc Get(GetRequest) returns(GetResponse) {}
 }
 
 // GET
