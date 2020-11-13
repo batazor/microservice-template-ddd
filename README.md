@@ -55,6 +55,11 @@ make down
 └── README.md                   # README
 ```
 
+### HTTP API
+
++ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for
+  test HTTP API
+
 ### Request example
 
 ![example](./docs/request.png)
