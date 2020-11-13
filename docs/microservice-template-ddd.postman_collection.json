@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "5aab3e3a-97fe-463d-b68c-fb53fc3de186",
+		"name": "microservice-template-ddd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7070/user",
+							"host": [
+								"localhost"
+							],
+							"port": "7070",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Billing",
+			"item": [
+				{
+					"name": "GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7070/billing",
+							"host": [
+								"localhost"
+							],
+							"port": "7070",
+							"path": [
+								"billing"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "RENT",
+					"item": [
+						{
+							"name": "RENT",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "localhost:7070/book/rent/id-123",
+									"host": [
+										"localhost"
+									],
+									"port": "7070",
+									"path": [
+										"book",
+										"rent",
+										"id-123"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:7070/book",
+							"host": [
+								"localhost"
+							],
+							"port": "7070",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
