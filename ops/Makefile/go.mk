@@ -9,6 +9,13 @@ generate: ## Code generation
 		--go-grpc_opt=paths=source_relative \
 		internal/user/domain/user.proto
 
+	@protoc -I/usr/local/include -I. \
+		--go_out=Minternal/billing/domain/billing.proto=.:. \
+		--go-grpc_out=Minternal/billing/domain/billing.proto=.:. \
+		--go_opt=paths=source_relative \
+		--go-grpc_opt=paths=source_relative \
+		internal/billing/domain/billing.proto
+
 	# Generate from .go code
 	@go generate internal/di/wire.go
 

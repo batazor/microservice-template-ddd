@@ -9,6 +9,7 @@ import (
 
 	"robovoice-template/internal/api/api_type"
 	"robovoice-template/internal/api/http"
+	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
 	user_rpc "robovoice-template/internal/user/infrastructure/rpc"
 )
 
@@ -26,15 +27,21 @@ func (s *Server) RunAPIServer(ctx context.Context, log *zap.Logger, rpcClient *g
 		Timeout: viper.GetDuration("API_TIMEOUT"),
 	}
 
-	// Register clients
+	// Register user
 	userService, err := user_rpc.Use(ctx, rpcClient)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
+	billingService, err := billing_rpc.Use(ctx, rpcClient)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
 	server = &http.API{
-		Log:         log,
-		UserService: userService,
+		Log:            log,
+		UserService:    userService,
+		BillingService: billingService,
 	}
 
 	if err := server.Run(ctx, config); err != nil {

@@ -75,6 +75,32 @@ func InitializeUserService(ctx context.Context) (*Service, func(), error) {
 	}, nil
 }
 
+func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
+	logger, err := InitLogger(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+	tracer, cleanup, err := InitTracer(ctx, logger)
+	if err != nil {
+		return nil, nil, err
+	}
+	rpcServer, cleanup2, err := runGRPCServer(logger, tracer)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	service, err := NewBillingService(logger, rpcServer)
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	return service, func() {
+		cleanup2()
+		cleanup()
+	}, nil
+}
+
 // wire.go:
 
 // Service - heplers
@@ -194,6 +220,16 @@ func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*Service, error
 var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService)
 
 func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
+	return &Service{
+		Log:       log,
+		ServerRPC: serverRPC,
+	}, nil
+}
+
+// UserService =========================================================================================================
+var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, NewBillingService)
+
+func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
 	return &Service{
 		Log:       log,
 		ServerRPC: serverRPC,

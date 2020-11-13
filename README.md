@@ -5,7 +5,14 @@ DDD example use micriservices.
 ### Getting Started
 
 ```
+# Get help
+make help
+
+# Run services
 make run
+
+# Stop services
+make down
 ```
 
 ##### Prerequisites
@@ -13,6 +20,18 @@ make run
 + docker
 + docker-compose
 + protoc 3.7.1+
+
+### Service
+
+| Name        | Port  | Description Endpoint          |
+|-------------|-------|-------------------------------|
+| traefik     | 80    | HTTP                          |
+| traefik     | 443   | HTTPS                         |
+| traefik     | 8060  | Dashboard                     |
+| api         | 7070  | HTTP API                      |
+| user        | 50051 | gRPC Server                   |
+| billing     | 50051 | gRPC Server                   |
+
 
 ### Architecture
 

@@ -189,3 +189,17 @@ func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
 func InitializeUserService(ctx context.Context) (*Service, func(), error) {
 	panic(wire.Build(UserSet))
 }
+
+// UserService =========================================================================================================
+var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, NewBillingService)
+
+func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
+	return &Service{
+		Log:       log,
+		ServerRPC: serverRPC,
+	}, nil
+}
+
+func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
+	panic(wire.Build(BillingSet))
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package billing_rpc;
+
+option go_package = "internal/billing/domain/billing_rpc";
+
+service BillingRPC {
+  rpc Get(GetRequest) returns(GetResponse) {}
+}
+
+message Billing {
+  float Balance = 1;
+}
+
+// GET
+message GetRequest {
+  string Id = 1;
+}
+
+message GetResponse {
+  Billing Billing = 1;
+}
