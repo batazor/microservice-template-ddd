@@ -10,16 +10,15 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
-	"go.uber.org/zap"
 
 	"robovoice-template/internal/api/api_type"
 )
 
 // Run HTTP-server
-func (api *API) Run(ctx context.Context, config api_type.Config, log *zap.Logger) error { // nolint unparam
+func (api *API) Run(ctx context.Context, config api_type.Config) error { // nolint unparam
 	api.ctx = ctx
 
-	log.Info("Run HTTP-CHI API")
+	api.Log.Info("Run HTTP-CHI API")
 
 	r := chi.NewRouter()
 
@@ -54,6 +53,7 @@ func (api *API) Run(ctx context.Context, config api_type.Config, log *zap.Logger
 	r.NotFound(NotFoundHandler)
 
 	r.Mount("/book", api.BookRoutes())
+	r.Mount("/user", api.UserRoutes())
 
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%d", config.Port),
@@ -66,7 +66,7 @@ func (api *API) Run(ctx context.Context, config api_type.Config, log *zap.Logger
 	}
 
 	// start HTTP-server
-	log.Info(fmt.Sprintf("API run on port %d", config.Port))
+	api.Log.Info(fmt.Sprintf("API run on port %d", config.Port))
 	err := srv.ListenAndServe()
 	return err
 }

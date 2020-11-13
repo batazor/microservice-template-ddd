@@ -8,8 +8,6 @@ import (
 	"context"
 	"time"
 
-	"go.uber.org/zap"
-
 	"robovoice-template/pkg/notify"
 )
 
@@ -23,7 +21,7 @@ var (
 
 // API - general describe of API
 type API interface { // nolint unused
-	Run(ctx context.Context, config Config, log *zap.Logger) error
+	Run(ctx context.Context, config Config) error
 }
 
 // Config - base configuration for API

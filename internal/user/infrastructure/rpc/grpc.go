@@ -8,18 +8,9 @@ import (
 	"robovoice-template/internal/user/domain"
 )
 
-type rpc struct {
-	client     *grpc.ClientConn
-	UserClient user_rpc.UserServiceClient
-}
+func Use(_ context.Context, rpcClient *grpc.ClientConn) (user_rpc.UserServiceClient, error) {
+	// Register clients
+	client := user_rpc.NewUserServiceClient(rpcClient)
 
-func Use(_ context.Context, rpcClient *grpc.ClientConn) (*rpc, error) {
-	r := &rpc{
-		client: rpcClient,
-
-		// Register clients
-		UserClient: user_rpc.NewUserServiceClient(rpcClient),
-	}
-
-	return r, nil
+	return client, nil
 }

@@ -21,7 +21,7 @@ func Init(cnf Config) (opentracing.Tracer, io.Closer, error) {
 			Param: 1,
 		},
 		Reporter: &config.ReporterConfig{
-			LogSpans:           true,
+			LogSpans:           false,
 			LocalAgentHostPort: cnf.URI,
 		},
 	}
