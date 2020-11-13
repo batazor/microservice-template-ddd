@@ -101,6 +101,40 @@ func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
 	}, nil
 }
 
+func InitializeBookService(ctx context.Context) (*Service, func(), error) {
+	logger, err := InitLogger(ctx)
+	if err != nil {
+		return nil, nil, err
+	}
+	tracer, cleanup, err := InitTracer(ctx, logger)
+	if err != nil {
+		return nil, nil, err
+	}
+	rpcServer, cleanup2, err := runGRPCServer(logger, tracer)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	clientConn, cleanup3, err := runGRPCClient(logger, tracer)
+	if err != nil {
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	service, err := NewBookService(logger, rpcServer, clientConn)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	return service, func() {
+		cleanup3()
+		cleanup2()
+		cleanup()
+	}, nil
+}
+
 // wire.go:
 
 // Service - heplers
@@ -233,5 +267,16 @@ func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) 
 	return &Service{
 		Log:       log,
 		ServerRPC: serverRPC,
+	}, nil
+}
+
+// BookService =========================================================================================================
+var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, NewBookService)
+
+func NewBookService(log *zap.Logger, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
+	return &Service{
+		Log:       log,
+		ServerRPC: serverRPC,
+		ClientRPC: clientRPC,
 	}, nil
 }

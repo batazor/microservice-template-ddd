@@ -48,6 +48,11 @@
     rule = "PathPrefix(`/billing_rpc.BillingRPC/`)"
     service = "billing"
 
+  [http.routers.book]
+    entryPoints = ["web"]
+    rule = "PathPrefix(`/book_rpc.BookRPC/`)"
+    service = "book"
+
 [http.services]
   [http.services.user]
     [http.services.user.loadBalancer]
@@ -59,6 +64,10 @@
       [[http.services.billing.loadBalancer.servers]]
         url = "h2c://localhost:50052"
 
+  [http.services.book]
+    [http.services.book.loadBalancer]
+      [[http.services.book.loadBalancer.servers]]
+        url = "h2c://localhost:50053"
 
 ################################################################
 # UI

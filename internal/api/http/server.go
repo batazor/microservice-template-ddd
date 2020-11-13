@@ -50,11 +50,11 @@ func (api *API) Run(ctx context.Context, config api_type.Config) error { // noli
 	//r.Use(additionalMiddleware.NewTracing(tracer))
 	//r.Use(additionalMiddleware.Logger(log))
 
-	r.NotFound(NotFoundHandler)
-
 	r.Mount("/book", api.BookRoutes())
 	r.Mount("/user", api.UserRoutes())
 	r.Mount("/billing", api.BillingRoutes())
+
+	r.NotFound(NotFoundHandler)
 
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%d", config.Port),

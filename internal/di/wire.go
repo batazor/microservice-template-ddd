@@ -203,3 +203,18 @@ func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) 
 func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
 	panic(wire.Build(BillingSet))
 }
+
+// BookService =========================================================================================================
+var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, NewBookService)
+
+func NewBookService(log *zap.Logger, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
+	return &Service{
+		Log:       log,
+		ServerRPC: serverRPC,
+		ClientRPC: clientRPC,
+	}, nil
+}
+
+func InitializeBookService(ctx context.Context) (*Service, func(), error) {
+	panic(wire.Build(BookSet))
+}

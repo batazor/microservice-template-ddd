@@ -6,6 +6,7 @@ import (
 	"go.uber.org/zap"
 
 	billing_rpc "robovoice-template/internal/billing/domain"
+	book_rpc "robovoice-template/internal/book/domain"
 	"robovoice-template/internal/user/domain"
 )
 
@@ -16,4 +17,5 @@ type API struct { // nolint unused
 
 	UserService    user_rpc.UserRPCClient
 	BillingService billing_rpc.BillingRPCClient
+	BookService    book_rpc.BookRPCClient
 }

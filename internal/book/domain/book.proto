@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package book_rpc;
+
+option go_package = "internal/book/domain/book_rpc";
+
+service BookRPC {
+  rpc Get(GetRequest) returns(GetResponse) {}
+  rpc Rent(RentRequest) returns(RentResponse) {}
+}
+
+message Book {
+  string Title = 1;
+  string Author = 2;
+  bool   IsRent = 3;
+}
+
+// GET
+message GetRequest {
+  string Id = 1;
+}
+
+message GetResponse {
+  Book Book = 1;
+}
+
+// RENT
+message RentRequest {
+  string Id = 1;
+}
+
+message RentResponse {
+  Book Book = 1;
+}
