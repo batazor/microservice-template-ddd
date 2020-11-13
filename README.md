@@ -63,3 +63,8 @@ make down
 ### Request example
 
 ![example](./docs/request.png)
+
+##### Opentracing example request
+
+![example](./docs/tracer1.png)
+![example](./docs/tracer2.png)
