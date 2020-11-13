@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package user_rpc;
+
+option go_package = "internal/user/domain/user_rpc";
+
+message User {
+  string Login = 1;
+  string Password = 2;
+  string Email = 3;
+  bool   IsActive = 4;
+}
+
+service UserService {
+  rpc Get(GetRequest) returns(GetResponse) {}
+}
+
+// GET
+message GetRequest {
+  string Id = 1;
+}
+
+message GetResponse {
+  User User = 1;
+}

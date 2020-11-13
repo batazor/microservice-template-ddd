@@ -3,11 +3,14 @@
 generate: ## Code generation
 	# proto generation metadata entity
 	@protoc -I/usr/local/include -I. \
-		--go_out=Minternal/ping/domain/ping.proto=.:. \
-		--go-grpc_out=Minternal/ping/domain/ping.proto=.:. \
+		--go_out=Minternal/user/domain/user.proto=.:. \
+		--go-grpc_out=Minternal/user/domain/user.proto=.:. \
 		--go_opt=paths=source_relative \
 		--go-grpc_opt=paths=source_relative \
-		internal/ping/domain/ping.proto
+		internal/user/domain/user.proto
+
+	# Generate from .go code
+	@go generate internal/di/wire.go
 
 	@make fmt
 
