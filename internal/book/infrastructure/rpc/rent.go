@@ -11,7 +11,7 @@ import (
 
 func (m *BookServer) Rent(ctx context.Context, in *book_rpc.RentRequest) (*book_rpc.RentResponse, error) {
 	// Get user
-	user, err := m.UserService.Get(ctx, &user_rpc.GetRequest{Id: "user@test"})
+	user, err := m.UserService.Get(ctx, &user_rpc.GetRequest{Id: in.Id})
 	if err != nil {
 		return nil, err
 	}
