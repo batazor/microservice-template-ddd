@@ -59,7 +59,7 @@ func main() {
 	}
 
 	// Run user server
-	book_rpc.New(s.ServerRPC, s.Log, userService, billingService)
+	book_rpc.New(s.ServerRPC, s.Log, s.BookStore, userService, billingService)
 
 	// Handle SIGINT and SIGTERM.
 	sigs := make(chan os.Signal, 1)

@@ -22,12 +22,18 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
+	"robovoice-template/internal/book/infrastructure/store"
+	"robovoice-template/internal/db"
 	"robovoice-template/pkg/traicing"
 )
 
 // Service - heplers
 type Service struct {
-	Log       *zap.Logger
+	Log *zap.Logger
+	DB  *db.Store
+
+	BookStore *store.BookStore
+
 	ClientRPC *grpc.ClientConn
 	ServerRPC *RPCServer
 }
@@ -36,6 +42,34 @@ type RPCServer struct {
 	Run      func()
 	Server   *grpc.Server
 	Endpoint string
+}
+
+// InitStore return db
+func InitStore(ctx context.Context, log *zap.Logger) (*db.Store, func(), error) {
+	var st db.Store
+	db, err := st.Use(ctx, log)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	cleanup := func() {
+		if err := db.Store.Close(); err != nil {
+			log.Error(err.Error())
+		}
+	}
+
+	return db, cleanup, nil
+}
+
+// InitMetaStore
+func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store.BookStore, error) {
+	st := store.BookStore{}
+	bookStore, err := st.Use(ctx, log, conn)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookStore, nil
 }
 
 func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(), error) {
@@ -205,11 +239,14 @@ func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
 }
 
 // BookService =========================================================================================================
-var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, NewBookService)
+var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, InitStore, InitBookStore, NewBookService)
 
-func NewBookService(log *zap.Logger, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
+func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
 	return &Service{
-		Log:       log,
+		Log: log,
+
+		BookStore: bookStore,
+
 		ServerRPC: serverRPC,
 		ClientRPC: clientRPC,
 	}, nil

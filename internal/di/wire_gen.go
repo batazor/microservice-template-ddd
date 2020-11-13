@@ -17,6 +17,8 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"net"
+	"robovoice-template/internal/book/infrastructure/store"
+	"robovoice-template/internal/db"
 	"robovoice-template/pkg/traicing"
 	"time"
 )
@@ -106,29 +108,43 @@ func InitializeBookService(ctx context.Context) (*Service, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	tracer, cleanup, err := InitTracer(ctx, logger)
+	store, cleanup, err := InitStore(ctx, logger)
 	if err != nil {
 		return nil, nil, err
 	}
-	rpcServer, cleanup2, err := runGRPCServer(logger, tracer)
+	bookStore, err := InitBookStore(ctx, logger, store)
 	if err != nil {
 		cleanup()
 		return nil, nil, err
 	}
-	clientConn, cleanup3, err := runGRPCClient(logger, tracer)
+	tracer, cleanup2, err := InitTracer(ctx, logger)
+	if err != nil {
+		cleanup()
+		return nil, nil, err
+	}
+	rpcServer, cleanup3, err := runGRPCServer(logger, tracer)
 	if err != nil {
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	service, err := NewBookService(logger, rpcServer, clientConn)
+	clientConn, cleanup4, err := runGRPCClient(logger, tracer)
 	if err != nil {
 		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
+	service, err := NewBookService(logger, bookStore, rpcServer, clientConn)
+	if err != nil {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
 	return service, func() {
+		cleanup4()
 		cleanup3()
 		cleanup2()
 		cleanup()
@@ -139,7 +155,11 @@ func InitializeBookService(ctx context.Context) (*Service, func(), error) {
 
 // Service - heplers
 type Service struct {
-	Log       *zap.Logger
+	Log *zap.Logger
+	DB  *db.Store
+
+	BookStore *store.BookStore
+
 	ClientRPC *grpc.ClientConn
 	ServerRPC *RPCServer
 }
@@ -148,6 +168,34 @@ type RPCServer struct {
 	Run      func()
 	Server   *grpc.Server
 	Endpoint string
+}
+
+// InitStore return db
+func InitStore(ctx context.Context, log *zap.Logger) (*db.Store, func(), error) {
+	var st db.Store
+	db2, err := st.Use(ctx, log)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	cleanup := func() {
+		if err := db2.Store.Close(); err != nil {
+			log.Error(err.Error())
+		}
+	}
+
+	return db2, cleanup, nil
+}
+
+// InitMetaStore
+func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store.BookStore, error) {
+	st := store.BookStore{}
+	bookStore, err := st.Use(ctx, log, conn)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookStore, nil
 }
 
 func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(), error) {
@@ -271,11 +319,14 @@ func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) 
 }
 
 // BookService =========================================================================================================
-var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, NewBookService)
+var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, InitStore, InitBookStore, NewBookService)
 
-func NewBookService(log *zap.Logger, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
+func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
 	return &Service{
-		Log:       log,
+		Log: log,
+
+		BookStore: bookStore,
+
 		ServerRPC: serverRPC,
 		ClientRPC: clientRPC,
 	}, nil

@@ -7,7 +7,9 @@ import (
 	"google.golang.org/grpc"
 
 	billing_rpc "robovoice-template/internal/billing/domain"
+	"robovoice-template/internal/book/application"
 	"robovoice-template/internal/book/domain"
+	"robovoice-template/internal/book/infrastructure/store"
 	"robovoice-template/internal/di"
 	user_rpc "robovoice-template/internal/user/domain"
 )
@@ -24,14 +26,21 @@ type BookServer struct {
 
 	book_rpc.UnimplementedBookRPCServer
 
+	// Application
+	service *application.Service
+
 	// ServiceClients
 	UserService    user_rpc.UserRPCClient
 	BillingService billing_rpc.BillingRPCClient
 }
 
-func New(runRPCServer *di.RPCServer, log *zap.Logger, userService user_rpc.UserRPCClient, billingService billing_rpc.BillingRPCClient) (*BookServer, error) {
+func New(runRPCServer *di.RPCServer, log *zap.Logger, bookStore *store.BookStore, userService user_rpc.UserRPCClient, billingService billing_rpc.BillingRPCClient) (*BookServer, error) {
 	server := &BookServer{
 		log: log,
+
+		service: &application.Service{
+			Store: bookStore,
+		},
 
 		UserService:    userService,
 		BillingService: billingService,
