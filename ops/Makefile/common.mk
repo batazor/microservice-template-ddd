@@ -7,6 +7,7 @@ run: ## Run this project in docker-compose
 		-f docker-compose.yaml \
 		-f ops/docker-compose/traefik.yaml \
 		-f ops/docker-compose/redis.yaml \
+		-f ops/docker-compose/opentracing.yaml \
 		up -d --remove-orphans
 
 down: ## Down docker-compose
@@ -14,4 +15,5 @@ down: ## Down docker-compose
 		-f docker-compose.yaml \
 		-f ops/docker-compose/traefik.yaml \
 		-f ops/docker-compose/redis.yaml \
+		-f ops/docker-compose/opentracing.yaml \
 		down --remove-orphans
