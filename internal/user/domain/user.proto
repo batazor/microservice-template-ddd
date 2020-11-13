@@ -9,6 +9,7 @@ service UserRPC {
 }
 
 message User {
+  string Id = 5;
   string Login = 1;
   string Password = 2;
   string Email = 3;

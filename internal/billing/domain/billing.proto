@@ -9,7 +9,10 @@ service BillingRPC {
 }
 
 message Billing {
+  string Id = 2;
   float Balance = 1;
+
+  string UserId = 3;
 }
 
 // GET
