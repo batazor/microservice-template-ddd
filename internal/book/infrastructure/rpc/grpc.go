@@ -40,6 +40,9 @@ func New(runRPCServer *di.RPCServer, log *zap.Logger, bookStore *store.BookStore
 
 		service: &application.Service{
 			Store: bookStore,
+
+			UserService:    userService,
+			BillingService: billingService,
 		},
 
 		UserService:    userService,
