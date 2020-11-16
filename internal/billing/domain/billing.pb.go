@@ -4,7 +4,7 @@
 // 	protoc        v3.13.0
 // source: internal/billing/domain/billing.proto
 
-package billing_rpc
+package billing
 
 import (
 	proto "github.com/golang/protobuf/proto"
@@ -30,9 +30,7 @@ type Billing struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id      string  `protobuf:"bytes,2,opt,name=Id,proto3" json:"Id,omitempty"`
 	Balance float32 `protobuf:"fixed32,1,opt,name=Balance,proto3" json:"Balance,omitempty"`
-	UserId  string  `protobuf:"bytes,3,opt,name=UserId,proto3" json:"UserId,omitempty"`
 }
 
 func (x *Billing) Reset() {
@@ -67,13 +65,6 @@ func (*Billing) Descriptor() ([]byte, []int) {
 	return file_internal_billing_domain_billing_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Billing) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
 func (x *Billing) GetBalance() float32 {
 	if x != nil {
 		return x.Balance
@@ -81,133 +72,19 @@ func (x *Billing) GetBalance() float32 {
 	return 0
 }
 
-func (x *Billing) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-// GET
-type GetRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id string `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
-}
-
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_billing_domain_billing_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRequest) ProtoMessage() {}
-
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_billing_domain_billing_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_internal_billing_domain_billing_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *GetRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-type GetResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Billing *Billing `protobuf:"bytes,1,opt,name=Billing,proto3" json:"Billing,omitempty"`
-}
-
-func (x *GetResponse) Reset() {
-	*x = GetResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_billing_domain_billing_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetResponse) ProtoMessage() {}
-
-func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_billing_domain_billing_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
-func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_internal_billing_domain_billing_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetResponse) GetBilling() *Billing {
-	if x != nil {
-		return x.Billing
-	}
-	return nil
-}
-
 var File_internal_billing_domain_billing_proto protoreflect.FileDescriptor
 
 var file_internal_billing_domain_billing_proto_rawDesc = []byte{
 	0x0a, 0x25, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69,
 	0x6e, 0x67, 0x2f, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e,
-	0x67, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0b, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67,
-	0x5f, 0x72, 0x70, 0x63, 0x22, 0x4b, 0x0a, 0x07, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x12,
-	0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49, 0x64, 0x12,
-	0x18, 0x0a, 0x07, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02,
-	0x52, 0x07, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65,
-	0x72, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49,
-	0x64, 0x22, 0x1c, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49, 0x64, 0x22,
-	0x3d, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2e,
-	0x0a, 0x07, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x14, 0x2e, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x72, 0x70, 0x63, 0x2e, 0x42, 0x69,
-	0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x52, 0x07, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x32, 0x48,
-	0x0a, 0x0a, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x52, 0x50, 0x43, 0x12, 0x3a, 0x0a, 0x03,
-	0x47, 0x65, 0x74, 0x12, 0x17, 0x2e, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x72, 0x70,
-	0x63, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x18, 0x2e, 0x62,
-	0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x25, 0x5a, 0x23, 0x69, 0x6e, 0x74, 0x65,
+	0x67, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x07, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67,
+	0x22, 0x23, 0x0a, 0x07, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x12, 0x18, 0x0a, 0x07, 0x42,
+	0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x07, 0x42, 0x61,
+	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x42, 0x34, 0x5a, 0x32, 0x72, 0x6f, 0x62, 0x6f, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x2d, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x2f, 0x69, 0x6e, 0x74, 0x65,
 	0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2f, 0x64, 0x6f, 0x6d,
-	0x61, 0x69, 0x6e, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x5f, 0x72, 0x70, 0x63, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x61, 0x69, 0x6e, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -222,21 +99,16 @@ func file_internal_billing_domain_billing_proto_rawDescGZIP() []byte {
 	return file_internal_billing_domain_billing_proto_rawDescData
 }
 
-var file_internal_billing_domain_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_internal_billing_domain_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_internal_billing_domain_billing_proto_goTypes = []interface{}{
-	(*Billing)(nil),     // 0: billing_rpc.Billing
-	(*GetRequest)(nil),  // 1: billing_rpc.GetRequest
-	(*GetResponse)(nil), // 2: billing_rpc.GetResponse
+	(*Billing)(nil), // 0: billing.Billing
 }
 var file_internal_billing_domain_billing_proto_depIdxs = []int32{
-	0, // 0: billing_rpc.GetResponse.Billing:type_name -> billing_rpc.Billing
-	1, // 1: billing_rpc.BillingRPC.Get:input_type -> billing_rpc.GetRequest
-	2, // 2: billing_rpc.BillingRPC.Get:output_type -> billing_rpc.GetResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_internal_billing_domain_billing_proto_init() }
@@ -257,30 +129,6 @@ func file_internal_billing_domain_billing_proto_init() {
 				return nil
 			}
 		}
-		file_internal_billing_domain_billing_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_internal_billing_domain_billing_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -288,9 +136,9 @@ func file_internal_billing_domain_billing_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_internal_billing_domain_billing_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   1,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   0,
 		},
 		GoTypes:           file_internal_billing_domain_billing_proto_goTypes,
 		DependencyIndexes: file_internal_billing_domain_billing_proto_depIdxs,

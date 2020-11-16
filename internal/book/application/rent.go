@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	billing_rpc "robovoice-template/internal/billing/domain"
+	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
 	book_rpc "robovoice-template/internal/book/domain"
 	"robovoice-template/internal/book/infrastructure/store"
 	user_rpc "robovoice-template/internal/user/domain"

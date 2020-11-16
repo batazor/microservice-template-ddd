@@ -10,7 +10,6 @@ service BookRPC {
 }
 
 message Book {
-  string Id = 4;
   string Title = 1;
   string Author = 2;
   bool   IsRent = 3;

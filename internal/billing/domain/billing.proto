@@ -1,25 +1,9 @@
 syntax = "proto3";
 
-package billing_rpc;
+package billing;
 
-option go_package = "internal/billing/domain/billing_rpc";
-
-service BillingRPC {
-  rpc Get(GetRequest) returns(GetResponse) {}
-}
+option go_package = "robovoice-template/internal/billing/domain/billing";
 
 message Billing {
-  string Id = 2;
   float Balance = 1;
-
-  string UserId = 3;
-}
-
-// GET
-message GetRequest {
-  string Id = 1;
-}
-
-message GetResponse {
-  Billing Billing = 1;
 }

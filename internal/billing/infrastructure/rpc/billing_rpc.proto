@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package billing;
+
+option go_package = "robovoice-template/internal/billing/infrastructure/billing_rpc";
+
+import "billing.proto";
+
+message Payload {
+  Billing Billing = 1;
+}
+
+service BillingRPC {
+  rpc Get(GetRequest) returns(GetResponse) {}
+}
+
+// GET
+message GetRequest {
+  string Id = 1;
+}
+
+message GetResponse {
+  Billing Billing = 1;
+}

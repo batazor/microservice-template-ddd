@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	billing_rpc "robovoice-template/internal/billing/domain"
+	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/book/application"
 	"robovoice-template/internal/book/domain"
 	"robovoice-template/internal/book/infrastructure/store"

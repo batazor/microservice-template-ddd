@@ -30,7 +30,7 @@ func NewBillingRPCClient(cc grpc.ClientConnInterface) BillingRPCClient {
 
 func (c *billingRPCClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
 	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, "/billing_rpc.BillingRPC/Get", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/billing.BillingRPC/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +75,7 @@ func _BillingRPC_Get_Handler(srv interface{}, ctx context.Context, dec func(inte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/billing_rpc.BillingRPC/Get",
+		FullMethod: "/billing.BillingRPC/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BillingRPCServer).Get(ctx, req.(*GetRequest))
@@ -84,7 +84,7 @@ func _BillingRPC_Get_Handler(srv interface{}, ctx context.Context, dec func(inte
 }
 
 var _BillingRPC_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "billing_rpc.BillingRPC",
+	ServiceName: "billing.BillingRPC",
 	HandlerType: (*BillingRPCServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -93,5 +93,5 @@ var _BillingRPC_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "internal/billing/domain/billing.proto",
+	Metadata: "internal/billing/infrastructure/rpc/billing_rpc.proto",
 }

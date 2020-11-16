@@ -5,7 +5,7 @@ import (
 
 	"go.uber.org/zap"
 
-	billing_rpc "robovoice-template/internal/billing/domain"
+	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
 	book_rpc "robovoice-template/internal/book/domain"
 	"robovoice-template/internal/user/domain"
 )

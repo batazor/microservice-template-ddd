@@ -16,6 +16,11 @@ generate: ## Code generation
 		--go-grpc_opt=paths=source_relative \
 		internal/billing/domain/billing.proto
 
+	@protoc -I/usr/local/include -I. -I./internal/billing/domain -I./internal/billing/infrastructure/rpc \
+		--go-grpc_out=Minternal/billing/domain/billing.proto=.:. --go_out=Minternal/billing/domain/billing.proto=.:. \
+		--go-grpc_opt=paths=source_relative --go_opt=paths=source_relative \
+		internal/billing/infrastructure/rpc/billing_rpc.proto
+
 	@protoc -I/usr/local/include -I. \
 		--go_out=Minternal/book/domain/book.proto=.:. \
 		--go-grpc_out=Minternal/book/domain/book.proto=.:. \

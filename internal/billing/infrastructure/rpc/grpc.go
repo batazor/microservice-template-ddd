@@ -1,4 +1,4 @@
-package rpc
+package billing_rpc
 
 import (
 	"context"
@@ -6,13 +6,13 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	billing_rpc "robovoice-template/internal/billing/domain"
+	billing "robovoice-template/internal/billing/domain"
 	"robovoice-template/internal/di"
 )
 
-func Use(_ context.Context, rpcClient *grpc.ClientConn) (billing_rpc.BillingRPCClient, error) {
+func Use(_ context.Context, rpcClient *grpc.ClientConn) (BillingRPCClient, error) {
 	// Register clients
-	client := billing_rpc.NewBillingRPCClient(rpcClient)
+	client := NewBillingRPCClient(rpcClient)
 
 	return client, nil
 }
@@ -20,7 +20,7 @@ func Use(_ context.Context, rpcClient *grpc.ClientConn) (billing_rpc.BillingRPCC
 type BillingServer struct {
 	log *zap.Logger
 
-	billing_rpc.UnimplementedBillingRPCServer
+	UnimplementedBillingRPCServer
 }
 
 func New(runRPCServer *di.RPCServer, log *zap.Logger) (*BillingServer, error) {
@@ -29,15 +29,15 @@ func New(runRPCServer *di.RPCServer, log *zap.Logger) (*BillingServer, error) {
 	}
 
 	// Register services
-	billing_rpc.RegisterBillingRPCServer(runRPCServer.Server, server)
+	RegisterBillingRPCServer(runRPCServer.Server, server)
 	runRPCServer.Run()
 
 	return server, nil
 }
 
-func (m *BillingServer) Get(ctx context.Context, in *billing_rpc.GetRequest) (*billing_rpc.GetResponse, error) {
-	return &billing_rpc.GetResponse{
-		Billing: &billing_rpc.Billing{
+func (m *BillingServer) Get(ctx context.Context, in *GetRequest) (*GetResponse, error) {
+	return &GetResponse{
+		Billing: &billing.Billing{
 			Balance: 100.00,
 		},
 	}, nil
