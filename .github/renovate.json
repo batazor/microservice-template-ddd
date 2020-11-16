@@ -1,0 +1,10 @@
+{
+  "extends": ["config:base"],
+  "rangeStrategy": "bump",
+  "baseBranches": ["main"],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "commitBody": "Signed-off-by: {{{gitAuthor}}}"
+}
