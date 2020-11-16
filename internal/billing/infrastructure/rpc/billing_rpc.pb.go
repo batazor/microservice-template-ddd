@@ -11,7 +11,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
-	billing "robovoice-template/internal/billing/domain"
+	domain "robovoice-template/internal/billing/domain"
 	sync "sync"
 )
 
@@ -31,7 +31,7 @@ type Payload struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Billing *billing.Billing `protobuf:"bytes,1,opt,name=Billing,proto3" json:"Billing,omitempty"`
+	Billing *domain.Billing `protobuf:"bytes,1,opt,name=Billing,proto3" json:"Billing,omitempty"`
 }
 
 func (x *Payload) Reset() {
@@ -66,7 +66,7 @@ func (*Payload) Descriptor() ([]byte, []int) {
 	return file_internal_billing_infrastructure_rpc_billing_rpc_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Payload) GetBilling() *billing.Billing {
+func (x *Payload) GetBilling() *domain.Billing {
 	if x != nil {
 		return x.Billing
 	}
@@ -126,7 +126,7 @@ type GetResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Billing *billing.Billing `protobuf:"bytes,1,opt,name=Billing,proto3" json:"Billing,omitempty"`
+	Billing *domain.Billing `protobuf:"bytes,1,opt,name=Billing,proto3" json:"Billing,omitempty"`
 }
 
 func (x *GetResponse) Reset() {
@@ -161,7 +161,7 @@ func (*GetResponse) Descriptor() ([]byte, []int) {
 	return file_internal_billing_infrastructure_rpc_billing_rpc_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetResponse) GetBilling() *billing.Billing {
+func (x *GetResponse) GetBilling() *domain.Billing {
 	if x != nil {
 		return x.Billing
 	}
@@ -210,10 +210,10 @@ func file_internal_billing_infrastructure_rpc_billing_rpc_proto_rawDescGZIP() []
 
 var file_internal_billing_infrastructure_rpc_billing_rpc_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_internal_billing_infrastructure_rpc_billing_rpc_proto_goTypes = []interface{}{
-	(*Payload)(nil),         // 0: billing.Payload
-	(*GetRequest)(nil),      // 1: billing.GetRequest
-	(*GetResponse)(nil),     // 2: billing.GetResponse
-	(*billing.Billing)(nil), // 3: billing.Billing
+	(*Payload)(nil),        // 0: billing.Payload
+	(*GetRequest)(nil),     // 1: billing.GetRequest
+	(*GetResponse)(nil),    // 2: billing.GetResponse
+	(*domain.Billing)(nil), // 3: billing.Billing
 }
 var file_internal_billing_infrastructure_rpc_billing_rpc_proto_depIdxs = []int32{
 	3, // 0: billing.Payload.Billing:type_name -> billing.Billing

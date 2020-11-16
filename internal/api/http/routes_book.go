@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/golang/protobuf/jsonpb"
 
-	book_rpc "robovoice-template/internal/book/domain"
+	"robovoice-template/internal/book/infrastructure/rpc"
 )
 
 // Routes creates a REST router

@@ -1,4 +1,4 @@
-package rpc
+package book_rpc
 
 import (
 	"context"
@@ -6,17 +6,17 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
+	"robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/book/application"
 	"robovoice-template/internal/book/domain"
 	"robovoice-template/internal/book/infrastructure/store"
 	"robovoice-template/internal/di"
-	user_rpc "robovoice-template/internal/user/domain"
+	"robovoice-template/internal/user/infrastructure/rpc"
 )
 
-func Use(_ context.Context, rpcClient *grpc.ClientConn) (book_rpc.BookRPCClient, error) {
+func Use(_ context.Context, rpcClient *grpc.ClientConn) (BookRPCClient, error) {
 	// Register clients
-	client := book_rpc.NewBookRPCClient(rpcClient)
+	client := NewBookRPCClient(rpcClient)
 
 	return client, nil
 }
@@ -24,7 +24,7 @@ func Use(_ context.Context, rpcClient *grpc.ClientConn) (book_rpc.BookRPCClient,
 type BookServer struct {
 	log *zap.Logger
 
-	book_rpc.UnimplementedBookRPCServer
+	UnimplementedBookRPCServer
 
 	// Application
 	service *application.Service
@@ -50,15 +50,15 @@ func New(runRPCServer *di.RPCServer, log *zap.Logger, bookStore *store.BookStore
 	}
 
 	// Register services
-	book_rpc.RegisterBookRPCServer(runRPCServer.Server, server)
+	RegisterBookRPCServer(runRPCServer.Server, server)
 	runRPCServer.Run()
 
 	return server, nil
 }
 
-func (m *BookServer) Get(ctx context.Context, in *book_rpc.GetRequest) (*book_rpc.GetResponse, error) {
-	return &book_rpc.GetResponse{
-		Book: &book_rpc.Book{
+func (m *BookServer) Get(ctx context.Context, in *GetRequest) (*GetResponse, error) {
+	return &GetResponse{
+		Book: &domain.Book{
 			Title:  "Hello World",
 			Author: "God",
 			IsRent: false,

@@ -4,7 +4,7 @@
 // 	protoc        v3.13.0
 // source: internal/book/domain/book.proto
 
-package book_rpc
+package domain
 
 import (
 	proto "github.com/golang/protobuf/proto"
@@ -88,227 +88,20 @@ func (x *Book) GetIsRent() bool {
 	return false
 }
 
-// GET
-type GetRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id string `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
-}
-
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_book_domain_book_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRequest) ProtoMessage() {}
-
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_book_domain_book_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_internal_book_domain_book_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *GetRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-type GetResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Book *Book `protobuf:"bytes,1,opt,name=Book,proto3" json:"Book,omitempty"`
-}
-
-func (x *GetResponse) Reset() {
-	*x = GetResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_book_domain_book_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *GetResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetResponse) ProtoMessage() {}
-
-func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_book_domain_book_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
-func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_internal_book_domain_book_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetResponse) GetBook() *Book {
-	if x != nil {
-		return x.Book
-	}
-	return nil
-}
-
-// RENT
-type RentRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Id string `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
-}
-
-func (x *RentRequest) Reset() {
-	*x = RentRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_book_domain_book_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *RentRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RentRequest) ProtoMessage() {}
-
-func (x *RentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_book_domain_book_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RentRequest.ProtoReflect.Descriptor instead.
-func (*RentRequest) Descriptor() ([]byte, []int) {
-	return file_internal_book_domain_book_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *RentRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-type RentResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Book *Book `protobuf:"bytes,1,opt,name=Book,proto3" json:"Book,omitempty"`
-}
-
-func (x *RentResponse) Reset() {
-	*x = RentResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_book_domain_book_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *RentResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RentResponse) ProtoMessage() {}
-
-func (x *RentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_book_domain_book_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RentResponse.ProtoReflect.Descriptor instead.
-func (*RentResponse) Descriptor() ([]byte, []int) {
-	return file_internal_book_domain_book_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *RentResponse) GetBook() *Book {
-	if x != nil {
-		return x.Book
-	}
-	return nil
-}
-
 var File_internal_book_domain_book_proto protoreflect.FileDescriptor
 
 var file_internal_book_domain_book_proto_rawDesc = []byte{
 	0x0a, 0x1f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x6f, 0x6f, 0x6b, 0x2f,
 	0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x2f, 0x62, 0x6f, 0x6f, 0x6b, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x12, 0x08, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72, 0x70, 0x63, 0x22, 0x4c, 0x0a, 0x04, 0x42,
-	0x6f, 0x6f, 0x6b, 0x12, 0x14, 0x0a, 0x05, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x05, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x41, 0x75, 0x74,
-	0x68, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x41, 0x75, 0x74, 0x68, 0x6f,
-	0x72, 0x12, 0x16, 0x0a, 0x06, 0x49, 0x73, 0x52, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x08, 0x52, 0x06, 0x49, 0x73, 0x52, 0x65, 0x6e, 0x74, 0x22, 0x1c, 0x0a, 0x0a, 0x47, 0x65, 0x74,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x02, 0x49, 0x64, 0x22, 0x31, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x22, 0x0a, 0x04, 0x42, 0x6f, 0x6f, 0x6b, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72, 0x70, 0x63, 0x2e,
-	0x42, 0x6f, 0x6f, 0x6b, 0x52, 0x04, 0x42, 0x6f, 0x6f, 0x6b, 0x22, 0x1d, 0x0a, 0x0b, 0x52, 0x65,
-	0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x49, 0x64, 0x22, 0x32, 0x0a, 0x0c, 0x52, 0x65, 0x6e,
-	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x22, 0x0a, 0x04, 0x42, 0x6f, 0x6f,
-	0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72,
-	0x70, 0x63, 0x2e, 0x42, 0x6f, 0x6f, 0x6b, 0x52, 0x04, 0x42, 0x6f, 0x6f, 0x6b, 0x32, 0x78, 0x0a,
-	0x07, 0x42, 0x6f, 0x6f, 0x6b, 0x52, 0x50, 0x43, 0x12, 0x34, 0x0a, 0x03, 0x47, 0x65, 0x74, 0x12,
-	0x14, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x15, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72, 0x70, 0x63,
-	0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x37,
-	0x0a, 0x04, 0x52, 0x65, 0x6e, 0x74, 0x12, 0x15, 0x2e, 0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72, 0x70,
-	0x63, 0x2e, 0x52, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e,
-	0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72, 0x70, 0x63, 0x2e, 0x52, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x1f, 0x5a, 0x1d, 0x69, 0x6e, 0x74, 0x65, 0x72,
-	0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x6f, 0x6f, 0x6b, 0x2f, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x2f,
-	0x62, 0x6f, 0x6f, 0x6b, 0x5f, 0x72, 0x70, 0x63, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6f, 0x12, 0x04, 0x62, 0x6f, 0x6f, 0x6b, 0x22, 0x4c, 0x0a, 0x04, 0x42, 0x6f, 0x6f, 0x6b, 0x12,
+	0x14, 0x0a, 0x05, 0x54, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x54, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x41, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x12, 0x16, 0x0a,
+	0x06, 0x49, 0x73, 0x52, 0x65, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x49,
+	0x73, 0x52, 0x65, 0x6e, 0x74, 0x42, 0x29, 0x5a, 0x27, 0x72, 0x6f, 0x62, 0x6f, 0x76, 0x6f, 0x69,
+	0x63, 0x65, 0x2d, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x2f, 0x69, 0x6e, 0x74, 0x65,
+	0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x6f, 0x6f, 0x6b, 0x2f, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -323,26 +116,16 @@ func file_internal_book_domain_book_proto_rawDescGZIP() []byte {
 	return file_internal_book_domain_book_proto_rawDescData
 }
 
-var file_internal_book_domain_book_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_internal_book_domain_book_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_internal_book_domain_book_proto_goTypes = []interface{}{
-	(*Book)(nil),         // 0: book_rpc.Book
-	(*GetRequest)(nil),   // 1: book_rpc.GetRequest
-	(*GetResponse)(nil),  // 2: book_rpc.GetResponse
-	(*RentRequest)(nil),  // 3: book_rpc.RentRequest
-	(*RentResponse)(nil), // 4: book_rpc.RentResponse
+	(*Book)(nil), // 0: book.Book
 }
 var file_internal_book_domain_book_proto_depIdxs = []int32{
-	0, // 0: book_rpc.GetResponse.Book:type_name -> book_rpc.Book
-	0, // 1: book_rpc.RentResponse.Book:type_name -> book_rpc.Book
-	1, // 2: book_rpc.BookRPC.Get:input_type -> book_rpc.GetRequest
-	3, // 3: book_rpc.BookRPC.Rent:input_type -> book_rpc.RentRequest
-	2, // 4: book_rpc.BookRPC.Get:output_type -> book_rpc.GetResponse
-	4, // 5: book_rpc.BookRPC.Rent:output_type -> book_rpc.RentResponse
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // [0:0] is the sub-list for method output_type
+	0, // [0:0] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_internal_book_domain_book_proto_init() }
@@ -363,54 +146,6 @@ func file_internal_book_domain_book_proto_init() {
 				return nil
 			}
 		}
-		file_internal_book_domain_book_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_internal_book_domain_book_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_internal_book_domain_book_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RentRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_internal_book_domain_book_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RentResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -418,9 +153,9 @@ func file_internal_book_domain_book_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_internal_book_domain_book_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   1,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   0,
 		},
 		GoTypes:           file_internal_book_domain_book_proto_goTypes,
 		DependencyIndexes: file_internal_book_domain_book_proto_depIdxs,

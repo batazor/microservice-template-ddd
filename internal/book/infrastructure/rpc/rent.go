@@ -1,11 +1,16 @@
-package rpc
+package book_rpc
 
 import (
 	"context"
-
-	book_rpc "robovoice-template/internal/book/domain"
 )
 
-func (m *BookServer) Rent(ctx context.Context, in *book_rpc.RentRequest) (*book_rpc.RentResponse, error) {
-	return m.service.Rent(ctx, in)
+func (m *BookServer) Rent(ctx context.Context, in *RentRequest) (*RentResponse, error) {
+	book, err := m.service.Rent(ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &RentResponse{
+		Book: book,
+	}, nil
 }

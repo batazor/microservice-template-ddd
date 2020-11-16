@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package book_rpc;
+
+option go_package = "robovoice-template/internal/book/infrastructure/book_rpc";
+
+import "book.proto";
+
+service BookRPC {
+  rpc Get(GetRequest) returns(GetResponse) {}
+  rpc Rent(RentRequest) returns(RentResponse) {}
+}
+
+// GET
+message GetRequest {
+  string Id = 1;
+}
+
+message GetResponse {
+  book.Book Book = 1;
+}
+
+// RENT
+message RentRequest {
+  string Id = 1;
+}
+
+message RentResponse {
+  book.Book Book = 1;
+}

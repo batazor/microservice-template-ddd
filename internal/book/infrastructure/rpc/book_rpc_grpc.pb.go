@@ -129,5 +129,5 @@ var _BookRPC_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "internal/book/domain/book.proto",
+	Metadata: "internal/book/infrastructure/rpc/book_rpc.proto",
 }

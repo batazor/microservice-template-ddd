@@ -9,9 +9,9 @@ import (
 
 	"robovoice-template/internal/api/api_type"
 	"robovoice-template/internal/api/http"
-	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
-	book_rpc "robovoice-template/internal/book/infrastructure/rpc"
-	user_rpc "robovoice-template/internal/user/infrastructure/rpc"
+	"robovoice-template/internal/billing/infrastructure/rpc"
+	"robovoice-template/internal/book/infrastructure/rpc"
+	"robovoice-template/internal/user/infrastructure/rpc"
 )
 
 type Server struct{} // nolint unused

@@ -7,10 +7,10 @@ import (
 	"context"
 	"fmt"
 
-	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
-	book_rpc "robovoice-template/internal/book/domain"
+	"robovoice-template/internal/billing/infrastructure/rpc"
+	"robovoice-template/internal/book/domain"
 	"robovoice-template/internal/book/infrastructure/store"
-	user_rpc "robovoice-template/internal/user/domain"
+	"robovoice-template/internal/user/infrastructure/rpc"
 )
 
 type Service struct {
@@ -21,9 +21,9 @@ type Service struct {
 	BillingService billing_rpc.BillingRPCClient
 }
 
-func (s *Service) Rent(ctx context.Context, in *book_rpc.RentRequest) (*book_rpc.RentResponse, error) {
+func (s *Service) Rent(ctx context.Context, bookId string) (*domain.Book, error) {
 	// Get user
-	user, err := s.UserService.Get(ctx, &user_rpc.GetRequest{Id: in.Id})
+	user, err := s.UserService.Get(ctx, &user_rpc.GetRequest{Id: bookId})
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (s *Service) Rent(ctx context.Context, in *book_rpc.RentRequest) (*book_rpc
 	book, err := s.Store.Store.Get(ctx, "Hello World")
 	if err != nil {
 		// For example create book
-		s.Store.Store.Add(ctx, &book_rpc.Book{
+		s.Store.Store.Add(ctx, &domain.Book{
 			Title:  "Hello World",
 			Author: "God",
 			IsRent: false,
@@ -58,7 +58,5 @@ func (s *Service) Rent(ctx context.Context, in *book_rpc.RentRequest) (*book_rpc
 		return nil, err
 	}
 
-	return &book_rpc.RentResponse{
-		Book: book,
-	}, nil
+	return book, nil
 }
