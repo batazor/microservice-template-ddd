@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	billing "robovoice-template/internal/billing/domain"
+	"robovoice-template/internal/billing/application"
 	"robovoice-template/internal/di"
 )
 
@@ -21,11 +21,16 @@ type BillingServer struct {
 	log *zap.Logger
 
 	UnimplementedBillingRPCServer
+
+	// Application
+	service *application.Service
 }
 
 func New(runRPCServer *di.RPCServer, log *zap.Logger) (*BillingServer, error) {
 	server := &BillingServer{
 		log: log,
+
+		service: &application.Service{},
 	}
 
 	// Register services
@@ -36,9 +41,12 @@ func New(runRPCServer *di.RPCServer, log *zap.Logger) (*BillingServer, error) {
 }
 
 func (m *BillingServer) Get(ctx context.Context, in *GetRequest) (*GetResponse, error) {
+	billing, err := m.service.Get()
+	if err != nil {
+		return nil, err
+	}
+
 	return &GetResponse{
-		Billing: &billing.Billing{
-			Balance: 100.00,
-		},
+		Billing: billing,
 	}, nil
 }
