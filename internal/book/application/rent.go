@@ -33,7 +33,7 @@ func New(store *store.BookStore, userService user_rpc.UserRPCClient, billingServ
 // Get - get book from store
 func (s *Service) Get(ctx context.Context, bookId string) (*domain.Book, error) {
 	// Get book from store
-	book, err := s.Store.Store.Get(ctx, "Hello World")
+	book, err := s.Store.Store.Get(ctx, bookId)
 	if err != nil {
 		// For example create book
 		s.Store.Store.Add(ctx, &domain.Book{
@@ -66,7 +66,7 @@ func (s *Service) Rent(ctx context.Context, bookId string) (*domain.Book, error)
 	}
 
 	// Get book from store
-	book, err := s.Get(ctx, "Hello World")
+	book, err := s.Get(ctx, bookId)
 	if err != nil {
 		return nil, err
 	}

@@ -1,8 +1,6 @@
 # GO TASKS =====================================================================
 
 generate: ## Code generation
-	# proto generation metadata entity
-
 	# Generate from .go code
 	@go generate ./...
 

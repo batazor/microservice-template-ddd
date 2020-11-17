@@ -33,7 +33,7 @@ func (api *API) AddBook(w http.ResponseWriter, r *http.Request) {
 func (api *API) ListBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-type", "application/json")
 
-	resp, err := api.BookService.Get(r.Context(), &book_rpc.GetRequest{Id: "test@user"})
+	resp, err := api.BookService.Get(r.Context(), &book_rpc.GetRequest{Id: "Hello World"})
 	if err != nil {
 		api.Log.Error(err.Error())
 		w.Write([]byte(`{"error": "error 0_o"}`))
@@ -60,7 +60,7 @@ func (api *API) DeleteBook(w http.ResponseWriter, r *http.Request) {
 func (api *API) RentBook(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-type", "application/json")
 
-	resp, err := api.BookService.Rent(r.Context(), &book_rpc.RentRequest{Id: "test@user"})
+	resp, err := api.BookService.Rent(r.Context(), &book_rpc.RentRequest{Id: "Hello World"})
 	if err != nil {
 		api.Log.Error(err.Error())
 		w.Write([]byte(`{"error": "error 0_o"}`))
