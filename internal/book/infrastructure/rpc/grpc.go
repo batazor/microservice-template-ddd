@@ -56,14 +56,3 @@ func New(runRPCServer *di.RPCServer, log *zap.Logger, bookStore *store.BookStore
 
 	return server, nil
 }
-
-func (m *BookServer) Get(ctx context.Context, in *GetRequest) (*GetResponse, error) {
-	book, err := m.service.Get(ctx, in.Id)
-	if err != nil {
-		return nil, err
-	}
-
-	return &GetResponse{
-		Book: book,
-	}, nil
-}
