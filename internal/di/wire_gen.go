@@ -25,7 +25,7 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeAPIService(ctx context.Context) (*Service, func(), error) {
+func InitializeAPIService(ctx context.Context) (*APIService, func(), error) {
 	logger, err := InitLogger(ctx)
 	if err != nil {
 		return nil, nil, err
@@ -39,19 +39,19 @@ func InitializeAPIService(ctx context.Context) (*Service, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	service, err := NewAPIService(logger, clientConn)
+	apiService, err := NewAPIService(logger, clientConn)
 	if err != nil {
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	return service, func() {
+	return apiService, func() {
 		cleanup2()
 		cleanup()
 	}, nil
 }
 
-func InitializeUserService(ctx context.Context) (*Service, func(), error) {
+func InitializeUserService(ctx context.Context) (*UserService, func(), error) {
 	logger, err := InitLogger(ctx)
 	if err != nil {
 		return nil, nil, err
@@ -65,19 +65,19 @@ func InitializeUserService(ctx context.Context) (*Service, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	service, err := NewUserService(logger, rpcServer)
+	userService, err := NewUserService(logger, rpcServer)
 	if err != nil {
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	return service, func() {
+	return userService, func() {
 		cleanup2()
 		cleanup()
 	}, nil
 }
 
-func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
+func InitializeBillingService(ctx context.Context) (*BillingService, func(), error) {
 	logger, err := InitLogger(ctx)
 	if err != nil {
 		return nil, nil, err
@@ -91,19 +91,19 @@ func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	service, err := NewBillingService(logger, rpcServer)
+	billingService, err := NewBillingService(logger, rpcServer)
 	if err != nil {
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	return service, func() {
+	return billingService, func() {
 		cleanup2()
 		cleanup()
 	}, nil
 }
 
-func InitializeBookService(ctx context.Context) (*Service, func(), error) {
+func InitializeBookService(ctx context.Context) (*BookService, func(), error) {
 	logger, err := InitLogger(ctx)
 	if err != nil {
 		return nil, nil, err
@@ -135,7 +135,7 @@ func InitializeBookService(ctx context.Context) (*Service, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	service, err := NewBookService(logger, bookStore, rpcServer, clientConn)
+	bookService, err := NewBookService(logger, bookStore, rpcServer, clientConn)
 	if err != nil {
 		cleanup4()
 		cleanup3()
@@ -143,7 +143,7 @@ func InitializeBookService(ctx context.Context) (*Service, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	return service, func() {
+	return bookService, func() {
 		cleanup4()
 		cleanup3()
 		cleanup2()
@@ -152,17 +152,6 @@ func InitializeBookService(ctx context.Context) (*Service, func(), error) {
 }
 
 // wire.go:
-
-// Service - heplers
-type Service struct {
-	Log *zap.Logger
-	DB  *db.Store
-
-	BookStore *store.BookStore
-
-	ClientRPC *grpc.ClientConn
-	ServerRPC *RPCServer
-}
 
 type RPCServer struct {
 	Run      func()
@@ -285,44 +274,71 @@ func InitLogger(ctx context.Context) (*zap.Logger, error) {
 	return log, nil
 }
 
-// Default =============================================================================================================
+// DefaultService ======================================================================================================
 var DefaultSet = wire.NewSet(InitLogger, InitTracer)
 
 // APIService ==========================================================================================================
+type APIService struct {
+	Log *zap.Logger
+
+	ClientRPC *grpc.ClientConn
+}
+
 var APISet = wire.NewSet(DefaultSet, runGRPCClient, NewAPIService)
 
-func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*Service, error) {
-	return &Service{
+func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*APIService, error) {
+	return &APIService{
 		Log:       log,
 		ClientRPC: clientRPC,
 	}, nil
 }
 
 // UserService =========================================================================================================
+type UserService struct {
+	Log *zap.Logger
+
+	ServerRPC *RPCServer
+}
+
 var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService)
 
-func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
-	return &Service{
+func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*UserService, error) {
+	return &UserService{
 		Log:       log,
 		ServerRPC: serverRPC,
 	}, nil
 }
 
-// UserService =========================================================================================================
+// BillingService ======================================================================================================
+type BillingService struct {
+	Log *zap.Logger
+
+	ServerRPC *RPCServer
+}
+
 var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, NewBillingService)
 
-func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
-	return &Service{
+func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*BillingService, error) {
+	return &BillingService{
 		Log:       log,
 		ServerRPC: serverRPC,
 	}, nil
 }
 
 // BookService =========================================================================================================
+type BookService struct {
+	Log *zap.Logger
+
+	BookStore *store.BookStore
+
+	ClientRPC *grpc.ClientConn
+	ServerRPC *RPCServer
+}
+
 var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, InitStore, InitBookStore, NewBookService)
 
-func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
-	return &Service{
+func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*BookService, error) {
+	return &BookService{
 		Log: log,
 
 		BookStore: bookStore,

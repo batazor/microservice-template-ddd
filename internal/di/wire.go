@@ -27,17 +27,6 @@ import (
 	"robovoice-template/pkg/traicing"
 )
 
-// Service - heplers
-type Service struct {
-	Log *zap.Logger
-	DB  *db.Store
-
-	BookStore *store.BookStore
-
-	ClientRPC *grpc.ClientConn
-	ServerRPC *RPCServer
-}
-
 type RPCServer struct {
 	Run      func()
 	Server   *grpc.Server
@@ -193,56 +182,83 @@ func InitLogger(ctx context.Context) (*zap.Logger, error) {
 	return log, nil
 }
 
-// Default =============================================================================================================
+// DefaultService ======================================================================================================
 var DefaultSet = wire.NewSet(InitLogger, InitTracer)
 
 // APIService ==========================================================================================================
+type APIService struct {
+	Log *zap.Logger
+
+	ClientRPC *grpc.ClientConn
+}
+
 var APISet = wire.NewSet(DefaultSet, runGRPCClient, NewAPIService)
 
-func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*Service, error) {
-	return &Service{
+func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*APIService, error) {
+	return &APIService{
 		Log:       log,
 		ClientRPC: clientRPC,
 	}, nil
 }
 
-func InitializeAPIService(ctx context.Context) (*Service, func(), error) {
+func InitializeAPIService(ctx context.Context) (*APIService, func(), error) {
 	panic(wire.Build(APISet))
 }
 
 // UserService =========================================================================================================
+type UserService struct {
+	Log *zap.Logger
+
+	ServerRPC *RPCServer
+}
+
 var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService)
 
-func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
-	return &Service{
+func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*UserService, error) {
+	return &UserService{
 		Log:       log,
 		ServerRPC: serverRPC,
 	}, nil
 }
 
-func InitializeUserService(ctx context.Context) (*Service, func(), error) {
+func InitializeUserService(ctx context.Context) (*UserService, func(), error) {
 	panic(wire.Build(UserSet))
 }
 
-// UserService =========================================================================================================
+// BillingService ======================================================================================================
+type BillingService struct {
+	Log *zap.Logger
+
+	ServerRPC *RPCServer
+}
+
 var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, NewBillingService)
 
-func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*Service, error) {
-	return &Service{
+func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*BillingService, error) {
+	return &BillingService{
 		Log:       log,
 		ServerRPC: serverRPC,
 	}, nil
 }
 
-func InitializeBillingService(ctx context.Context) (*Service, func(), error) {
+func InitializeBillingService(ctx context.Context) (*BillingService, func(), error) {
 	panic(wire.Build(BillingSet))
 }
 
 // BookService =========================================================================================================
+type BookService struct {
+	Log *zap.Logger
+
+	BookStore *store.BookStore
+
+	ClientRPC *grpc.ClientConn
+	ServerRPC *RPCServer
+}
+
 var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, InitStore, InitBookStore, NewBookService)
 
-func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*Service, error) {
-	return &Service{
+func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*BookService, error) {
+	return &BookService{
 		Log: log,
 
 		BookStore: bookStore,
@@ -252,6 +268,6 @@ func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCS
 	}, nil
 }
 
-func InitializeBookService(ctx context.Context) (*Service, func(), error) {
+func InitializeBookService(ctx context.Context) (*BookService, func(), error) {
 	panic(wire.Build(BookSet))
 }
