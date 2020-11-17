@@ -11,6 +11,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	"robovoice-template/internal/billing/application"
 	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/di"
 	"robovoice-template/pkg/config"
@@ -45,8 +46,17 @@ func main() {
 		}
 	}()
 
-	// Run user server
-	billing_rpc.New(s.ServerRPC, s.Log)
+	// Init services
+	billingService, err := application.New()
+	if err != nil {
+		s.Log.Fatal(err.Error())
+	}
+
+	// Register rpc-servers
+	_, err = billing_rpc.New(s.ServerRPC, s.Log, billingService)
+	if err != nil {
+		s.Log.Fatal(err.Error())
+	}
 
 	// Handle SIGINT and SIGTERM.
 	sigs := make(chan os.Signal, 1)

@@ -21,6 +21,15 @@ type Service struct {
 	BillingService billing_rpc.BillingRPCClient
 }
 
+func New(store *store.BookStore, userService user_rpc.UserRPCClient, billingService billing_rpc.BillingRPCClient) (*Service, error) {
+	return &Service{
+		Store: store,
+
+		UserService:    userService,
+		BillingService: billingService,
+	}, nil
+}
+
 // Get - get book from store
 func (s *Service) Get(ctx context.Context, bookId string) (*domain.Book, error) {
 	// Get book from store

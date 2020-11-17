@@ -10,7 +10,6 @@ import (
 
 	"robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/book/application"
-	"robovoice-template/internal/book/infrastructure/store"
 	"robovoice-template/internal/di"
 	"robovoice-template/internal/user/infrastructure/rpc"
 )
@@ -35,19 +34,11 @@ type BookServer struct {
 	BillingService billing_rpc.BillingRPCClient
 }
 
-func New(runRPCServer *di.RPCServer, log *zap.Logger, bookStore *store.BookStore, userService user_rpc.UserRPCClient, billingService billing_rpc.BillingRPCClient) (*BookServer, error) {
+func New(runRPCServer *di.RPCServer, log *zap.Logger, bookService *application.Service) (*BookServer, error) {
 	server := &BookServer{
 		log: log,
 
-		service: &application.Service{
-			Store: bookStore,
-
-			UserService:    userService,
-			BillingService: billingService,
-		},
-
-		UserService:    userService,
-		BillingService: billingService,
+		service: bookService,
 	}
 
 	// Register services

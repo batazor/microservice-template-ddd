@@ -12,6 +12,7 @@ import (
 	"syscall"
 
 	"robovoice-template/internal/di"
+	"robovoice-template/internal/user/application"
 	user_rpc "robovoice-template/internal/user/infrastructure/rpc"
 	"robovoice-template/pkg/config"
 	"robovoice-template/pkg/error/status"
@@ -45,8 +46,17 @@ func main() {
 		}
 	}()
 
-	// Run user server
-	user_rpc.New(s.ServerRPC, s.Log)
+	// Init services
+	userService, err := application.New()
+	if err != nil {
+		s.Log.Fatal(err.Error())
+	}
+
+	// Register rpc-servers
+	_, err = user_rpc.New(s.ServerRPC, s.Log, userService)
+	if err != nil {
+		s.Log.Fatal(err.Error())
+	}
 
 	// Handle SIGINT and SIGTERM.
 	sigs := make(chan os.Signal, 1)

@@ -28,11 +28,11 @@ type BillingServer struct {
 	service *application.Service
 }
 
-func New(runRPCServer *di.RPCServer, log *zap.Logger) (*BillingServer, error) {
+func New(runRPCServer *di.RPCServer, log *zap.Logger, billingService *application.Service) (*BillingServer, error) {
 	server := &BillingServer{
 		log: log,
 
-		service: &application.Service{},
+		service: billingService,
 	}
 
 	// Register services

@@ -28,11 +28,11 @@ type UserServer struct {
 	service *application.Service
 }
 
-func New(runRPCServer *di.RPCServer, log *zap.Logger) (*UserServer, error) {
+func New(runRPCServer *di.RPCServer, log *zap.Logger, userService *application.Service) (*UserServer, error) {
 	server := &UserServer{
 		log: log,
 
-		service: &application.Service{},
+		service: userService,
 	}
 
 	// Register services
