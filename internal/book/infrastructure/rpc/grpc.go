@@ -10,7 +10,6 @@ import (
 
 	"robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/book/application"
-	"robovoice-template/internal/book/domain"
 	"robovoice-template/internal/book/infrastructure/store"
 	"robovoice-template/internal/di"
 	"robovoice-template/internal/user/infrastructure/rpc"
@@ -59,11 +58,12 @@ func New(runRPCServer *di.RPCServer, log *zap.Logger, bookStore *store.BookStore
 }
 
 func (m *BookServer) Get(ctx context.Context, in *GetRequest) (*GetResponse, error) {
+	book, err := m.service.Get(ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
+
 	return &GetResponse{
-		Book: &domain.Book{
-			Title:  "Hello World",
-			Author: "God",
-			IsRent: false,
-		},
+		Book: book,
 	}, nil
 }

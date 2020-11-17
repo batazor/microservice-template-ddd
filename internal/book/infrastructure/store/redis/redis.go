@@ -7,7 +7,7 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/golang/protobuf/jsonpb"
 
-	book_rpc "robovoice-template/internal/book/domain"
+	"robovoice-template/internal/book/domain"
 	"robovoice-template/internal/db"
 )
 
@@ -24,7 +24,7 @@ func (s *Store) Init(_ context.Context, db *db.Store) error {
 }
 
 // Get ...
-func (r *Store) Get(ctx context.Context, id string) (*book_rpc.Book, error) {
+func (r *Store) Get(ctx context.Context, id string) (*domain.Book, error) {
 	val, err := r.client.Get(id).Result()
 	if err != nil {
 		if err.Error() == "redis: nil" {
@@ -34,7 +34,7 @@ func (r *Store) Get(ctx context.Context, id string) (*book_rpc.Book, error) {
 		return nil, err
 	}
 
-	var book book_rpc.Book
+	var book domain.Book
 	err = jsonpb.UnmarshalString(val, &book)
 	if err != nil {
 		return nil, fmt.Errorf("Error parse book by id: %s", id)
@@ -44,12 +44,12 @@ func (r *Store) Get(ctx context.Context, id string) (*book_rpc.Book, error) {
 }
 
 // List ...
-func (r *Store) List(ctx context.Context, filter interface{}) ([]*book_rpc.Book, error) { // nolint unused
+func (r *Store) List(ctx context.Context, filter interface{}) ([]*domain.Book, error) { // nolint unused
 	panic("implement me")
 }
 
 // Add ...
-func (r *Store) Add(ctx context.Context, in *book_rpc.Book) (*book_rpc.Book, error) {
+func (r *Store) Add(ctx context.Context, in *domain.Book) (*domain.Book, error) {
 	m := jsonpb.Marshaler{}
 	json, err := m.MarshalToString(in)
 	if err != nil {
@@ -65,7 +65,7 @@ func (r *Store) Add(ctx context.Context, in *book_rpc.Book) (*book_rpc.Book, err
 }
 
 // Update ...
-func (r *Store) Update(ctx context.Context, in *book_rpc.Book) (*book_rpc.Book, error) {
+func (r *Store) Update(ctx context.Context, in *domain.Book) (*domain.Book, error) {
 	m := jsonpb.Marshaler{}
 	json, err := m.MarshalToString(in)
 	if err != nil {

@@ -21,6 +21,24 @@ type Service struct {
 	BillingService billing_rpc.BillingRPCClient
 }
 
+// Get - get book from store
+func (s *Service) Get(ctx context.Context, bookId string) (*domain.Book, error) {
+	// Get book from store
+	book, err := s.Store.Store.Get(ctx, "Hello World")
+	if err != nil {
+		// For example create book
+		s.Store.Store.Add(ctx, &domain.Book{
+			Title:  "Hello World",
+			Author: "God",
+			IsRent: false,
+		})
+
+		return nil, err
+	}
+
+	return book, nil
+}
+
 func (s *Service) Rent(ctx context.Context, bookId string) (*domain.Book, error) {
 	// Get user
 	user, err := s.UserService.Get(ctx, &user_rpc.GetRequest{Id: bookId})
@@ -39,15 +57,8 @@ func (s *Service) Rent(ctx context.Context, bookId string) (*domain.Book, error)
 	}
 
 	// Get book from store
-	book, err := s.Store.Store.Get(ctx, "Hello World")
+	book, err := s.Get(ctx, "Hello World")
 	if err != nil {
-		// For example create book
-		s.Store.Store.Add(ctx, &domain.Book{
-			Title:  "Hello World",
-			Author: "God",
-			IsRent: false,
-		})
-
 		return nil, err
 	}
 
