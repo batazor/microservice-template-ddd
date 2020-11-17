@@ -1,3 +1,5 @@
+//go:generate protoc -I/usr/local/include -I. -I../../domain --go-grpc_out=Minternal/book/domain/book.proto=.:. --go_out=Minternal/book/domain/book.proto=.:. --go-grpc_opt=paths=source_relative --go_opt=paths=source_relative book_rpc.proto
+
 package book_rpc
 
 import (

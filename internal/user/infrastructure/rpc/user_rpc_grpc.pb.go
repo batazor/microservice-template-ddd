@@ -93,5 +93,5 @@ var _UserRPC_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "internal/user/infrastructure/rpc/user_rpc.proto",
+	Metadata: "user_rpc.proto",
 }

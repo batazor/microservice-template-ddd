@@ -3,41 +3,8 @@
 generate: ## Code generation
 	# proto generation metadata entity
 
-	# USER ===========================
-	@protoc -I/usr/local/include -I. \
-		--go_out=Minternal/user/domain/user.proto=.:. \
-		--go_opt=paths=source_relative \
-		internal/user/domain/user.proto
-
-	@protoc -I/usr/local/include -I. -I./internal/user/domain -I./internal/user/infrastructure/rpc \
-		--go-grpc_out=Minternal/user/domain/user.proto=.:. --go_out=Minternal/user/domain/user.proto=.:. \
-		--go-grpc_opt=paths=source_relative --go_opt=paths=source_relative \
-		internal/user/infrastructure/rpc/user_rpc.proto
-
-	# BILLING =======================
-	@protoc -I/usr/local/include -I. \
-		--go_out=Minternal/billing/domain/billing.proto=.:. \
-		--go_opt=paths=source_relative \
-		internal/billing/domain/billing.proto
-
-	@protoc -I/usr/local/include -I. -I./internal/billing/domain -I./internal/billing/infrastructure/rpc \
-		--go-grpc_out=Minternal/billing/domain/billing.proto=.:. --go_out=Minternal/billing/domain/billing.proto=.:. \
-		--go-grpc_opt=paths=source_relative --go_opt=paths=source_relative \
-		internal/billing/infrastructure/rpc/billing_rpc.proto
-
-	# BOOK ===========================
-	@protoc -I/usr/local/include -I. \
-		--go_out=Minternal/book/domain/book.proto=.:. \
-		--go_opt=paths=source_relative \
-		internal/book/domain/book.proto
-
-	@protoc -I/usr/local/include -I. -I./internal/book/domain -I./internal/book/infrastructure/rpc \
-		--go-grpc_out=Minternal/book/domain/book.proto=.:. --go_out=Minternal/book/domain/book.proto=.:. \
-		--go-grpc_opt=paths=source_relative --go_opt=paths=source_relative \
-		internal/book/infrastructure/rpc/book_rpc.proto
-
 	# Generate from .go code
-	@go generate internal/di/wire.go
+	@go generate ./...
 
 	@make fmt
 

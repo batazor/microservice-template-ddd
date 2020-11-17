@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.13.0
-// source: internal/billing/domain/billing.proto
+// source: billing.proto
 
 package domain
 
@@ -36,7 +36,7 @@ type Billing struct {
 func (x *Billing) Reset() {
 	*x = Billing{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_internal_billing_domain_billing_proto_msgTypes[0]
+		mi := &file_billing_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -49,7 +49,7 @@ func (x *Billing) String() string {
 func (*Billing) ProtoMessage() {}
 
 func (x *Billing) ProtoReflect() protoreflect.Message {
-	mi := &file_internal_billing_domain_billing_proto_msgTypes[0]
+	mi := &file_billing_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62,7 +62,7 @@ func (x *Billing) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Billing.ProtoReflect.Descriptor instead.
 func (*Billing) Descriptor() ([]byte, []int) {
-	return file_internal_billing_domain_billing_proto_rawDescGZIP(), []int{0}
+	return file_billing_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Billing) GetBalance() float32 {
@@ -72,37 +72,36 @@ func (x *Billing) GetBalance() float32 {
 	return 0
 }
 
-var File_internal_billing_domain_billing_proto protoreflect.FileDescriptor
+var File_billing_proto protoreflect.FileDescriptor
 
-var file_internal_billing_domain_billing_proto_rawDesc = []byte{
-	0x0a, 0x25, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69,
-	0x6e, 0x67, 0x2f, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e,
-	0x67, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x07, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67,
-	0x22, 0x23, 0x0a, 0x07, 0x42, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x12, 0x18, 0x0a, 0x07, 0x42,
-	0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x07, 0x42, 0x61,
-	0x6c, 0x61, 0x6e, 0x63, 0x65, 0x42, 0x2c, 0x5a, 0x2a, 0x72, 0x6f, 0x62, 0x6f, 0x76, 0x6f, 0x69,
-	0x63, 0x65, 0x2d, 0x74, 0x65, 0x6d, 0x70, 0x6c, 0x61, 0x74, 0x65, 0x2f, 0x69, 0x6e, 0x74, 0x65,
-	0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2f, 0x64, 0x6f, 0x6d,
-	0x61, 0x69, 0x6e, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+var file_billing_proto_rawDesc = []byte{
+	0x0a, 0x0d, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12,
+	0x07, 0x62, 0x69, 0x6c, 0x6c, 0x69, 0x6e, 0x67, 0x22, 0x23, 0x0a, 0x07, 0x42, 0x69, 0x6c, 0x6c,
+	0x69, 0x6e, 0x67, 0x12, 0x18, 0x0a, 0x07, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x02, 0x52, 0x07, 0x42, 0x61, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x42, 0x2c, 0x5a,
+	0x2a, 0x72, 0x6f, 0x62, 0x6f, 0x76, 0x6f, 0x69, 0x63, 0x65, 0x2d, 0x74, 0x65, 0x6d, 0x70, 0x6c,
+	0x61, 0x74, 0x65, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x62, 0x69, 0x6c,
+	0x6c, 0x69, 0x6e, 0x67, 0x2f, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
-	file_internal_billing_domain_billing_proto_rawDescOnce sync.Once
-	file_internal_billing_domain_billing_proto_rawDescData = file_internal_billing_domain_billing_proto_rawDesc
+	file_billing_proto_rawDescOnce sync.Once
+	file_billing_proto_rawDescData = file_billing_proto_rawDesc
 )
 
-func file_internal_billing_domain_billing_proto_rawDescGZIP() []byte {
-	file_internal_billing_domain_billing_proto_rawDescOnce.Do(func() {
-		file_internal_billing_domain_billing_proto_rawDescData = protoimpl.X.CompressGZIP(file_internal_billing_domain_billing_proto_rawDescData)
+func file_billing_proto_rawDescGZIP() []byte {
+	file_billing_proto_rawDescOnce.Do(func() {
+		file_billing_proto_rawDescData = protoimpl.X.CompressGZIP(file_billing_proto_rawDescData)
 	})
-	return file_internal_billing_domain_billing_proto_rawDescData
+	return file_billing_proto_rawDescData
 }
 
-var file_internal_billing_domain_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_internal_billing_domain_billing_proto_goTypes = []interface{}{
+var file_billing_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_billing_proto_goTypes = []interface{}{
 	(*Billing)(nil), // 0: billing.Billing
 }
-var file_internal_billing_domain_billing_proto_depIdxs = []int32{
+var file_billing_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -110,13 +109,13 @@ var file_internal_billing_domain_billing_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_internal_billing_domain_billing_proto_init() }
-func file_internal_billing_domain_billing_proto_init() {
-	if File_internal_billing_domain_billing_proto != nil {
+func init() { file_billing_proto_init() }
+func file_billing_proto_init() {
+	if File_billing_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_internal_billing_domain_billing_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_billing_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Billing); i {
 			case 0:
 				return &v.state
@@ -133,18 +132,18 @@ func file_internal_billing_domain_billing_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_internal_billing_domain_billing_proto_rawDesc,
+			RawDescriptor: file_billing_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_internal_billing_domain_billing_proto_goTypes,
-		DependencyIndexes: file_internal_billing_domain_billing_proto_depIdxs,
-		MessageInfos:      file_internal_billing_domain_billing_proto_msgTypes,
+		GoTypes:           file_billing_proto_goTypes,
+		DependencyIndexes: file_billing_proto_depIdxs,
+		MessageInfos:      file_billing_proto_msgTypes,
 	}.Build()
-	File_internal_billing_domain_billing_proto = out.File
-	file_internal_billing_domain_billing_proto_rawDesc = nil
-	file_internal_billing_domain_billing_proto_goTypes = nil
-	file_internal_billing_domain_billing_proto_depIdxs = nil
+	File_billing_proto = out.File
+	file_billing_proto_rawDesc = nil
+	file_billing_proto_goTypes = nil
+	file_billing_proto_depIdxs = nil
 }

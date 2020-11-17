@@ -93,5 +93,5 @@ var _BillingRPC_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "internal/billing/infrastructure/rpc/billing_rpc.proto",
+	Metadata: "billing_rpc.proto",
 }
