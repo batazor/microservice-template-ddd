@@ -8,8 +8,8 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	"robovoice-template/internal/di"
 	"robovoice-template/internal/user/application"
+	"robovoice-template/pkg/rpc"
 )
 
 func Use(_ context.Context, rpcClient *grpc.ClientConn) (UserRPCClient, error) {
@@ -28,7 +28,7 @@ type UserServer struct {
 	service *application.Service
 }
 
-func New(runRPCServer *di.RPCServer, log *zap.Logger, userService *application.Service) (*UserServer, error) {
+func New(runRPCServer *rpc.RPCServer, log *zap.Logger, userService *application.Service) (*UserServer, error) {
 	server := &UserServer{
 		log: log,
 

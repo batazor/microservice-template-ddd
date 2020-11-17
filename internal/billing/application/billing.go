@@ -1,7 +1,7 @@
 /*
 Billing Service. Application layer
 */
-package application
+package billing
 
 import "robovoice-template/internal/billing/domain"
 

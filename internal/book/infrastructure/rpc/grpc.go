@@ -10,8 +10,8 @@ import (
 
 	"robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/book/application"
-	"robovoice-template/internal/di"
 	"robovoice-template/internal/user/infrastructure/rpc"
+	"robovoice-template/pkg/rpc"
 )
 
 func Use(_ context.Context, rpcClient *grpc.ClientConn) (BookRPCClient, error) {
@@ -34,7 +34,7 @@ type BookServer struct {
 	BillingService billing_rpc.BillingRPCClient
 }
 
-func New(runRPCServer *di.RPCServer, log *zap.Logger, bookService *application.Service) (*BookServer, error) {
+func New(runRPCServer *rpc.RPCServer, log *zap.Logger, bookService *application.Service) (*BookServer, error) {
 	server := &BookServer{
 		log: log,
 

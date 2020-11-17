@@ -22,16 +22,18 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	"robovoice-template/internal/book/infrastructure/store"
+	// common
 	"robovoice-template/internal/db"
+	"robovoice-template/pkg/rpc"
 	"robovoice-template/pkg/traicing"
-)
 
-type RPCServer struct {
-	Run      func()
-	Server   *grpc.Server
-	Endpoint string
-}
+	// billing
+	"robovoice-template/internal/billing/application"
+	"robovoice-template/internal/billing/infrastructure/rpc"
+
+	// book
+	"robovoice-template/internal/book/infrastructure/store"
+)
 
 // InitStore return db
 func InitStore(ctx context.Context, log *zap.Logger) (*db.Store, func(), error) {
@@ -86,7 +88,7 @@ func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(
 
 // TODO: Move to inside package
 // runGRPCServer ...
-func runGRPCServer(log *zap.Logger, tracer opentracing.Tracer) (*RPCServer, func(), error) {
+func runGRPCServer(log *zap.Logger, tracer opentracing.Tracer) (*rpc.RPCServer, func(), error) {
 	viper.SetDefault("GRPC_SERVER_PORT", "50051") // gRPC port
 	grpc_port := viper.GetInt("GRPC_SERVER_PORT")
 
@@ -97,7 +99,7 @@ func runGRPCServer(log *zap.Logger, tracer opentracing.Tracer) (*RPCServer, func
 	}
 
 	// Initialize the gRPC server.
-	rpc := grpc.NewServer(
+	newRPCServer := grpc.NewServer(
 		// Initialize your gRPC server's interceptor.
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			otgrpc.OpenTracingServerInterceptor(tracer, otgrpc.LogPayloads()),
@@ -110,20 +112,20 @@ func runGRPCServer(log *zap.Logger, tracer opentracing.Tracer) (*RPCServer, func
 		)),
 	)
 
-	r := &RPCServer{
-		Server: rpc,
+	r := &rpc.RPCServer{
+		Server: newRPCServer,
 		Run: func() {
 			// After all your registrations, make sure all of the Prometheus metrics are initialized.
-			grpc_prometheus.Register(rpc)
+			grpc_prometheus.Register(newRPCServer)
 
-			go rpc.Serve(lis)
+			go newRPCServer.Serve(lis)
 			log.Info("Run gRPC server", zap.Int("port", grpc_port))
 		},
 		Endpoint: endpoint,
 	}
 
 	cleanup := func() {
-		rpc.GracefulStop()
+		newRPCServer.GracefulStop()
 	}
 
 	return r, cleanup, err
@@ -183,6 +185,10 @@ func InitLogger(ctx context.Context) (*zap.Logger, error) {
 }
 
 // DefaultService ======================================================================================================
+type DefaultService struct {
+	Log *zap.Logger
+}
+
 var DefaultSet = wire.NewSet(InitLogger, InitTracer)
 
 // APIService ==========================================================================================================
@@ -209,12 +215,12 @@ func InitializeAPIService(ctx context.Context) (*APIService, func(), error) {
 type UserService struct {
 	Log *zap.Logger
 
-	ServerRPC *RPCServer
+	ServerRPC *rpc.RPCServer
 }
 
 var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService)
 
-func NewUserService(log *zap.Logger, serverRPC *RPCServer) (*UserService, error) {
+func NewUserService(log *zap.Logger, serverRPC *rpc.RPCServer) (*UserService, error) {
 	return &UserService{
 		Log:       log,
 		ServerRPC: serverRPC,
@@ -229,15 +235,34 @@ func InitializeUserService(ctx context.Context) (*UserService, func(), error) {
 type BillingService struct {
 	Log *zap.Logger
 
-	ServerRPC *RPCServer
+	billingRPCServer *billing_rpc.BillingServer
 }
 
-var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, NewBillingService)
+var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, NewBillingService, NewBillingApplication, NewBillingRPCServer)
 
-func NewBillingService(log *zap.Logger, serverRPC *RPCServer) (*BillingService, error) {
+func NewBillingApplication() (*billing.Service, error) {
+	billingService, err := billing.New()
+	if err != nil {
+		return nil, err
+	}
+
+	return billingService, nil
+}
+
+func NewBillingRPCServer(billingService *billing.Service, log *zap.Logger, serverRPC *rpc.RPCServer) (*billing_rpc.BillingServer, error) {
+	billingRPCServer, err := billing_rpc.New(serverRPC, log, billingService)
+	if err != nil {
+		return nil, err
+	}
+
+	return billingRPCServer, nil
+}
+
+func NewBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingServer) (*BillingService, error) {
 	return &BillingService{
-		Log:       log,
-		ServerRPC: serverRPC,
+		Log: log,
+
+		billingRPCServer: billingRPCServer,
 	}, nil
 }
 
@@ -252,12 +277,12 @@ type BookService struct {
 	BookStore *store.BookStore
 
 	ClientRPC *grpc.ClientConn
-	ServerRPC *RPCServer
+	ServerRPC *rpc.RPCServer
 }
 
 var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, InitStore, InitBookStore, NewBookService)
 
-func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *RPCServer, clientRPC *grpc.ClientConn) (*BookService, error) {
+func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *rpc.RPCServer, clientRPC *grpc.ClientConn) (*BookService, error) {
 	return &BookService{
 		Log: log,
 

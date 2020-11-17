@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 
 	"robovoice-template/internal/billing/application"
-	"robovoice-template/internal/di"
+	"robovoice-template/pkg/rpc"
 )
 
 func Use(_ context.Context, rpcClient *grpc.ClientConn) (BillingRPCClient, error) {
@@ -25,10 +25,10 @@ type BillingServer struct {
 	UnimplementedBillingRPCServer
 
 	// Application
-	service *application.Service
+	service *billing.Service
 }
 
-func New(runRPCServer *di.RPCServer, log *zap.Logger, billingService *application.Service) (*BillingServer, error) {
+func New(runRPCServer *rpc.RPCServer, log *zap.Logger, billingService *billing.Service) (*BillingServer, error) {
 	server := &BillingServer{
 		log: log,
 

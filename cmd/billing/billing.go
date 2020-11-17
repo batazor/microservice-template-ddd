@@ -11,8 +11,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	"robovoice-template/internal/billing/application"
-	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/di"
 	"robovoice-template/pkg/config"
 	"robovoice-template/pkg/error/status"
@@ -31,7 +29,7 @@ func main() {
 	ctx := context.Background()
 
 	// Init a new service
-	s, cleanup, err := di.InitializeUserService(ctx)
+	s, cleanup, err := di.InitializeBillingService(ctx)
 	if err != nil { // TODO: use as helpers
 		if r, ok := err.(*net.OpError); ok {
 			panic(fmt.Errorf("address %s already in use. Set GRPC_SERVER_PORT enviroment", r.Addr.String()))
@@ -45,18 +43,6 @@ func main() {
 			s.Log.Error(r.(string))
 		}
 	}()
-
-	// Init services
-	billingService, err := application.New()
-	if err != nil {
-		s.Log.Fatal(err.Error())
-	}
-
-	// Register rpc-servers
-	_, err = billing_rpc.New(s.ServerRPC, s.Log, billingService)
-	if err != nil {
-		s.Log.Fatal(err.Error())
-	}
 
 	// Handle SIGINT and SIGTERM.
 	sigs := make(chan os.Signal, 1)
