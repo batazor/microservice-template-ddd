@@ -49,6 +49,8 @@ func (m *BillingServer) Get(ctx context.Context, in *GetRequest) (*GetResponse, 
 	}
 
 	return &GetResponse{
-		Billing: billing,
+		Billing: &Payload{
+			Billing: billing,
+		},
 	}, nil
 }

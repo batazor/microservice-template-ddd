@@ -20,5 +20,5 @@ message GetRequest {
 }
 
 message GetResponse {
-  billing.Billing Billing = 1;
+  Payload Billing = 1;
 }

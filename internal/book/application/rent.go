@@ -61,8 +61,8 @@ func (s *Service) Rent(ctx context.Context, bookId string) (*domain.Book, error)
 		return nil, err
 	}
 
-	if billing.Billing.Balance <= 0 {
-		return nil, fmt.Errorf("Problem with balance. Current balance %f", billing.Billing.Balance)
+	if billing.Billing.Billing.Balance <= 0 {
+		return nil, fmt.Errorf("Problem with balance. Current balance %f", billing.Billing.Billing.Balance)
 	}
 
 	// Get book from store
