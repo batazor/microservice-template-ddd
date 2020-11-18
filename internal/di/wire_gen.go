@@ -282,7 +282,14 @@ type APIService struct {
 	ClientRPC *grpc.ClientConn
 }
 
-var APISet = wire.NewSet(DefaultSet, runGRPCClient, NewAPIService)
+var APISet = wire.NewSet(
+
+	DefaultSet,
+
+	runGRPCClient,
+
+	NewAPIService,
+)
 
 func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*APIService, error) {
 	return &APIService{
@@ -298,7 +305,17 @@ type UserService struct {
 	userRPCServer *user_rpc.UserServer
 }
 
-var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService, NewUserApplication, NewUserRPCServer)
+var UserSet = wire.NewSet(
+
+	DefaultSet,
+
+	runGRPCServer,
+	NewUserRPCServer,
+
+	NewUserApplication,
+
+	NewUserService,
+)
 
 func NewUserApplication() (*user.Service, error) {
 	userService, err := user.New()
@@ -342,7 +359,17 @@ type BillingService struct {
 	billingRPCServer *billing_rpc.BillingServer
 }
 
-var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, InitBillingService, NewBillingApplication, NewBillingRPCServer)
+var BillingSet = wire.NewSet(
+
+	DefaultSet,
+
+	runGRPCServer,
+	NewBillingRPCServer,
+
+	NewBillingApplication,
+
+	InitBillingService,
+)
 
 func NewBillingApplication() (*billing.Service, error) {
 	billingService, err := billing.New()
@@ -386,9 +413,25 @@ type BookService struct {
 	bookRPCServer *book_rpc.BookServer
 }
 
-var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, NewBookApplication, NewBillingRPCClient, NewUserRPCClient, InitStore, InitBookStore, NewBookRPCServer, NewBookService)
+var BookSet = wire.NewSet(
 
-// InitMetaStore
+	DefaultSet,
+
+	runGRPCServer,
+	NewBookRPCServer,
+
+	runGRPCClient,
+	NewBillingRPCClient,
+	NewUserRPCClient,
+
+	InitStore,
+	InitBookStore,
+
+	NewBookApplication,
+
+	NewBookService,
+)
+
 func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store.BookStore, error) {
 	st := store.BookStore{}
 	bookStore, err := st.Use(ctx, log, conn)
