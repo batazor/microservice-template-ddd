@@ -25,10 +25,10 @@ type UserServer struct {
 	UnimplementedUserRPCServer
 
 	// Application
-	service *application.Service
+	service *user.Service
 }
 
-func New(runRPCServer *rpc.RPCServer, log *zap.Logger, userService *application.Service) (*UserServer, error) {
+func New(runRPCServer *rpc.RPCServer, log *zap.Logger, userService *user.Service) (*UserServer, error) {
 	server := &UserServer{
 		log: log,
 

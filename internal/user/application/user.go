@@ -1,7 +1,7 @@
 /*
 User Service. Application layer
 */
-package application
+package user
 
 import "robovoice-template/internal/user/domain"
 

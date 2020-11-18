@@ -26,6 +26,10 @@ import (
 	"robovoice-template/internal/billing/application"
 	"robovoice-template/internal/billing/infrastructure/rpc"
 
+	// user
+	"robovoice-template/internal/user/application"
+	"robovoice-template/internal/user/infrastructure/rpc"
+
 	// book
 	"robovoice-template/internal/book/infrastructure/store"
 )
@@ -58,6 +62,43 @@ func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store
 	return bookStore, nil
 }
 
+// TODO: Move to inside package
+// runGRPCServer ...
+func runGRPCServer(log *zap.Logger, tracer opentracing.Tracer) (*rpc.RPCServer, func(), error) {
+	return rpc.InitServer(log, tracer)
+}
+
+// TODO: Move to inside package
+// runGRPCClient - set up a connection to the server.
+func runGRPCClient(log *zap.Logger, tracer opentracing.Tracer) (*grpc.ClientConn, func(), error) {
+	return rpc.InitClient(log, tracer)
+}
+
+// DefaultService ======================================================================================================
+type DefaultService struct {
+	Log *zap.Logger
+}
+
+var DefaultSet = wire.NewSet(InitLogger, InitTracer)
+
+func InitLogger(ctx context.Context) (*zap.Logger, error) {
+	viper.SetDefault("LOG_LEVEL", zap.InfoLevel)
+	viper.SetDefault("LOG_TIME_FORMAT", time.RFC3339Nano)
+
+	// TODO: add conf
+	//conf := logger.Configuration{
+	//	Level:      viper.GetInt("LOG_LEVEL"),
+	//	TimeFormat: viper.GetString("LOG_TIME_FORMAT"),
+	//}
+
+	log, err := zap.NewProduction()
+	if err != nil {
+		return nil, err
+	}
+
+	return log, nil
+}
+
 func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(), error) {
 	viper.SetDefault("TRACER_SERVICE_NAME", "ShortLink") // Service Name
 	viper.SetDefault("TRACER_URI", "localhost:6831")     // Tracing addr:host
@@ -80,43 +121,6 @@ func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(
 
 	return tracer, cleanup, nil
 }
-
-// TODO: Move to inside package
-// runGRPCServer ...
-func runGRPCServer(log *zap.Logger, tracer opentracing.Tracer) (*rpc.RPCServer, func(), error) {
-	return rpc.InitServer(log, tracer)
-}
-
-// TODO: Move to inside package
-// runGRPCClient - set up a connection to the server.
-func runGRPCClient(log *zap.Logger, tracer opentracing.Tracer) (*grpc.ClientConn, func(), error) {
-	return rpc.InitClient(log, tracer)
-}
-
-func InitLogger(ctx context.Context) (*zap.Logger, error) {
-	viper.SetDefault("LOG_LEVEL", zap.InfoLevel)
-	viper.SetDefault("LOG_TIME_FORMAT", time.RFC3339Nano)
-
-	// TODO: add conf
-	//conf := logger.Configuration{
-	//	Level:      viper.GetInt("LOG_LEVEL"),
-	//	TimeFormat: viper.GetString("LOG_TIME_FORMAT"),
-	//}
-
-	log, err := zap.NewProduction()
-	if err != nil {
-		return nil, err
-	}
-
-	return log, nil
-}
-
-// DefaultService ======================================================================================================
-type DefaultService struct {
-	Log *zap.Logger
-}
-
-var DefaultSet = wire.NewSet(InitLogger, InitTracer)
 
 // APIService ==========================================================================================================
 type APIService struct {
@@ -142,15 +146,34 @@ func InitializeAPIService(ctx context.Context) (*APIService, func(), error) {
 type UserService struct {
 	Log *zap.Logger
 
-	ServerRPC *rpc.RPCServer
+	userRPCServer *user_rpc.UserServer
 }
 
-var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService)
+var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService, NewUserApplication, NewUserRPCServer)
 
-func NewUserService(log *zap.Logger, serverRPC *rpc.RPCServer) (*UserService, error) {
+func NewUserApplication() (*user.Service, error) {
+	userService, err := user.New()
+	if err != nil {
+		return nil, err
+	}
+
+	return userService, nil
+}
+
+func NewUserRPCServer(userService *user.Service, log *zap.Logger, serverRPC *rpc.RPCServer) (*user_rpc.UserServer, error) {
+	userRPCServer, err := user_rpc.New(serverRPC, log, userService)
+	if err != nil {
+		return nil, err
+	}
+
+	return userRPCServer, nil
+}
+
+func NewUserService(log *zap.Logger, userRPCServer *user_rpc.UserServer) (*UserService, error) {
 	return &UserService{
-		Log:       log,
-		ServerRPC: serverRPC,
+		Log: log,
+
+		userRPCServer: userRPCServer,
 	}, nil
 }
 
