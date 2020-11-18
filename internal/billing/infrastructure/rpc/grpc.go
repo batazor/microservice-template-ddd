@@ -1,4 +1,4 @@
-//go:generate protoc -I/usr/local/include -I. -I../../domain --go-grpc_out=Minternal/billing/domain/billing.proto=.:. --go_out=Minternal/billing/domain/billing.proto=.:. --go-grpc_opt=paths=source_relative --go_opt=paths=source_relative billing_rpc.proto
+//go:generate protoc -I. -I../../domain --go-grpc_out=Minternal/billing/domain/billing.proto=.:. --go_out=Minternal/billing/domain/billing.proto=.:. --go-grpc_opt=paths=source_relative --go_opt=paths=source_relative billing_rpc.proto
 
 package billing_rpc
 

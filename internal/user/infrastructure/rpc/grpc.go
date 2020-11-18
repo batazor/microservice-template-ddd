@@ -1,4 +1,4 @@
-//go:generate protoc -I/usr/local/include -I. -I../../domain --go-grpc_out=Minternal/user/domain/user.proto=.:. --go_out=Minternal/user/domain/user.proto=.:. --go-grpc_opt=paths=source_relative --go_opt=paths=source_relative user_rpc.proto
+//go:generate protoc -I. -I../../domain --go-grpc_out=Minternal/user/domain/user.proto=.:. --go_out=Minternal/user/domain/user.proto=.:. --go-grpc_opt=paths=source_relative --go_opt=paths=source_relative user_rpc.proto
 
 package user_rpc
 
