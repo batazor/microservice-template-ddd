@@ -56,18 +56,42 @@
 [http.services]
   [http.services.user]
     [http.services.user.loadBalancer]
+      [http.services.user.loadBalancer.healthCheck]
+        scheme = "http"
+        path = "/health"
+        interval = "10s"
+        timeout = "3s"
+        port = 8080
       [[http.services.user.loadBalancer.servers]]
-        url = "h2c://localhost:50051"
+        url = "h2c://192.168.1.57:50051"
+      [[http.services.user.loadBalancer.servers]]
+        url = "h2c://user:50051"
 
   [http.services.billing]
     [http.services.billing.loadBalancer]
+      [http.services.billing.loadBalancer.healthCheck]
+        scheme = "http"
+        path = "/health"
+        interval = "10s"
+        timeout = "3s"
+        port = 8080
       [[http.services.billing.loadBalancer.servers]]
-        url = "h2c://localhost:50052"
+        url = "h2c://192.168.1.57:50052"
+      [[http.services.billing.loadBalancer.servers]]
+        url = "h2c://billing:50051"
 
   [http.services.book]
     [http.services.book.loadBalancer]
+      [http.services.book.loadBalancer.healthCheck]
+        scheme = "http"
+        path = "/health"
+        interval = "10s"
+        timeout = "3s"
+        port = 8080
       [[http.services.book.loadBalancer.servers]]
-        url = "h2c://localhost:50053"
+        url = "h2c://192.168.1.57:50053"
+      [[http.services.book.loadBalancer.servers]]
+        url = "h2c://book:50051"
 
 ################################################################
 # UI

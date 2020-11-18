@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -37,6 +38,12 @@ func main() {
 
 		panic(err)
 	}
+
+	// RUN HTTP HEALTH AS EXAMPLE
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "{}")
+	})
+	go http.ListenAndServe(":8080", nil)
 
 	defer func() {
 		if r := recover(); r != nil {

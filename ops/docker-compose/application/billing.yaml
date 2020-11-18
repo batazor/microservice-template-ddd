@@ -1,0 +1,18 @@
+version: '2.4'
+
+services:
+
+  billing:
+    depends_on:
+      - traefik
+    build:
+      context: .
+      dockerfile: ops/dockerfile/billing.Dockerfile
+      shm_size: 1gb
+    container_name: billing
+    restart: on-failure
+    environment:
+      TRACER_SERVICE_NAME: Billing
+      TRACER_URI: jaeger-agent:6831
+    cpu_quota: 20000
+    mem_limit: 500m

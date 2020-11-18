@@ -1,0 +1,22 @@
+version: '2.4'
+
+services:
+
+  book:
+    depends_on:
+      - traefik
+      - redis
+    build:
+      context: .
+      dockerfile: ops/dockerfile/book.Dockerfile
+      shm_size: 1gb
+    container_name: book
+    restart: on-failure
+    environment:
+      GRPC_CLIENT_PORT: 80
+      GRPC_CLIENT_HOST: traefik
+      TRACER_SERVICE_NAME: Book
+      TRACER_URI: jaeger-agent:6831
+      STORE_REDIS_URI: redis:6379
+    cpu_quota: 20000
+    mem_limit: 500m

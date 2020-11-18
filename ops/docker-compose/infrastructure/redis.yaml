@@ -7,6 +7,5 @@ services:
     init: true
     restart: on-failure
     container_name: redis
-    network_mode: host
     ports:
       - "6379:6379"

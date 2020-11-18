@@ -42,3 +42,13 @@ services:
       image: jaegertracing/jaeger-cassandra-schema
       depends_on:
         - cassandra
+
+    spark-dependencies:
+      depends_on:
+        - cassandra
+        - jaeger-query
+      image: jaegertracing/spark-dependencies
+      container_name: spark-dependencies
+      environment:
+        STORAGE: cassandra
+        CASSANDRA_CONTACT_POINTS: cassandra

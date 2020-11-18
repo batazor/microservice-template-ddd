@@ -16,9 +16,12 @@ func InitClient(log *zap.Logger, tracer opentracing.Tracer) (*grpc.ClientConn, f
 	viper.SetDefault("GRPC_CLIENT_PORT", "50051") // gRPC port
 	grpc_port := viper.GetInt("GRPC_CLIENT_PORT")
 
+	viper.SetDefault("GRPC_CLIENT_HOST", "0.0.0.0") // gRPC host
+	grpc_host := viper.GetString("GRPC_CLIENT_HOST")
+
 	// Set up a connection to the server peer
 	conn, err := grpc.Dial(
-		fmt.Sprintf("0.0.0.0:%d", grpc_port),
+		fmt.Sprintf("%s:%d", grpc_host, grpc_port),
 		grpc.WithInsecure(),
 
 		// Initialize your gRPC server's interceptor.
@@ -36,7 +39,7 @@ func InitClient(log *zap.Logger, tracer opentracing.Tracer) (*grpc.ClientConn, f
 		return nil, nil, err
 	}
 
-	log.Info("Run gRPC client", zap.Int("port", grpc_port))
+	log.Info("Run gRPC client", zap.String("host", grpc_host), zap.Int("port", grpc_port))
 
 	cleanup := func() {
 		conn.Close()
