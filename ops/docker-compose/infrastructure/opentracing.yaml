@@ -2,7 +2,7 @@ version: '2.4'
 
 services:
     jaeger-collector:
-      image: jaegertracing/jaeger-collector
+      image: jaegertracing/jaeger-collector:1.21
       command: ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra", "--collector.zipkin.http-port=9411"]
       ports:
         - "14269"
@@ -14,7 +14,7 @@ services:
         - cassandra-schema
 
     jaeger-query:
-      image: jaegertracing/jaeger-query
+      image: jaegertracing/jaeger-query:1.21
       command: ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra"]
       ports:
         - "16686:16686"
@@ -24,7 +24,7 @@ services:
         - cassandra-schema
 
     jaeger-agent:
-      image: jaegertracing/jaeger-agent
+      image: jaegertracing/jaeger-agent:1.21
       command: ["--reporter.grpc.host-port=jaeger-collector:14250"]
       ports:
         - "5775:5775/udp"
@@ -39,7 +39,7 @@ services:
       image: cassandra:3.9
 
     cassandra-schema:
-      image: jaegertracing/jaeger-cassandra-schema
+      image: jaegertracing/jaeger-cassandra-schema:1.21
       depends_on:
         - cassandra
 
@@ -47,7 +47,7 @@ services:
       depends_on:
         - cassandra
         - jaeger-query
-      image: jaegertracing/spark-dependencies
+      image: jaegertracing/spark-dependencies:1.21
       container_name: spark-dependencies
       environment:
         STORAGE: cassandra
