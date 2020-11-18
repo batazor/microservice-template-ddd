@@ -22,6 +22,9 @@ import (
 	"robovoice-template/pkg/rpc"
 	"robovoice-template/pkg/traicing"
 
+	// API
+	"robovoice-template/internal/api"
+
 	// billing
 	"robovoice-template/internal/billing/application"
 	"robovoice-template/internal/billing/infrastructure/rpc"
@@ -131,7 +134,11 @@ var APISet = wire.NewSet(
 	NewAPIService,
 )
 
-func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*APIService, error) {
+func NewAPIService(ctx context.Context, log *zap.Logger, clientRPC *grpc.ClientConn) (*APIService, error) {
+	// Run API server
+	var API api.Server
+	API.RunAPIServer(ctx, log, clientRPC)
+
 	return &APIService{
 		Log:       log,
 		ClientRPC: clientRPC,
@@ -222,7 +229,7 @@ var BillingSet = wire.NewSet(
 	NewBillingApplication,
 
 	// CMD
-	InitBillingService,
+	NewBillingService,
 )
 
 func NewBillingApplication() (*billing.Service, error) {
@@ -252,7 +259,7 @@ func NewBillingRPCServer(billingService *billing.Service, log *zap.Logger, serve
 	return billingRPCServer, nil
 }
 
-func InitBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingServer) (*BillingService, error) {
+func NewBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingServer) (*BillingService, error) {
 	return &BillingService{
 		Log: log,
 

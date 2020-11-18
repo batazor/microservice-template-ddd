@@ -12,6 +12,7 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"robovoice-template/internal/api"
 	"robovoice-template/internal/billing/application"
 	"robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/book/application"
@@ -41,7 +42,7 @@ func InitializeAPIService(ctx context.Context) (*APIService, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	apiService, err := NewAPIService(logger, clientConn)
+	apiService, err := NewAPIService(ctx, logger, clientConn)
 	if err != nil {
 		cleanup2()
 		cleanup()
@@ -113,7 +114,7 @@ func InitializeBillingService(ctx context.Context) (*BillingService, func(), err
 		cleanup()
 		return nil, nil, err
 	}
-	billingService, err := InitBillingService(logger, billingServer)
+	billingService, err := NewBillingService(logger, billingServer)
 	if err != nil {
 		cleanup2()
 		cleanup()
@@ -291,7 +292,11 @@ var APISet = wire.NewSet(
 	NewAPIService,
 )
 
-func NewAPIService(log *zap.Logger, clientRPC *grpc.ClientConn) (*APIService, error) {
+func NewAPIService(ctx context.Context, log *zap.Logger, clientRPC *grpc.ClientConn) (*APIService, error) {
+	// Run API server
+	var API api.Server
+	API.RunAPIServer(ctx, log, clientRPC)
+
 	return &APIService{
 		Log:       log,
 		ClientRPC: clientRPC,
@@ -368,7 +373,7 @@ var BillingSet = wire.NewSet(
 
 	NewBillingApplication,
 
-	InitBillingService,
+	NewBillingService,
 )
 
 func NewBillingApplication() (*billing.Service, error) {
@@ -398,7 +403,7 @@ func NewBillingRPCServer(billingService *billing.Service, log *zap.Logger, serve
 	return billingRPCServer, nil
 }
 
-func InitBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingServer) (*BillingService, error) {
+func NewBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingServer) (*BillingService, error) {
 	return &BillingService{
 		Log: log,
 

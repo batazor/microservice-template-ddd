@@ -11,7 +11,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	"robovoice-template/internal/api"
 	"robovoice-template/internal/di"
 	"robovoice-template/pkg/config"
 	"robovoice-template/pkg/error/status"
@@ -38,10 +37,6 @@ func main() {
 
 		panic(err)
 	}
-
-	// Run API server
-	var API api.Server
-	API.RunAPIServer(ctx, s.Log, s.ClientRPC)
 
 	defer func() {
 		if r := recover(); r != nil {
