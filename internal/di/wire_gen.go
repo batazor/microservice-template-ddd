@@ -7,16 +7,11 @@ package di
 
 import (
 	"context"
-	"fmt"
 	"github.com/google/wire"
-	"github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/grpc-ecosystem/go-grpc-prometheus"
-	"github.com/opentracing-contrib/go-grpc"
 	"github.com/opentracing/opentracing-go"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"net"
 	"robovoice-template/internal/billing/application"
 	"robovoice-template/internal/billing/infrastructure/rpc"
 	"robovoice-template/internal/book/infrastructure/store"
@@ -104,7 +99,7 @@ func InitializeBillingService(ctx context.Context) (*BillingService, func(), err
 		cleanup()
 		return nil, nil, err
 	}
-	billingService, err := NewBillingService(logger, billingServer)
+	billingService, err := InitBillingService(logger, billingServer)
 	if err != nil {
 		cleanup2()
 		cleanup()
@@ -220,53 +215,13 @@ func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(
 // TODO: Move to inside package
 // runGRPCServer ...
 func runGRPCServer(log *zap.Logger, tracer opentracing.Tracer) (*rpc.RPCServer, func(), error) {
-	viper.SetDefault("GRPC_SERVER_PORT", "50051")
-	grpc_port := viper.GetInt("GRPC_SERVER_PORT")
-
-	endpoint := fmt.Sprintf("0.0.0.0:%d", grpc_port)
-	lis, err := net.Listen("tcp", endpoint)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	newRPCServer := grpc.NewServer(grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(otgrpc.OpenTracingServerInterceptor(tracer, otgrpc.LogPayloads()), grpc_prometheus.UnaryServerInterceptor)), grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(otgrpc.OpenTracingStreamServerInterceptor(tracer, otgrpc.LogPayloads()), grpc_prometheus.StreamServerInterceptor)))
-
-	r := &rpc.RPCServer{
-		Server: newRPCServer,
-		Run: func() {
-			grpc_prometheus.Register(newRPCServer)
-
-			go newRPCServer.Serve(lis)
-			log.Info("Run gRPC server", zap.Int("port", grpc_port))
-		},
-		Endpoint: endpoint,
-	}
-
-	cleanup := func() {
-		newRPCServer.GracefulStop()
-	}
-
-	return r, cleanup, err
+	return rpc.InitServer(log, tracer)
 }
 
 // TODO: Move to inside package
 // runGRPCClient - set up a connection to the server.
 func runGRPCClient(log *zap.Logger, tracer opentracing.Tracer) (*grpc.ClientConn, func(), error) {
-	viper.SetDefault("GRPC_CLIENT_PORT", "50051")
-	grpc_port := viper.GetInt("GRPC_CLIENT_PORT")
-
-	conn, err := grpc.Dial(fmt.Sprintf("0.0.0.0:%d", grpc_port), grpc.WithInsecure(), grpc.WithUnaryInterceptor(grpc_middleware.ChainUnaryClient(otgrpc.OpenTracingClientInterceptor(tracer, otgrpc.LogPayloads()), grpc_prometheus.UnaryClientInterceptor)), grpc.WithStreamInterceptor(grpc_middleware.ChainStreamClient(otgrpc.OpenTracingStreamClientInterceptor(tracer, otgrpc.LogPayloads()), grpc_prometheus.StreamClientInterceptor)))
-	if err != nil {
-		return nil, nil, err
-	}
-
-	log.Info("Run gRPC client", zap.Int("port", grpc_port))
-
-	cleanup := func() {
-		conn.Close()
-	}
-
-	return conn, cleanup, nil
+	return rpc.InitClient(log, tracer)
 }
 
 func InitLogger(ctx context.Context) (*zap.Logger, error) {
@@ -327,7 +282,7 @@ type BillingService struct {
 	billingRPCServer *billing_rpc.BillingServer
 }
 
-var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, NewBillingService, NewBillingApplication, NewBillingRPCServer)
+var BillingSet = wire.NewSet(DefaultSet, runGRPCServer, InitBillingService, NewBillingApplication, NewBillingRPCServer)
 
 func NewBillingApplication() (*billing.Service, error) {
 	billingService, err := billing.New()
@@ -347,7 +302,7 @@ func NewBillingRPCServer(billingService *billing.Service, log *zap.Logger, serve
 	return billingRPCServer, nil
 }
 
-func NewBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingServer) (*BillingService, error) {
+func InitBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingServer) (*BillingService, error) {
 	return &BillingService{
 		Log: log,
 
