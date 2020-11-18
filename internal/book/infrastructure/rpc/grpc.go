@@ -27,14 +27,14 @@ type BookServer struct {
 	UnimplementedBookRPCServer
 
 	// Application
-	service *application.Service
+	service *book.Service
 
 	// ServiceClients
 	UserService    user_rpc.UserRPCClient
 	BillingService billing_rpc.BillingRPCClient
 }
 
-func New(runRPCServer *rpc.RPCServer, log *zap.Logger, bookService *application.Service) (*BookServer, error) {
+func New(runRPCServer *rpc.RPCServer, log *zap.Logger, bookService *book.Service) (*BookServer, error) {
 	server := &BookServer{
 		log: log,
 

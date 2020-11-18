@@ -14,6 +14,8 @@ import (
 	"google.golang.org/grpc"
 	"robovoice-template/internal/billing/application"
 	"robovoice-template/internal/billing/infrastructure/rpc"
+	"robovoice-template/internal/book/application"
+	"robovoice-template/internal/book/infrastructure/rpc"
 	"robovoice-template/internal/book/infrastructure/store"
 	"robovoice-template/internal/db"
 	"robovoice-template/internal/user/application"
@@ -142,20 +144,49 @@ func InitializeBookService(ctx context.Context) (*BookService, func(), error) {
 		cleanup()
 		return nil, nil, err
 	}
-	rpcServer, cleanup3, err := runGRPCServer(logger, tracer)
+	clientConn, cleanup3, err := runGRPCClient(logger, tracer)
 	if err != nil {
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	clientConn, cleanup4, err := runGRPCClient(logger, tracer)
+	billingRPCClient, err := NewBillingRPCClient(ctx, logger, clientConn)
 	if err != nil {
 		cleanup3()
 		cleanup2()
 		cleanup()
 		return nil, nil, err
 	}
-	bookService, err := NewBookService(logger, bookStore, rpcServer, clientConn)
+	userRPCClient, err := NewUserRPCClient(ctx, logger, clientConn)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	service, err := NewBookApplication(bookStore, billingRPCClient, userRPCClient)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	rpcServer, cleanup4, err := runGRPCServer(logger, tracer)
+	if err != nil {
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	bookServer, err := NewBookRPCServer(service, logger, rpcServer)
+	if err != nil {
+		cleanup4()
+		cleanup3()
+		cleanup2()
+		cleanup()
+		return nil, nil, err
+	}
+	bookService, err := NewBookService(logger, bookServer)
 	if err != nil {
 		cleanup4()
 		cleanup3()
@@ -172,34 +203,6 @@ func InitializeBookService(ctx context.Context) (*BookService, func(), error) {
 }
 
 // wire.go:
-
-// InitStore return db
-func InitStore(ctx context.Context, log *zap.Logger) (*db.Store, func(), error) {
-	var st db.Store
-	db2, err := st.Use(ctx, log)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	cleanup := func() {
-		if err := db2.Store.Close(); err != nil {
-			log.Error(err.Error())
-		}
-	}
-
-	return db2, cleanup, nil
-}
-
-// InitMetaStore
-func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store.BookStore, error) {
-	st := store.BookStore{}
-	bookStore, err := st.Use(ctx, log, conn)
-	if err != nil {
-		return nil, err
-	}
-
-	return bookStore, nil
-}
 
 // TODO: Move to inside package
 // runGRPCServer ...
@@ -255,6 +258,23 @@ func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(
 	return tracer, cleanup, nil
 }
 
+// InitStore return db
+func InitStore(ctx context.Context, log *zap.Logger) (*db.Store, func(), error) {
+	var st db.Store
+	db2, err := st.Use(ctx, log)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	cleanup := func() {
+		if err := db2.Store.Close(); err != nil {
+			log.Error(err.Error())
+		}
+	}
+
+	return db2, cleanup, nil
+}
+
 // APIService ==========================================================================================================
 type APIService struct {
 	Log *zap.Logger
@@ -282,6 +302,15 @@ var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService, NewUserAppl
 
 func NewUserApplication() (*user.Service, error) {
 	userService, err := user.New()
+	if err != nil {
+		return nil, err
+	}
+
+	return userService, nil
+}
+
+func NewUserRPCClient(ctx context.Context, log *zap.Logger, rpcClient *grpc.ClientConn) (user_rpc.UserRPCClient, error) {
+	userService, err := user_rpc.Use(ctx, rpcClient)
 	if err != nil {
 		return nil, err
 	}
@@ -324,6 +353,15 @@ func NewBillingApplication() (*billing.Service, error) {
 	return billingService, nil
 }
 
+func NewBillingRPCClient(ctx context.Context, log *zap.Logger, rpcClient *grpc.ClientConn) (billing_rpc.BillingRPCClient, error) {
+	billingService, err := billing_rpc.Use(ctx, rpcClient)
+	if err != nil {
+		return nil, err
+	}
+
+	return billingService, nil
+}
+
 func NewBillingRPCServer(billingService *billing.Service, log *zap.Logger, serverRPC *rpc.RPCServer) (*billing_rpc.BillingServer, error) {
 	billingRPCServer, err := billing_rpc.New(serverRPC, log, billingService)
 	if err != nil {
@@ -345,21 +383,53 @@ func InitBillingService(log *zap.Logger, billingRPCServer *billing_rpc.BillingSe
 type BookService struct {
 	Log *zap.Logger
 
-	BookStore *store.BookStore
-
-	ClientRPC *grpc.ClientConn
-	ServerRPC *rpc.RPCServer
+	bookRPCServer *book_rpc.BookServer
 }
 
-var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, InitStore, InitBookStore, NewBookService)
+var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, NewBookApplication, NewBillingRPCClient, NewUserRPCClient, InitStore, InitBookStore, NewBookRPCServer, NewBookService)
 
-func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *rpc.RPCServer, clientRPC *grpc.ClientConn) (*BookService, error) {
+// InitMetaStore
+func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store.BookStore, error) {
+	st := store.BookStore{}
+	bookStore, err := st.Use(ctx, log, conn)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookStore, nil
+}
+
+func NewBookApplication(store2 *store.BookStore, billingRPC billing_rpc.BillingRPCClient, userRPC user_rpc.UserRPCClient) (*book.Service, error) {
+	bookService, err := book.New(store2, userRPC, billingRPC)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookService, nil
+}
+
+func NewBookRPCClient(ctx context.Context, log *zap.Logger, rpcClient *grpc.ClientConn) (book_rpc.BookRPCClient, error) {
+	bookService, err := book_rpc.Use(ctx, rpcClient)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookService, nil
+}
+
+func NewBookRPCServer(bookService *book.Service, log *zap.Logger, serverRPC *rpc.RPCServer) (*book_rpc.BookServer, error) {
+	bookRPCServer, err := book_rpc.New(serverRPC, log, bookService)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookRPCServer, nil
+}
+
+func NewBookService(log *zap.Logger, bookRPCServer *book_rpc.BookServer) (*BookService, error) {
 	return &BookService{
 		Log: log,
 
-		BookStore: bookStore,
-
-		ServerRPC: serverRPC,
-		ClientRPC: clientRPC,
+		bookRPCServer: bookRPCServer,
 	}, nil
 }

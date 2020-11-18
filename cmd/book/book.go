@@ -11,11 +11,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	billing_rpc "robovoice-template/internal/billing/infrastructure/rpc"
-	"robovoice-template/internal/book/application"
-	book_rpc "robovoice-template/internal/book/infrastructure/rpc"
 	"robovoice-template/internal/di"
-	user_rpc "robovoice-template/internal/user/infrastructure/rpc"
 	"robovoice-template/pkg/config"
 	"robovoice-template/pkg/error/status"
 )
@@ -47,29 +43,6 @@ func main() {
 			s.Log.Error(r.(string))
 		}
 	}()
-
-	// Register rpc-clients
-	userService, err := user_rpc.Use(ctx, s.ClientRPC)
-	if err != nil {
-		s.Log.Fatal(err.Error())
-	}
-
-	billingService, err := billing_rpc.Use(ctx, s.ClientRPC)
-	if err != nil {
-		s.Log.Fatal(err.Error())
-	}
-
-	// Init services
-	bookService, err := application.New(s.BookStore, userService, billingService)
-	if err != nil {
-		s.Log.Fatal(err.Error())
-	}
-
-	// Register rpc-servers
-	_, err = book_rpc.New(s.ServerRPC, s.Log, bookService)
-	if err != nil {
-		s.Log.Fatal(err.Error())
-	}
 
 	// Handle SIGINT and SIGTERM.
 	sigs := make(chan os.Signal, 1)

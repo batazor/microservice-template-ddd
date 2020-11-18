@@ -1,7 +1,7 @@
 /*
 Book Service. Application layer
 */
-package application
+package book
 
 import (
 	"context"

@@ -31,36 +31,10 @@ import (
 	"robovoice-template/internal/user/infrastructure/rpc"
 
 	// book
+	"robovoice-template/internal/book/application"
+	"robovoice-template/internal/book/infrastructure/rpc"
 	"robovoice-template/internal/book/infrastructure/store"
 )
-
-// InitStore return db
-func InitStore(ctx context.Context, log *zap.Logger) (*db.Store, func(), error) {
-	var st db.Store
-	db, err := st.Use(ctx, log)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	cleanup := func() {
-		if err := db.Store.Close(); err != nil {
-			log.Error(err.Error())
-		}
-	}
-
-	return db, cleanup, nil
-}
-
-// InitMetaStore
-func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store.BookStore, error) {
-	st := store.BookStore{}
-	bookStore, err := st.Use(ctx, log, conn)
-	if err != nil {
-		return nil, err
-	}
-
-	return bookStore, nil
-}
 
 // TODO: Move to inside package
 // runGRPCServer ...
@@ -122,6 +96,23 @@ func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(
 	return tracer, cleanup, nil
 }
 
+// InitStore return db
+func InitStore(ctx context.Context, log *zap.Logger) (*db.Store, func(), error) {
+	var st db.Store
+	db, err := st.Use(ctx, log)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	cleanup := func() {
+		if err := db.Store.Close(); err != nil {
+			log.Error(err.Error())
+		}
+	}
+
+	return db, cleanup, nil
+}
+
 // APIService ==========================================================================================================
 type APIService struct {
 	Log *zap.Logger
@@ -153,6 +144,15 @@ var UserSet = wire.NewSet(DefaultSet, runGRPCServer, NewUserService, NewUserAppl
 
 func NewUserApplication() (*user.Service, error) {
 	userService, err := user.New()
+	if err != nil {
+		return nil, err
+	}
+
+	return userService, nil
+}
+
+func NewUserRPCClient(ctx context.Context, log *zap.Logger, rpcClient *grpc.ClientConn) (user_rpc.UserRPCClient, error) {
+	userService, err := user_rpc.Use(ctx, rpcClient)
 	if err != nil {
 		return nil, err
 	}
@@ -199,6 +199,15 @@ func NewBillingApplication() (*billing.Service, error) {
 	return billingService, nil
 }
 
+func NewBillingRPCClient(ctx context.Context, log *zap.Logger, rpcClient *grpc.ClientConn) (billing_rpc.BillingRPCClient, error) {
+	billingService, err := billing_rpc.Use(ctx, rpcClient)
+	if err != nil {
+		return nil, err
+	}
+
+	return billingService, nil
+}
+
 func NewBillingRPCServer(billingService *billing.Service, log *zap.Logger, serverRPC *rpc.RPCServer) (*billing_rpc.BillingServer, error) {
 	billingRPCServer, err := billing_rpc.New(serverRPC, log, billingService)
 	if err != nil {
@@ -224,22 +233,54 @@ func InitializeBillingService(ctx context.Context) (*BillingService, func(), err
 type BookService struct {
 	Log *zap.Logger
 
-	BookStore *store.BookStore
-
-	ClientRPC *grpc.ClientConn
-	ServerRPC *rpc.RPCServer
+	bookRPCServer *book_rpc.BookServer
 }
 
-var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, InitStore, InitBookStore, NewBookService)
+var BookSet = wire.NewSet(DefaultSet, runGRPCServer, runGRPCClient, NewBookApplication, NewBillingRPCClient, NewUserRPCClient, InitStore, InitBookStore, NewBookRPCServer, NewBookService)
 
-func NewBookService(log *zap.Logger, bookStore *store.BookStore, serverRPC *rpc.RPCServer, clientRPC *grpc.ClientConn) (*BookService, error) {
+// InitMetaStore
+func InitBookStore(ctx context.Context, log *zap.Logger, conn *db.Store) (*store.BookStore, error) {
+	st := store.BookStore{}
+	bookStore, err := st.Use(ctx, log, conn)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookStore, nil
+}
+
+func NewBookApplication(store *store.BookStore, billingRPC billing_rpc.BillingRPCClient, userRPC user_rpc.UserRPCClient) (*book.Service, error) {
+	bookService, err := book.New(store, userRPC, billingRPC)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookService, nil
+}
+
+func NewBookRPCClient(ctx context.Context, log *zap.Logger, rpcClient *grpc.ClientConn) (book_rpc.BookRPCClient, error) {
+	bookService, err := book_rpc.Use(ctx, rpcClient)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookService, nil
+}
+
+func NewBookRPCServer(bookService *book.Service, log *zap.Logger, serverRPC *rpc.RPCServer) (*book_rpc.BookServer, error) {
+	bookRPCServer, err := book_rpc.New(serverRPC, log, bookService)
+	if err != nil {
+		return nil, err
+	}
+
+	return bookRPCServer, nil
+}
+
+func NewBookService(log *zap.Logger, bookRPCServer *book_rpc.BookServer) (*BookService, error) {
 	return &BookService{
 		Log: log,
 
-		BookStore: bookStore,
-
-		ServerRPC: serverRPC,
-		ClientRPC: clientRPC,
+		bookRPCServer: bookRPCServer,
 	}, nil
 }
 
