@@ -45,7 +45,7 @@
 
   [http.routers.billing]
     entryPoints = ["web"]
-    rule = "PathPrefix(`/billing.BillingRPC/`)"
+    rule = "PathPrefix(`/billing_rpc.BillingRPC/`)"
     service = "billing"
 
   [http.routers.book]
