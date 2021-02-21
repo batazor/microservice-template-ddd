@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.0.0 // indirect
-	github.com/go-chi/chi v1.5.2
+	github.com/go-chi/chi v1.5.3
 	github.com/go-chi/cors v1.1.1
 	github.com/go-chi/render v1.0.1
 	github.com/go-redis/redis v6.15.9+incompatible
