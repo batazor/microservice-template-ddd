@@ -24,6 +24,6 @@ require (
 	go.mongodb.org/mongo-driver v1.5.0
 	go.uber.org/atomic v1.7.0
 	go.uber.org/zap v1.16.0
-	google.golang.org/grpc v1.36.0
+	google.golang.org/grpc v1.36.1
 	google.golang.org/protobuf v1.26.0
 )
