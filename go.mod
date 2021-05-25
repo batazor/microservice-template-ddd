@@ -23,7 +23,7 @@ require (
 	github.com/uber/jaeger-lib v2.4.0+incompatible // indirect
 	go.mongodb.org/mongo-driver v1.5.2
 	go.uber.org/atomic v1.7.0
-	go.uber.org/zap v1.16.0
+	go.uber.org/zap v1.17.0
 	google.golang.org/grpc v1.38.0
 	google.golang.org/protobuf v1.26.0
 )
