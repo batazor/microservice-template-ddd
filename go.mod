@@ -8,7 +8,7 @@ require (
 	github.com/go-chi/cors v1.2.0
 	github.com/go-chi/render v1.0.1
 	github.com/go-redis/redis v6.15.9+incompatible
-	github.com/go-redis/redis/v8 v8.9.0
+	github.com/go-redis/redis/v8 v8.10.0
 	github.com/golang-migrate/migrate/v4 v4.14.1
 	github.com/golang/protobuf v1.5.2
 	github.com/google/wire v0.5.0
