@@ -16,7 +16,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/opentracing-contrib/go-grpc v0.0.0-20210225150812-73cb765af46e
 	github.com/opentracing/opentracing-go v1.2.0
-	github.com/ory/dockertest/v3 v3.6.5
+	github.com/ory/dockertest/v3 v3.7.0
 	github.com/spf13/viper v1.8.0
 	github.com/stretchr/testify v1.7.0
 	github.com/uber/jaeger-client-go v2.29.1+incompatible
