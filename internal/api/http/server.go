@@ -3,6 +3,7 @@ package http
 import (
 	"context"
 	"fmt"
+	"net"
 	"net/http"
 	"time"
 
@@ -58,7 +59,10 @@ func (api *API) Run(ctx context.Context, config api_type.Config) error { // noli
 
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%d", config.Port),
-		Handler: chi.ServerBaseContext(ctx, r),
+		Handler: r,
+		BaseContext: func(_ net.Listener) context.Context {
+			return ctx
+		},
 
 		ReadTimeout:       1 * time.Second,                     // the maximum duration for reading the entire request, including the body
 		WriteTimeout:      (config.Timeout + 30) * time.Second, // the maximum duration before timing out writes of the response
