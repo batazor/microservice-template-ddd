@@ -3,12 +3,12 @@ version: '2.4'
 services:
     jaeger-collector:
       image: jaegertracing/jaeger-collector:1.30
-      command: ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra", "--collector.zipkin.http-port=9411"]
+      command: ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra", "--collector.zipkin.host-port=9411"]
+      container_name: jaeger-collector
       ports:
-        - "14269"
-        - "14268:14268"
-        - "14250"
-        - "9411:9411"
+        - "6831"         # accept jaeger.thrift in compact Thrift protocol used by most current Jaeger clients
+        - "6832"         # accept jaeger.thrift in binary Thrift protocol used by Node.js Jaeger client (because thriftrw npm package does not support compact protocol)
+        - "14271"        # Healthcheck at / and metrics at /metrics
       restart: on-failure
       depends_on:
         - cassandra-schema
@@ -16,6 +16,7 @@ services:
     jaeger-query:
       image: jaegertracing/jaeger-query:1.30
       command: ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra"]
+      container_name: jaeger-query
       ports:
         - "16686:16686"
         - "16687"
@@ -26,20 +27,24 @@ services:
     jaeger-agent:
       image: jaegertracing/jaeger-agent:1.30
       command: ["--reporter.grpc.host-port=jaeger-collector:14250"]
+      container_name: jaeger-agent
       ports:
         - "5775:5775/udp"
         - "6831:6831/udp"
         - "6832:6832/udp"
         - "5778:5778"
+        - "9411:9411"
       restart: on-failure
       depends_on:
         - jaeger-collector
 
     cassandra:
       image: cassandra:3.9
+      container_name: jaeger-cassandra
 
     cassandra-schema:
       image: jaegertracing/jaeger-cassandra-schema:1.30
+      container_name: jaeger-cassandra-schema
       depends_on:
         - cassandra
 

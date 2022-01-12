@@ -47,8 +47,8 @@ func InitLogger(ctx context.Context) (*zap.Logger, error) {
 }
 
 func InitTracer(ctx context.Context, log *zap.Logger) (opentracing.Tracer, func(), error) {
-	viper.SetDefault("TRACER_SERVICE_NAME", "ShortLink") // Service Name
-	viper.SetDefault("TRACER_URI", "localhost:6831")     // Tracing addr:host
+	viper.SetDefault("TRACER_SERVICE_NAME", "microservice-template-ddd") // Service Name
+	viper.SetDefault("TRACER_URI", "localhost:6831")                     // Tracing addr:host
 
 	config := traicing.Config{
 		ServiceName: viper.GetString("TRACER_SERVICE_NAME"),

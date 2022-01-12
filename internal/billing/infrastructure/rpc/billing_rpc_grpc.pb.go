@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // BillingRPCClient is the client API for BillingRPC service.
@@ -61,8 +62,8 @@ type UnsafeBillingRPCServer interface {
 	mustEmbedUnimplementedBillingRPCServer()
 }
 
-func RegisterBillingRPCServer(s *grpc.Server, srv BillingRPCServer) {
-	s.RegisterService(&_BillingRPC_serviceDesc, srv)
+func RegisterBillingRPCServer(s grpc.ServiceRegistrar, srv BillingRPCServer) {
+	s.RegisterService(&BillingRPC_ServiceDesc, srv)
 }
 
 func _BillingRPC_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -83,7 +84,10 @@ func _BillingRPC_Get_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-var _BillingRPC_serviceDesc = grpc.ServiceDesc{
+// BillingRPC_ServiceDesc is the grpc.ServiceDesc for BillingRPC service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var BillingRPC_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "billing_rpc.BillingRPC",
 	HandlerType: (*BillingRPCServer)(nil),
 	Methods: []grpc.MethodDesc{

@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // BookRPCClient is the client API for BookRPC service.
@@ -75,8 +76,8 @@ type UnsafeBookRPCServer interface {
 	mustEmbedUnimplementedBookRPCServer()
 }
 
-func RegisterBookRPCServer(s *grpc.Server, srv BookRPCServer) {
-	s.RegisterService(&_BookRPC_serviceDesc, srv)
+func RegisterBookRPCServer(s grpc.ServiceRegistrar, srv BookRPCServer) {
+	s.RegisterService(&BookRPC_ServiceDesc, srv)
 }
 
 func _BookRPC_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -115,7 +116,10 @@ func _BookRPC_Rent_Handler(srv interface{}, ctx context.Context, dec func(interf
 	return interceptor(ctx, in, info, handler)
 }
 
-var _BookRPC_serviceDesc = grpc.ServiceDesc{
+// BookRPC_ServiceDesc is the grpc.ServiceDesc for BookRPC service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var BookRPC_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "book_rpc.BookRPC",
 	HandlerType: (*BookRPCServer)(nil),
 	Methods: []grpc.MethodDesc{
