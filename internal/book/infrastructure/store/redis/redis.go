@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	"github.com/go-redis/redis"
-	"github.com/golang/protobuf/jsonpb"
+	"google.golang.org/protobuf/encoding/protojson"
 
-	"robovoice-template/internal/book/domain"
-	"robovoice-template/internal/db"
+	"microservice-template-ddd/internal/book/domain"
+	"microservice-template-ddd/internal/db"
 )
 
 // Store implementation of db interface
@@ -35,7 +35,7 @@ func (r *Store) Get(ctx context.Context, id string) (*domain.Book, error) {
 	}
 
 	var book domain.Book
-	err = jsonpb.UnmarshalString(val, &book)
+	err = protojson.Unmarshal([]byte(val), &book)
 	if err != nil {
 		return nil, fmt.Errorf("Error parse book by id: %s", id)
 	}
@@ -50,8 +50,8 @@ func (r *Store) List(ctx context.Context, filter interface{}) ([]*domain.Book, e
 
 // Add ...
 func (r *Store) Add(ctx context.Context, in *domain.Book) (*domain.Book, error) {
-	m := jsonpb.Marshaler{}
-	json, err := m.MarshalToString(in)
+	m := protojson.MarshalOptions{}
+	json, err := m.Marshal(in)
 	if err != nil {
 		return nil, fmt.Errorf("Error convert to JSON id: %s", in.Title)
 	}
@@ -66,8 +66,8 @@ func (r *Store) Add(ctx context.Context, in *domain.Book) (*domain.Book, error) 
 
 // Update ...
 func (r *Store) Update(ctx context.Context, in *domain.Book) (*domain.Book, error) {
-	m := jsonpb.Marshaler{}
-	json, err := m.MarshalToString(in)
+	m := protojson.MarshalOptions{}
+	json, err := m.Marshal(in)
 	if err != nil {
 		return nil, fmt.Errorf("Error convert to JSON id: %s", in.Title)
 	}

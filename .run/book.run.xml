@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="book" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="microservice-template-ddd" />
+    <working_directory value="$PROJECT_DIR$" />
+    <envs>
+      <env name="GRPC_SERVER_PORT" value="50052" />
+    </envs>
+    <kind value="PACKAGE" />
+    <package value="microservice-template-ddd/cmd/book" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/cmd/book/book.go" />
+    <method v="2" />
+  </configuration>
+</component>

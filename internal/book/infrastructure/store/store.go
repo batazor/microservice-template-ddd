@@ -9,8 +9,8 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
-	"robovoice-template/internal/book/infrastructure/store/redis"
-	"robovoice-template/internal/db"
+	"microservice-template-ddd/internal/book/infrastructure/store/redis"
+	"microservice-template-ddd/internal/db"
 )
 
 // Use return implementation of db

@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
-	"github.com/golang/protobuf/jsonpb"
+	"google.golang.org/protobuf/encoding/protojson"
 
-	"robovoice-template/internal/user/infrastructure/rpc"
+	"microservice-template-ddd/internal/user/infrastructure/rpc"
 )
 
 // Routes creates a REST router
@@ -33,16 +33,18 @@ func (api *API) ListUser(w http.ResponseWriter, r *http.Request) {
 	resp, err := api.UserService.Get(r.Context(), &user_rpc.GetRequest{Id: "test@user"})
 	if err != nil {
 		api.Log.Error(err.Error())
-		w.Write([]byte(`{"error": "error 0_o"}`))
+		_, _ = w.Write([]byte(`{"error": "error 0_o"}`))
 		return
 	}
 
-	m := jsonpb.Marshaler{}
-	err = m.Marshal(w, resp)
+	m := protojson.MarshalOptions{}
+	payload, err := m.Marshal(resp)
 	if err != nil {
 		api.Log.Error(err.Error())
-		w.Write([]byte(`{"error": "error 0_o"}`))
+		_, _ = w.Write([]byte(`{"error": "error 0_o"}`))
 	}
+
+	_, _ = w.Write(payload)
 }
 
 func (api *API) GetUser(w http.ResponseWriter, r *http.Request) {

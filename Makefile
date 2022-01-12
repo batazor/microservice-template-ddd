@@ -1,8 +1,16 @@
 SELF_DIR := $(dir $(lastword $(MAKEFILE_LIST)))
 
+# BASE CONFIG ==========================================================================================================
+.SILENT: ;               # no need for @
+.ONESHELL: ;             # recipes execute in same shell
+.NOTPARALLEL: ;          # wait for this target to finish
+.EXPORT_ALL_VARIABLES: ; # send all vars to shell
+default: help;           # default target
+Makefile: ;              # skip prerequisite discovery
+
 # PROJECT_NAME defaults to name of the current directory.
 # should not to be changed if you follow GitOps operating procedures.
-PROJECT_NAME := robovoice-template
+PROJECT_NAME := microservice-template-ddd
 
 CI_COMMIT_TAG := latest
 

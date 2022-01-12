@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
-	"github.com/golang/protobuf/jsonpb"
+	"google.golang.org/protobuf/encoding/protojson"
 
-	"robovoice-template/internal/book/infrastructure/rpc"
+	"microservice-template-ddd/internal/book/infrastructure/rpc"
 )
 
 // Routes creates a REST router
@@ -36,16 +36,18 @@ func (api *API) ListBook(w http.ResponseWriter, r *http.Request) {
 	resp, err := api.BookService.Get(r.Context(), &book_rpc.GetRequest{Id: "Hello World"})
 	if err != nil {
 		api.Log.Error(err.Error())
-		w.Write([]byte(`{"error": "error 0_o"}`))
+		_, _ = w.Write([]byte(`{"error": "error 0_o"}`))
 		return
 	}
 
-	m := jsonpb.Marshaler{}
-	err = m.Marshal(w, resp)
+	m := protojson.MarshalOptions{}
+	payload, err := m.Marshal(resp)
 	if err != nil {
 		api.Log.Error(err.Error())
-		w.Write([]byte(`{"error": "error 0_o"}`))
+		_, _ = w.Write([]byte(`{"error": "error 0_o"}`))
 	}
+
+	_, _ = w.Write(payload)
 }
 
 func (api *API) GetBook(w http.ResponseWriter, r *http.Request) {
@@ -63,14 +65,16 @@ func (api *API) RentBook(w http.ResponseWriter, r *http.Request) {
 	resp, err := api.BookService.Rent(r.Context(), &book_rpc.RentRequest{Id: "Hello World"})
 	if err != nil {
 		api.Log.Error(err.Error())
-		w.Write([]byte(`{"error": "error 0_o"}`))
+		_, _ = w.Write([]byte(`{"error": "error 0_o"}`))
 		return
 	}
 
-	m := jsonpb.Marshaler{}
-	err = m.Marshal(w, resp)
+	m := protojson.MarshalOptions{}
+	payload, err := m.Marshal(resp)
 	if err != nil {
 		api.Log.Error(err.Error())
-		w.Write([]byte(`{"error": "error 0_o"}`))
+		_, _ = w.Write([]byte(`{"error": "error 0_o"}`))
 	}
+
+	_, _ = w.Write(payload)
 }

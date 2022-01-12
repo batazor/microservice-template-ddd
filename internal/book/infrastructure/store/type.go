@@ -3,8 +3,8 @@ package store
 import (
 	"context"
 
-	"robovoice-template/internal/book/domain"
-	"robovoice-template/internal/db"
+	"microservice-template-ddd/internal/book/domain"
+	"microservice-template-ddd/internal/db"
 )
 
 type Repository interface {

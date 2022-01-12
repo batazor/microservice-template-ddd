@@ -2,7 +2,7 @@ FROM golang:1.17-alpine as builder
 
 ARG CI_COMMIT_TAG
 
-WORKDIR /go/src/robovoice-template
+WORKDIR /go/src/microservice-template-ddd
 COPY . .
 
 # Load dependencies
@@ -33,5 +33,5 @@ RUN addgroup -S user && adduser -S -g user user
 USER user
 
 WORKDIR /app/
-COPY --from=builder /go/src/robovoice-template/app .
+COPY --from=builder /go/src/microservice-template-ddd/app .
 CMD ["./app"]

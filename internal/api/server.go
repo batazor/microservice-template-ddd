@@ -7,11 +7,11 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	"robovoice-template/internal/api/api_type"
-	"robovoice-template/internal/api/http"
-	"robovoice-template/internal/billing/infrastructure/rpc"
-	"robovoice-template/internal/book/infrastructure/rpc"
-	"robovoice-template/internal/user/infrastructure/rpc"
+	"microservice-template-ddd/internal/api/api_type"
+	"microservice-template-ddd/internal/api/http"
+	"microservice-template-ddd/internal/billing/infrastructure/rpc"
+	"microservice-template-ddd/internal/book/infrastructure/rpc"
+	"microservice-template-ddd/internal/user/infrastructure/rpc"
 )
 
 type Server struct{} // nolint unused

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package book;
 
-option go_package = "robovoice-template/internal/book/domain";
+option go_package = "microservice-template-ddd/internal/book/domain";
 
 message Book {
   string Title = 1;

@@ -3,7 +3,7 @@ User Service. Application layer
 */
 package user
 
-import "robovoice-template/internal/user/domain"
+import "microservice-template-ddd/internal/user/domain"
 
 type Service struct{}
 

@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="user" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="microservice-template-ddd" />
+    <working_directory value="$PROJECT_DIR$" />
+    <envs>
+      <env name="GRPC_SERVER_PORT" value="50053" />
+    </envs>
+    <kind value="PACKAGE" />
+    <package value="microservice-template-ddd/cmd/user" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/cmd/user/user.go" />
+    <method v="2" />
+  </configuration>
+</component>

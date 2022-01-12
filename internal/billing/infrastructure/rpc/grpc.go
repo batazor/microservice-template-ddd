@@ -8,8 +8,8 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	"robovoice-template/internal/billing/application"
-	"robovoice-template/pkg/rpc"
+	"microservice-template-ddd/internal/billing/application"
+	"microservice-template-ddd/pkg/rpc"
 )
 
 func Use(_ context.Context, rpcClient *grpc.ClientConn) (BillingRPCClient, error) {

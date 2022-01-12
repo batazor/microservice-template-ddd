@@ -11,9 +11,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"robovoice-template/internal/di"
-	"robovoice-template/pkg/config"
-	"robovoice-template/pkg/error/status"
+	"microservice-template-ddd/internal/di"
+	"microservice-template-ddd/pkg/config"
+	"microservice-template-ddd/pkg/error/status"
 )
 
 func init() {

@@ -1,4 +1,6 @@
-//+build wireinject
+//go:build wireinject
+// +build wireinject
+
 // The build tag makes sure the stub is not built in the final build.
 
 package di
@@ -13,9 +15,9 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	"robovoice-template/internal/db"
-	"robovoice-template/pkg/rpc"
-	"robovoice-template/pkg/traicing"
+	"microservice-template-ddd/internal/db"
+	"microservice-template-ddd/pkg/rpc"
+	"microservice-template-ddd/pkg/traicing"
 )
 
 type DefaultService struct {

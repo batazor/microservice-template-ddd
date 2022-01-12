@@ -12,9 +12,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"robovoice-template/internal/di"
-	"robovoice-template/pkg/config"
-	"robovoice-template/pkg/error/status"
+	"microservice-template-ddd/internal/di"
+	"microservice-template-ddd/pkg/config"
+	"microservice-template-ddd/pkg/error/status"
 )
 
 func init() {
@@ -43,7 +43,7 @@ func main() {
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{}")
 	})
-	go http.ListenAndServe(":8080", nil)
+	go http.ListenAndServe(":8080", nil) // nolint errcheck
 
 	defer func() {
 		if r := recover(); r != nil {

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user_rpc;
 
-option go_package = "robovoice-template/internal/user/infrastructure/user_rpc";
+option go_package = "microservice-template-ddd/internal/user/infrastructure/user_rpc";
 
 import "user.proto";
 

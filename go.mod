@@ -1,4 +1,4 @@
-module robovoice-template
+module microservice-template-ddd
 
 go 1.15
 

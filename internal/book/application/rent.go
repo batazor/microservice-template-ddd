@@ -7,10 +7,10 @@ import (
 	"context"
 	"fmt"
 
-	"robovoice-template/internal/billing/infrastructure/rpc"
-	"robovoice-template/internal/book/domain"
-	"robovoice-template/internal/book/infrastructure/store"
-	"robovoice-template/internal/user/infrastructure/rpc"
+	"microservice-template-ddd/internal/billing/infrastructure/rpc"
+	"microservice-template-ddd/internal/book/domain"
+	"microservice-template-ddd/internal/book/infrastructure/store"
+	"microservice-template-ddd/internal/user/infrastructure/rpc"
 )
 
 type Service struct {
@@ -36,7 +36,7 @@ func (s *Service) Get(ctx context.Context, bookId string) (*domain.Book, error) 
 	book, err := s.Store.Store.Get(ctx, bookId)
 	if err != nil {
 		// For example create book
-		s.Store.Store.Add(ctx, &domain.Book{
+		_, _ = s.Store.Store.Add(ctx, &domain.Book{
 			Title:  "Hello World",
 			Author: "God",
 			IsRent: false,

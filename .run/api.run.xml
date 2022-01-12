@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="api" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="microservice-template-ddd" />
+    <working_directory value="$PROJECT_DIR$" />
+    <kind value="PACKAGE" />
+    <package value="microservice-template-ddd/cmd/api" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/cmd/api/api.go" />
+    <method v="2" />
+  </configuration>
+</component>

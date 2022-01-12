@@ -8,8 +8,8 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
-	"robovoice-template/internal/db/mongo"
-	"robovoice-template/internal/db/redis"
+	"microservice-template-ddd/internal/db/mongo"
+	"microservice-template-ddd/internal/db/redis"
 )
 
 // Use return implementation of db

@@ -10,8 +10,8 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	domain "microservice-template-ddd/internal/user/domain"
 	reflect "reflect"
-	domain "robovoice-template/internal/user/domain"
 	sync "sync"
 )
 

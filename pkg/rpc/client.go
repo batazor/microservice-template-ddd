@@ -22,7 +22,7 @@ func InitClient(log *zap.Logger, tracer opentracing.Tracer) (*grpc.ClientConn, f
 	// Set up a connection to the server peer
 	conn, err := grpc.Dial(
 		fmt.Sprintf("%s:%d", grpc_host, grpc_port),
-		grpc.WithInsecure(),
+		grpc.WithInsecure(), // nolint staticcheck
 
 		// Initialize your gRPC server's interceptor.
 		grpc.WithUnaryInterceptor(grpc_middleware.ChainUnaryClient(

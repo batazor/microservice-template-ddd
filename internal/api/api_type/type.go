@@ -8,7 +8,7 @@ import (
 	"context"
 	"time"
 
-	"robovoice-template/pkg/notify"
+	"microservice-template-ddd/pkg/notify"
 )
 
 var (

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package billing_rpc;
 
-option go_package = "robovoice-template/internal/billing/infrastructure/billing_rpc";
+option go_package = "microservice-template-ddd/internal/billing/infrastructure/billing_rpc";
 
 import "billing.proto";
 

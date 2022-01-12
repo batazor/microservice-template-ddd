@@ -11,8 +11,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"robovoice-template/internal/db/mongo/migrations"
-	storeOptions "robovoice-template/internal/db/options"
+	"microservice-template-ddd/internal/db/mongo/migrations"
+	storeOptions "microservice-template-ddd/internal/db/options"
 )
 
 // Init ...

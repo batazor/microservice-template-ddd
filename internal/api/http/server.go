@@ -12,7 +12,7 @@ import (
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
 
-	"robovoice-template/internal/api/api_type"
+	"microservice-template-ddd/internal/api/api_type"
 )
 
 // Run HTTP-server
