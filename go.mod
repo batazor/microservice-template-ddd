@@ -18,7 +18,7 @@ require (
 	github.com/ory/dockertest/v3 v3.9.1
 	github.com/spf13/viper v1.13.0
 	github.com/stretchr/testify v1.8.0
-	github.com/uber/jaeger-client-go v2.29.1+incompatible
+	github.com/uber/jaeger-client-go v2.30.0+incompatible
 	github.com/uber/jaeger-lib v2.4.0+incompatible // indirect
 	go.mongodb.org/mongo-driver v1.10.2
 	go.uber.org/atomic v1.10.0
