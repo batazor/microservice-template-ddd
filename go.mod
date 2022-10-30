@@ -1,6 +1,6 @@
 module microservice-template-ddd
 
-go 1.15
+go 1.19
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.0.0 // indirect
