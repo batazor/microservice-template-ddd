@@ -18,7 +18,7 @@ require (
 	github.com/spf13/viper v1.13.0
 	github.com/stretchr/testify v1.8.1
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
-	go.mongodb.org/mongo-driver v1.10.4
+	go.mongodb.org/mongo-driver v1.11.0
 	go.uber.org/atomic v1.10.0
 	go.uber.org/zap v1.23.0
 	google.golang.org/grpc v1.50.1
