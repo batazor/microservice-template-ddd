@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/cors v1.2.1
-	github.com/go-chi/render v1.0.2
+	github.com/go-chi/render v1.0.3
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/golang-migrate/migrate/v4 v4.15.2
