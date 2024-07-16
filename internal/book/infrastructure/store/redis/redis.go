@@ -24,8 +24,8 @@ func (s *Store) Init(_ context.Context, db *db.Store) error {
 }
 
 // Get ...
-func (r *Store) Get(ctx context.Context, id string) (*domain.Book, error) {
-	val, err := r.client.Get(id).Result()
+func (s *Store) Get(ctx context.Context, id string) (*domain.Book, error) {
+	val, err := s.client.Get(ctx, id).Result()
 	if err != nil {
 		if err.Error() == "redis: nil" {
 			return nil, fmt.Errorf("Not found id: %s", id)
@@ -44,19 +44,19 @@ func (r *Store) Get(ctx context.Context, id string) (*domain.Book, error) {
 }
 
 // List ...
-func (r *Store) List(ctx context.Context, filter interface{}) ([]*domain.Book, error) { // nolint unused
+func (s *Store) List(ctx context.Context, filter interface{}) ([]*domain.Book, error) { // nolint unused
 	panic("implement me")
 }
 
 // Add ...
-func (r *Store) Add(ctx context.Context, in *domain.Book) (*domain.Book, error) {
+func (s *Store) Add(ctx context.Context, in *domain.Book) (*domain.Book, error) {
 	m := protojson.MarshalOptions{}
 	json, err := m.Marshal(in)
 	if err != nil {
 		return nil, fmt.Errorf("Error convert to JSON id: %s", in.Title)
 	}
 
-	err = r.client.Set(in.Title, json, 0).Err()
+	err = s.client.Set(ctx, in.Title, json, 0).Err()
 	if err != nil {
 		return nil, fmt.Errorf("Error update book by id: %s", in.Title)
 	}
@@ -65,14 +65,14 @@ func (r *Store) Add(ctx context.Context, in *domain.Book) (*domain.Book, error) 
 }
 
 // Update ...
-func (r *Store) Update(ctx context.Context, in *domain.Book) (*domain.Book, error) {
+func (s *Store) Update(ctx context.Context, in *domain.Book) (*domain.Book, error) {
 	m := protojson.MarshalOptions{}
 	json, err := m.Marshal(in)
 	if err != nil {
 		return nil, fmt.Errorf("Error convert to JSON id: %s", in.Title)
 	}
 
-	err = r.client.Set(in.Title, json, 0).Err()
+	err = s.client.Set(ctx, in.Title, json, 0).Err()
 	if err != nil {
 		return nil, fmt.Errorf("Error update book by id: %s", in.Title)
 	}
@@ -81,6 +81,6 @@ func (r *Store) Update(ctx context.Context, in *domain.Book) (*domain.Book, erro
 }
 
 // Delete ...
-func (r *Store) Delete(ctx context.Context, id string) error {
+func (s *Store) Delete(ctx context.Context, id string) error {
 	panic("implement me")
 }
