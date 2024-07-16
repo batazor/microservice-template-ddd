@@ -9,7 +9,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-redis/redis/v9 v9.5.2
 	github.com/golang-migrate/migrate/v4 v4.15.2
-	github.com/google/wire v0.5.0
+	github.com/google/wire v0.6.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0
 	github.com/opentracing-contrib/go-grpc v0.0.0-20210225150812-73cb765af46e
