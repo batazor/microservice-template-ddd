@@ -22,7 +22,7 @@ require (
 	go.uber.org/atomic v1.10.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.57.0
-	google.golang.org/protobuf v1.30.0
+	google.golang.org/protobuf v1.34.2
 )
 
 require (
