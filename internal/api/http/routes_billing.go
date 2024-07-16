@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"google.golang.org/protobuf/encoding/protojson"
 
 	"microservice-template-ddd/internal/billing/infrastructure/rpc"

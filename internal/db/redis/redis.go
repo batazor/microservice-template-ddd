@@ -3,9 +3,8 @@ package redis
 import (
 	"context"
 
+	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
-
-	"github.com/go-redis/redis"
 )
 
 // Config ...
@@ -31,7 +30,7 @@ func (r *Store) Init(ctx context.Context) error {
 		DB:       0,  // use default DB
 	})
 
-	if _, err := r.client.Ping().Result(); err != nil {
+	if _, err := r.client.Ping(ctx).Result(); err != nil {
 		return err
 	}
 
