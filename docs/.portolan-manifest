@@ -1,0 +1,29 @@
+{
+  "markdown": [
+    "README.md",
+    "flows/README.md",
+    "flows/api-http-get-billing.md",
+    "flows/api-http-get-book.md",
+    "flows/api-http-get-user.md",
+    "flows/api-http-post-book-rent-bookid.md",
+    "llms-full.txt",
+    "llms.txt",
+    "microservice-template-ddd/README.md",
+    "microservice-template-ddd/api/README.md",
+    "microservice-template-ddd/billing/README.md",
+    "microservice-template-ddd/billing/aggregates/billing.md",
+    "microservice-template-ddd/book/README.md",
+    "microservice-template-ddd/book/aggregates/book.md",
+    "microservice-template-ddd/book/stores/redis.md",
+    "microservice-template-ddd/user/README.md",
+    "microservice-template-ddd/user/aggregates/user.md",
+    "modules/README.md",
+    "modules/internal-billing-domain.md",
+    "modules/internal-billing-infrastructure-rpc.md",
+    "modules/internal-book-domain.md",
+    "modules/internal-book-infrastructure-rpc.md",
+    "modules/internal-user-domain.md",
+    "modules/internal-user-infrastructure-rpc.md",
+    "types.md"
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "generatedAt": "2026-09-09T01:20:07Z",
+  "commit": "498f577",
+  "contexts": [
+    {
+      "id": "microservice-template-ddd",
+      "slug": "microservice-template-ddd",
+      "name": "",
+      "summary": "",
+      "services": [
+        {
+          "id": "microservice-template-ddd.book",
+          "slug": "book",
+          "name": "",
+          "repo": "",
+          "path": "",
+          "readme": "",
+          "provides": [
+            {
+              "id": "book_rpc.BookRPC",
+              "methods": [
+                {
+                  "name": "Get",
+                  "request": "GetRequest",
+                  "response": "GetResponse"
+                },
+                {
+                  "name": "Rent",
+                  "request": "RentRequest",
+                  "response": "RentResponse"
+                }
+              ],
+              "source": "internal/book/infrastructure/rpc/book_rpc.proto:9",
+              "messages": [
+                {
+                  "name": "GetRequest",
+                  "fields": [
+                    {
+                      "name": "Id",
+                      "type": "string",
+                      "doc": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "GetResponse",
+                  "fields": [
+                    {
+                      "name": "Book",
+                      "type": "Book",
+                      "doc": "",
+                      "ref": "Book"
+                    }
+                  ]
+                },
+                {
+                  "name": "RentRequest",
+                  "fields": [
+                    {
+                      "name": "Id",
+                      "type": "string",
+                      "doc": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "RentResponse",
+                  "fields": [
+                    {
+                      "name": "Book",
+                      "type": "Book",
+                      "doc": "",
+                      "ref": "Book"
+                    }
+                  ]
+                },
+                {
+                  "name": "Book",
+                  "fields": [
+                    {
+                      "name": "Title",
+                      "type": "string",
+                      "doc": ""
+                    },
+                    {
+                      "name": "Author",
+                      "type": "string",
+                      "doc": ""
+                    },
+                    {
+                      "name": "IsRent",
+                      "type": "bool",
+                      "doc": ""
+                    }
+                  ]
+                }
+              ],
+              "module": "local:internal/book/infrastructure/rpc"
+            }
+          ],
+          "consumes": [],
+          "aggregates": [],
+          "modules": [
+            "local:internal/book/domain",
+            "local:internal/book/infrastructure/rpc"
+          ]
+        }
+      ]
+    }
+  ],
+  "defs": {
+    "Book": {
+      "fields": [
+        {
+          "name": "Title",
+          "type": "string",
+          "doc": ""
+        },
+        {
+          "name": "Author",
+          "type": "string",
+          "doc": ""
+        },
+        {
+          "name": "IsRent",
+          "type": "bool",
+          "doc": ""
+        }
+      ]
+    }
+  },
+  "flows": [],
+  "adrs": [],
+  "modules": [
+    {
+      "id": "local:internal/book/domain",
+      "slug": "internal-book-domain",
+      "name": "internal/book/domain",
+      "owner": "microservice-template-ddd.book",
+      "packages": [
+        "book"
+      ],
+      "files": [
+        "book.proto"
+      ],
+      "source": "internal/book/domain"
+    },
+    {
+      "id": "local:internal/book/infrastructure/rpc",
+      "slug": "internal-book-infrastructure-rpc",
+      "name": "internal/book/infrastructure/rpc",
+      "owner": "microservice-template-ddd.book",
+      "packages": [
+        "book_rpc"
+      ],
+      "files": [
+        "book_rpc.proto"
+      ],
+      "source": "internal/book/infrastructure/rpc"
+    }
+  ]
+}

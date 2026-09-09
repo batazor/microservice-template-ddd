@@ -1,0 +1,686 @@
+{
+  "generatedAt": "2026-09-09T01:20:07Z",
+  "commit": "498f577",
+  "contexts": [
+    {
+      "id": "microservice-template-ddd",
+      "slug": "microservice-template-ddd",
+      "name": "Microservice Template Ddd",
+      "summary": "",
+      "services": [
+        {
+          "id": "microservice-template-ddd.api",
+          "slug": "api",
+          "name": "API",
+          "repo": "microservice-template-ddd",
+          "path": ".",
+          "readme": "# microservice-template by ddd\n\nDDD example use micriservices.\n\n### Getting Started\n\n```\n# Get help\nmake help\n\n# Run services\nmake run\n\n# Stop services\nmake down\n```\n\n##### Prerequisites\n\n+ docker\n+ docker-compose\n+ protoc 3.7.1+\n\n### Service\n\n| Name        | Port  | Description Endpoint          |\n|-------------|-------|-------------------------------|\n| traefik     | 80    | HTTP                          |\n| traefik     | 443   | HTTPS                         |\n| traefik     | 8060  | Dashboard                     |\n| api         | 7070  | HTTP API                      |\n| user        | 50051 | gRPC Server                   |\n| billing     | 50051 | gRPC Server                   |\n\n\n### Architecture\n\n```\n.\n├── /cmd/                       # Run service endpoint\n│   ├── /user/                  # User service\n│   ├── /book/                  # Book service\n│   └── /billing/               # Billing service\n├── /pkg/                       # The public source code of the application\n├── /internal/                  # The private source code of the application\n│   └── /bookService/           # Book service source code\n│       ├── /useCases/          # Write business logic [./application]\n│       ├── /domian/            # Entity struct that represent mapping to data model\n│       └── /infrastructure/    # Solves backend technical topics\n│           ├── /store/         # Store delivery [../repository]\n│           ├── /rpc/           # RPC delivery\n│           └── /mq/            # MQ delivery\n├── /ops/                       # All infrastructure configuration for IoC\n├── .gitignore                  # A gitignore file specifies untracked files\n└── README.md                   # README\n```\n\n### HTTP API\n\n+ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for\n  test HTTP API\n\n### Request example\n\n![example](./docs/request.png)\n\n##### Opentracing example request\n\n![example](./docs/tracer1.png)\n![example](./docs/tracer2.png)",
+          "provides": [],
+          "consumes": [
+            {
+              "id": "billing_rpc.BillingRPC/Get",
+              "peer": "microservice-template-ddd.billing",
+              "status": "declared",
+              "source": "internal/billing/infrastructure/rpc/billing_rpc_grpc.pb.go"
+            },
+            {
+              "id": "book_rpc.BookRPC/Get",
+              "peer": "microservice-template-ddd.book",
+              "status": "declared",
+              "source": "internal/book/infrastructure/rpc/book_rpc_grpc.pb.go"
+            },
+            {
+              "id": "book_rpc.BookRPC/Rent",
+              "peer": "microservice-template-ddd.book",
+              "status": "declared",
+              "source": "internal/book/infrastructure/rpc/book_rpc_grpc.pb.go"
+            },
+            {
+              "id": "user_rpc.UserRPC/Get",
+              "peer": "microservice-template-ddd.user",
+              "status": "declared",
+              "source": "internal/user/infrastructure/rpc/user_rpc_grpc.pb.go"
+            }
+          ],
+          "aggregates": []
+        }
+      ]
+    }
+  ],
+  "defs": {},
+  "flows": [
+    {
+      "id": "flow.api-http-get-billing",
+      "slug": "api-http-get-billing",
+      "name": "GET /billing/",
+      "summary": "Source-derived http execution path for `GET /billing/`.",
+      "source": "internal/api/http/routes_billing.go",
+      "trigger": {
+        "kind": "http",
+        "label": "GET /billing/",
+        "confidence": "high"
+      },
+      "owner": "microservice-template-ddd",
+      "participants": [
+        {
+          "id": "microservice-template-ddd.api",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "client",
+          "kind": "actor",
+          "context": null
+        },
+        {
+          "id": "microservice-template-ddd.billing",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        }
+      ],
+      "steps": [
+        {
+          "type": "step",
+          "id": "s1",
+          "from": "client",
+          "to": "microservice-template-ddd.api",
+          "kind": "rpc",
+          "label": "GET /billing/",
+          "status": "declared",
+          "line": "internal/api/http/routes_billing.go:18"
+        },
+        {
+          "type": "step",
+          "id": "s2",
+          "from": "microservice-template-ddd.api",
+          "to": "microservice-template-ddd.billing",
+          "kind": "rpc",
+          "ref": "billing_rpc.BillingRPC/Get",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/api/http/routes_billing.go:33",
+          "continuesAt": "internal/billing/infrastructure/rpc:BillingServer.Get"
+        },
+        {
+          "type": "alt",
+          "id": "alt4",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s3",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_billing.go:36",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200.",
+                    "source": "internal/api/http/routes_billing.go:36",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "alt",
+          "id": "alt6",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s5",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_billing.go:44",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.",
+                    "source": "internal/api/http/routes_billing.go:44",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "s7",
+          "from": "microservice-template-ddd.api",
+          "to": "client",
+          "kind": "response",
+          "label": "200 · HTTP response",
+          "status": "declared",
+          "line": "internal/api/http/routes_billing.go:47",
+          "replyTo": "s1",
+          "http": {
+            "status": 200,
+            "contentType": "application/json",
+            "bodyRef": "billing_rpc.BillingRPC/Get",
+            "encoding": "protojson",
+            "outcome": "success",
+            "source": "internal/api/http/routes_billing.go:47"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flow.api-http-get-book",
+      "slug": "api-http-get-book",
+      "name": "GET /book/",
+      "summary": "Source-derived http execution path for `GET /book/`.",
+      "source": "internal/api/http/routes_book.go",
+      "trigger": {
+        "kind": "http",
+        "label": "GET /book/",
+        "confidence": "high"
+      },
+      "owner": "microservice-template-ddd",
+      "participants": [
+        {
+          "id": "microservice-template-ddd.api",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "client",
+          "kind": "actor",
+          "context": null
+        },
+        {
+          "id": "microservice-template-ddd.book",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        }
+      ],
+      "steps": [
+        {
+          "type": "step",
+          "id": "s1",
+          "from": "client",
+          "to": "microservice-template-ddd.api",
+          "kind": "rpc",
+          "label": "GET /book/",
+          "status": "declared",
+          "line": "internal/api/http/routes_book.go:18"
+        },
+        {
+          "type": "step",
+          "id": "s2",
+          "from": "microservice-template-ddd.api",
+          "to": "microservice-template-ddd.book",
+          "kind": "rpc",
+          "ref": "book_rpc.BookRPC/Get",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/api/http/routes_book.go:36",
+          "continuesAt": "internal/book/infrastructure/rpc:BookServer.Get"
+        },
+        {
+          "type": "alt",
+          "id": "alt4",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s3",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_book.go:39",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200.",
+                    "source": "internal/api/http/routes_book.go:39",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "alt",
+          "id": "alt6",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s5",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_book.go:47",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.",
+                    "source": "internal/api/http/routes_book.go:47",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "s7",
+          "from": "microservice-template-ddd.api",
+          "to": "client",
+          "kind": "response",
+          "label": "200 · HTTP response",
+          "status": "declared",
+          "line": "internal/api/http/routes_book.go:50",
+          "replyTo": "s1",
+          "http": {
+            "status": 200,
+            "contentType": "application/json",
+            "bodyRef": "book_rpc.BookRPC/Get",
+            "encoding": "protojson",
+            "outcome": "success",
+            "source": "internal/api/http/routes_book.go:50"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flow.api-http-get-user",
+      "slug": "api-http-get-user",
+      "name": "GET /user/",
+      "summary": "Source-derived http execution path for `GET /user/`.",
+      "source": "internal/api/http/routes_user.go",
+      "trigger": {
+        "kind": "http",
+        "label": "GET /user/",
+        "confidence": "high"
+      },
+      "owner": "microservice-template-ddd",
+      "participants": [
+        {
+          "id": "microservice-template-ddd.api",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "client",
+          "kind": "actor",
+          "context": null
+        },
+        {
+          "id": "microservice-template-ddd.user",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        }
+      ],
+      "steps": [
+        {
+          "type": "step",
+          "id": "s1",
+          "from": "client",
+          "to": "microservice-template-ddd.api",
+          "kind": "rpc",
+          "label": "GET /user/",
+          "status": "declared",
+          "line": "internal/api/http/routes_user.go:18"
+        },
+        {
+          "type": "step",
+          "id": "s2",
+          "from": "microservice-template-ddd.api",
+          "to": "microservice-template-ddd.user",
+          "kind": "rpc",
+          "ref": "user_rpc.UserRPC/Get",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/api/http/routes_user.go:33",
+          "continuesAt": "internal/user/infrastructure/rpc:UserServer.Get"
+        },
+        {
+          "type": "alt",
+          "id": "alt4",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s3",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_user.go:36",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200.",
+                    "source": "internal/api/http/routes_user.go:36",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "alt",
+          "id": "alt6",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s5",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_user.go:44",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.",
+                    "source": "internal/api/http/routes_user.go:44",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "s7",
+          "from": "microservice-template-ddd.api",
+          "to": "client",
+          "kind": "response",
+          "label": "200 · HTTP response",
+          "status": "declared",
+          "line": "internal/api/http/routes_user.go:47",
+          "replyTo": "s1",
+          "http": {
+            "status": 200,
+            "contentType": "application/json",
+            "bodyRef": "user_rpc.UserRPC/Get",
+            "encoding": "protojson",
+            "outcome": "success",
+            "source": "internal/api/http/routes_user.go:47"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flow.api-http-post-book-rent-bookid",
+      "slug": "api-http-post-book-rent-bookid",
+      "name": "POST /book/rent/{bookId}",
+      "summary": "Source-derived http execution path for `POST /book/rent/{bookId}`.",
+      "source": "internal/api/http/routes_book.go",
+      "trigger": {
+        "kind": "http",
+        "label": "POST /book/rent/{bookId}",
+        "confidence": "high"
+      },
+      "owner": "microservice-template-ddd",
+      "participants": [
+        {
+          "id": "microservice-template-ddd.api",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "client",
+          "kind": "actor",
+          "context": null
+        },
+        {
+          "id": "microservice-template-ddd.book",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        }
+      ],
+      "steps": [
+        {
+          "type": "step",
+          "id": "s1",
+          "from": "client",
+          "to": "microservice-template-ddd.api",
+          "kind": "rpc",
+          "label": "POST /book/rent/{bookId}",
+          "status": "declared",
+          "line": "internal/api/http/routes_book.go:23"
+        },
+        {
+          "type": "step",
+          "id": "s2",
+          "from": "microservice-template-ddd.api",
+          "to": "microservice-template-ddd.book",
+          "kind": "rpc",
+          "ref": "book_rpc.BookRPC/Rent",
+          "label": "Rent",
+          "status": "declared",
+          "line": "internal/api/http/routes_book.go:65",
+          "continuesAt": "internal/book/infrastructure/rpc:BookServer.Rent"
+        },
+        {
+          "type": "alt",
+          "id": "alt4",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s3",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_book.go:68",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200.",
+                    "source": "internal/api/http/routes_book.go:68",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "alt",
+          "id": "alt6",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s5",
+                  "from": "microservice-template-ddd.api",
+                  "to": "client",
+                  "kind": "response",
+                  "label": "200 · Error",
+                  "status": "declared",
+                  "line": "internal/api/http/routes_book.go:76",
+                  "replyTo": "s1",
+                  "http": {
+                    "status": 200,
+                    "contentType": "application/json",
+                    "body": "Error",
+                    "encoding": "json",
+                    "outcome": "error",
+                    "warning": "Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.",
+                    "source": "internal/api/http/routes_book.go:76",
+                    "fields": [
+                      {
+                        "name": "error",
+                        "type": "string",
+                        "doc": ""
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "s7",
+          "from": "microservice-template-ddd.api",
+          "to": "client",
+          "kind": "response",
+          "label": "200 · HTTP response",
+          "status": "declared",
+          "line": "internal/api/http/routes_book.go:79",
+          "replyTo": "s1",
+          "http": {
+            "status": 200,
+            "contentType": "application/json",
+            "bodyRef": "book_rpc.BookRPC/Rent",
+            "encoding": "protojson",
+            "outcome": "success",
+            "source": "internal/api/http/routes_book.go:79"
+          }
+        }
+      ]
+    }
+  ],
+  "adrs": []
+}

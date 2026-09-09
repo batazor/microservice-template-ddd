@@ -1,0 +1,305 @@
+{
+  "generatedAt": "2026-09-09T01:20:07Z",
+  "commit": "498f577",
+  "contexts": [
+    {
+      "id": "microservice-template-ddd",
+      "slug": "microservice-template-ddd",
+      "name": "Microservice Template Ddd",
+      "summary": "",
+      "services": [
+        {
+          "id": "microservice-template-ddd.book",
+          "slug": "book",
+          "name": "Book",
+          "repo": "microservice-template-ddd",
+          "path": ".",
+          "readme": "# microservice-template by ddd\n\nDDD example use micriservices.\n\n### Getting Started\n\n```\n# Get help\nmake help\n\n# Run services\nmake run\n\n# Stop services\nmake down\n```\n\n##### Prerequisites\n\n+ docker\n+ docker-compose\n+ protoc 3.7.1+\n\n### Service\n\n| Name        | Port  | Description Endpoint          |\n|-------------|-------|-------------------------------|\n| traefik     | 80    | HTTP                          |\n| traefik     | 443   | HTTPS                         |\n| traefik     | 8060  | Dashboard                     |\n| api         | 7070  | HTTP API                      |\n| user        | 50051 | gRPC Server                   |\n| billing     | 50051 | gRPC Server                   |\n\n\n### Architecture\n\n```\n.\n├── /cmd/                       # Run service endpoint\n│   ├── /user/                  # User service\n│   ├── /book/                  # Book service\n│   └── /billing/               # Billing service\n├── /pkg/                       # The public source code of the application\n├── /internal/                  # The private source code of the application\n│   └── /bookService/           # Book service source code\n│       ├── /useCases/          # Write business logic [./application]\n│       ├── /domian/            # Entity struct that represent mapping to data model\n│       └── /infrastructure/    # Solves backend technical topics\n│           ├── /store/         # Store delivery [../repository]\n│           ├── /rpc/           # RPC delivery\n│           └── /mq/            # MQ delivery\n├── /ops/                       # All infrastructure configuration for IoC\n├── .gitignore                  # A gitignore file specifies untracked files\n└── README.md                   # README\n```\n\n### HTTP API\n\n+ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for\n  test HTTP API\n\n### Request example\n\n![example](./docs/request.png)\n\n##### Opentracing example request\n\n![example](./docs/tracer1.png)\n![example](./docs/tracer2.png)",
+          "provides": [],
+          "consumes": [
+            {
+              "id": "billing_rpc.BillingRPC/Get",
+              "peer": "microservice-template-ddd.billing",
+              "status": "declared",
+              "source": "internal/billing/infrastructure/rpc/billing_rpc_grpc.pb.go"
+            },
+            {
+              "id": "user_rpc.UserRPC/Get",
+              "peer": "microservice-template-ddd.user",
+              "status": "declared",
+              "source": "internal/user/infrastructure/rpc/user_rpc_grpc.pb.go"
+            }
+          ],
+          "aggregates": [
+            {
+              "id": "microservice-template-ddd.book.book",
+              "slug": "book",
+              "name": "Book",
+              "readme": "",
+              "root": "Book",
+              "entities": [
+                {
+                  "id": "microservice-template-ddd.book.book.book",
+                  "slug": "book",
+                  "name": "Book",
+                  "doc": "",
+                  "fields": [
+                    {
+                      "name": "state",
+                      "type": "protoimpl.MessageState",
+                      "doc": ""
+                    },
+                    {
+                      "name": "sizeCache",
+                      "type": "protoimpl.SizeCache",
+                      "doc": ""
+                    },
+                    {
+                      "name": "unknownFields",
+                      "type": "protoimpl.UnknownFields",
+                      "doc": ""
+                    },
+                    {
+                      "name": "Title",
+                      "type": "string",
+                      "doc": ""
+                    },
+                    {
+                      "name": "Author",
+                      "type": "string",
+                      "doc": ""
+                    },
+                    {
+                      "name": "IsRent",
+                      "type": "bool",
+                      "doc": ""
+                    }
+                  ]
+                }
+              ],
+              "valueObjects": [],
+              "operations": [],
+              "events": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "defs": {},
+  "flows": [
+    {
+      "id": "flow.book-grpc-book-rpc-bookrpc-get",
+      "slug": "book-grpc-book-rpc-bookrpc-get",
+      "name": "book_rpc.BookRPC/Get",
+      "summary": "Source-derived grpc execution path for `book_rpc.BookRPC/Get`.",
+      "source": "internal/book/infrastructure/rpc/book.go",
+      "trigger": {
+        "kind": "unproven",
+        "label": "book_rpc.BookRPC/Get",
+        "confidence": "high"
+      },
+      "entrypoint": "internal/book/infrastructure/rpc:BookServer.Get",
+      "owner": "microservice-template-ddd",
+      "participants": [
+        {
+          "id": "microservice-template-ddd.book",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "book-redis",
+          "kind": "store",
+          "context": "microservice-template-ddd"
+        }
+      ],
+      "steps": [
+        {
+          "type": "step",
+          "id": "s1",
+          "from": "microservice-template-ddd.book",
+          "to": "microservice-template-ddd.book",
+          "kind": "call",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/book/infrastructure/rpc/book.go:8"
+        },
+        {
+          "type": "step",
+          "id": "s2",
+          "from": "microservice-template-ddd.book",
+          "to": "book-redis",
+          "kind": "call",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/book/application/rent.go:36",
+          "storeAccess": {
+            "store": "microservice-template-ddd.book.redis",
+            "method": "Get"
+          }
+        },
+        {
+          "type": "alt",
+          "id": "alt4",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s3",
+                  "from": "microservice-template-ddd.book",
+                  "to": "book-redis",
+                  "kind": "call",
+                  "label": "Add",
+                  "status": "declared",
+                  "line": "internal/book/application/rent.go:39",
+                  "storeAccess": {
+                    "store": "microservice-template-ddd.book.redis",
+                    "method": "Add"
+                  }
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flow.book-grpc-book-rpc-bookrpc-rent",
+      "slug": "book-grpc-book-rpc-bookrpc-rent",
+      "name": "book_rpc.BookRPC/Rent",
+      "summary": "Source-derived grpc execution path for `book_rpc.BookRPC/Rent`.",
+      "source": "internal/book/infrastructure/rpc/rent.go",
+      "trigger": {
+        "kind": "unproven",
+        "label": "book_rpc.BookRPC/Rent",
+        "confidence": "high"
+      },
+      "entrypoint": "internal/book/infrastructure/rpc:BookServer.Rent",
+      "owner": "microservice-template-ddd",
+      "participants": [
+        {
+          "id": "microservice-template-ddd.book",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "microservice-template-ddd.user",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "microservice-template-ddd.billing",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        },
+        {
+          "id": "book-redis",
+          "kind": "store",
+          "context": "microservice-template-ddd"
+        }
+      ],
+      "steps": [
+        {
+          "type": "step",
+          "id": "s1",
+          "from": "microservice-template-ddd.book",
+          "to": "microservice-template-ddd.book",
+          "kind": "call",
+          "label": "Rent",
+          "status": "declared",
+          "line": "internal/book/infrastructure/rpc/rent.go:8"
+        },
+        {
+          "type": "step",
+          "id": "s2",
+          "from": "microservice-template-ddd.book",
+          "to": "microservice-template-ddd.user",
+          "kind": "rpc",
+          "ref": "user_rpc.UserRPC/Get",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/book/application/rent.go:53",
+          "continuesAt": "internal/user/infrastructure/rpc:UserServer.Get"
+        },
+        {
+          "type": "step",
+          "id": "s3",
+          "from": "microservice-template-ddd.book",
+          "to": "microservice-template-ddd.billing",
+          "kind": "rpc",
+          "ref": "billing_rpc.BillingRPC/Get",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/book/application/rent.go:59",
+          "continuesAt": "internal/billing/infrastructure/rpc:BillingServer.Get"
+        },
+        {
+          "type": "step",
+          "id": "s4",
+          "from": "microservice-template-ddd.book",
+          "to": "book-redis",
+          "kind": "call",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/book/application/rent.go:36",
+          "storeAccess": {
+            "store": "microservice-template-ddd.book.redis",
+            "method": "Get"
+          }
+        },
+        {
+          "type": "alt",
+          "id": "alt6",
+          "branches": [
+            {
+              "title": "err != nil",
+              "steps": [
+                {
+                  "type": "step",
+                  "id": "s5",
+                  "from": "microservice-template-ddd.book",
+                  "to": "book-redis",
+                  "kind": "call",
+                  "label": "Add",
+                  "status": "declared",
+                  "line": "internal/book/application/rent.go:39",
+                  "storeAccess": {
+                    "store": "microservice-template-ddd.book.redis",
+                    "method": "Add"
+                  }
+                }
+              ],
+              "terminal": true
+            },
+            {
+              "title": "otherwise",
+              "steps": []
+            }
+          ]
+        },
+        {
+          "type": "step",
+          "id": "s7",
+          "from": "microservice-template-ddd.book",
+          "to": "book-redis",
+          "kind": "call",
+          "label": "Update",
+          "status": "declared",
+          "line": "internal/book/application/rent.go:76",
+          "storeAccess": {
+            "store": "microservice-template-ddd.book.redis",
+            "method": "Update"
+          }
+        }
+      ]
+    }
+  ],
+  "adrs": []
+}

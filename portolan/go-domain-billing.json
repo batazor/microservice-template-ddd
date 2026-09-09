@@ -1,0 +1,103 @@
+{
+  "generatedAt": "2026-09-09T01:20:07Z",
+  "commit": "498f577",
+  "contexts": [
+    {
+      "id": "microservice-template-ddd",
+      "slug": "microservice-template-ddd",
+      "name": "Microservice Template Ddd",
+      "summary": "",
+      "services": [
+        {
+          "id": "microservice-template-ddd.billing",
+          "slug": "billing",
+          "name": "Billing",
+          "repo": "microservice-template-ddd",
+          "path": ".",
+          "readme": "# microservice-template by ddd\n\nDDD example use micriservices.\n\n### Getting Started\n\n```\n# Get help\nmake help\n\n# Run services\nmake run\n\n# Stop services\nmake down\n```\n\n##### Prerequisites\n\n+ docker\n+ docker-compose\n+ protoc 3.7.1+\n\n### Service\n\n| Name        | Port  | Description Endpoint          |\n|-------------|-------|-------------------------------|\n| traefik     | 80    | HTTP                          |\n| traefik     | 443   | HTTPS                         |\n| traefik     | 8060  | Dashboard                     |\n| api         | 7070  | HTTP API                      |\n| user        | 50051 | gRPC Server                   |\n| billing     | 50051 | gRPC Server                   |\n\n\n### Architecture\n\n```\n.\n├── /cmd/                       # Run service endpoint\n│   ├── /user/                  # User service\n│   ├── /book/                  # Book service\n│   └── /billing/               # Billing service\n├── /pkg/                       # The public source code of the application\n├── /internal/                  # The private source code of the application\n│   └── /bookService/           # Book service source code\n│       ├── /useCases/          # Write business logic [./application]\n│       ├── /domian/            # Entity struct that represent mapping to data model\n│       └── /infrastructure/    # Solves backend technical topics\n│           ├── /store/         # Store delivery [../repository]\n│           ├── /rpc/           # RPC delivery\n│           └── /mq/            # MQ delivery\n├── /ops/                       # All infrastructure configuration for IoC\n├── .gitignore                  # A gitignore file specifies untracked files\n└── README.md                   # README\n```\n\n### HTTP API\n\n+ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for\n  test HTTP API\n\n### Request example\n\n![example](./docs/request.png)\n\n##### Opentracing example request\n\n![example](./docs/tracer1.png)\n![example](./docs/tracer2.png)",
+          "provides": [],
+          "consumes": [],
+          "aggregates": [
+            {
+              "id": "microservice-template-ddd.billing.billing",
+              "slug": "billing",
+              "name": "Billing",
+              "readme": "",
+              "root": "Billing",
+              "entities": [
+                {
+                  "id": "microservice-template-ddd.billing.billing.billing",
+                  "slug": "billing",
+                  "name": "Billing",
+                  "doc": "",
+                  "fields": [
+                    {
+                      "name": "state",
+                      "type": "protoimpl.MessageState",
+                      "doc": ""
+                    },
+                    {
+                      "name": "sizeCache",
+                      "type": "protoimpl.SizeCache",
+                      "doc": ""
+                    },
+                    {
+                      "name": "unknownFields",
+                      "type": "protoimpl.UnknownFields",
+                      "doc": ""
+                    },
+                    {
+                      "name": "Balance",
+                      "type": "float32",
+                      "doc": ""
+                    }
+                  ]
+                }
+              ],
+              "valueObjects": [],
+              "operations": [],
+              "events": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "defs": {},
+  "flows": [
+    {
+      "id": "flow.billing-grpc-billing-rpc-billingrpc-get",
+      "slug": "billing-grpc-billing-rpc-billingrpc-get",
+      "name": "billing_rpc.BillingRPC/Get",
+      "summary": "Source-derived grpc execution path for `billing_rpc.BillingRPC/Get`.",
+      "source": "internal/billing/infrastructure/rpc/grpc.go",
+      "trigger": {
+        "kind": "unproven",
+        "label": "billing_rpc.BillingRPC/Get",
+        "confidence": "high"
+      },
+      "entrypoint": "internal/billing/infrastructure/rpc:BillingServer.Get",
+      "owner": "microservice-template-ddd",
+      "participants": [
+        {
+          "id": "microservice-template-ddd.billing",
+          "kind": "service",
+          "context": "microservice-template-ddd"
+        }
+      ],
+      "steps": [
+        {
+          "type": "step",
+          "id": "s1",
+          "from": "microservice-template-ddd.billing",
+          "to": "microservice-template-ddd.billing",
+          "kind": "call",
+          "label": "Get",
+          "status": "declared",
+          "line": "internal/billing/infrastructure/rpc/grpc.go:46"
+        }
+      ]
+    }
+  ],
+  "adrs": []
+}

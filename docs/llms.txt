@@ -1,0 +1,45 @@
+# Microservice Template Ddd
+
+> Architecture catalog of Microservice Template Ddd: 1 bounded context, 4 services, 3 aggregates, 1 store, 6 schema modules, 4 flows and 0 decision records, read from the code, the specs and the traces of the estate.
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+Every link below is a markdown page beside this file. [llms-full.txt](llms-full.txt) is all of those pages in one file, in the order the site lists them.
+
+## Contexts
+
+- [Microservice Template Ddd](microservice-template-ddd/README.md)
+
+## Services
+
+- [API](microservice-template-ddd/api/README.md): in Microservice Template Ddd
+- [Billing](microservice-template-ddd/billing/README.md): in Microservice Template Ddd. Aggregates: Billing
+- [Book](microservice-template-ddd/book/README.md): in Microservice Template Ddd. Aggregates: Book
+- [User](microservice-template-ddd/user/README.md): in Microservice Template Ddd. Aggregates: User
+
+## Aggregates
+
+- [Billing](microservice-template-ddd/billing/aggregates/billing.md): in [Billing](microservice-template-ddd/billing/README.md). root `Billing`. 0 commands, 0 events
+- [Book](microservice-template-ddd/book/aggregates/book.md): in [Book](microservice-template-ddd/book/README.md). root `Book`. 0 commands, 0 events
+- [User](microservice-template-ddd/user/aggregates/user.md): in [User](microservice-template-ddd/user/README.md). root `User`. 0 commands, 0 events
+
+## Schema modules
+
+- [internal/billing/domain](modules/internal-billing-domain.md): schema module. published by [microservice-template-ddd.billing](microservice-template-ddd/billing/README.md). billing
+- [internal/billing/infrastructure/rpc](modules/internal-billing-infrastructure-rpc.md): schema module. published by [microservice-template-ddd.billing](microservice-template-ddd/billing/README.md). billing_rpc
+- [internal/book/domain](modules/internal-book-domain.md): schema module. published by [microservice-template-ddd.book](microservice-template-ddd/book/README.md). book
+- [internal/book/infrastructure/rpc](modules/internal-book-infrastructure-rpc.md): schema module. published by [microservice-template-ddd.book](microservice-template-ddd/book/README.md). book_rpc
+- [internal/user/domain](modules/internal-user-domain.md): schema module. published by [microservice-template-ddd.user](microservice-template-ddd/user/README.md). user
+- [internal/user/infrastructure/rpc](modules/internal-user-infrastructure-rpc.md): schema module. published by [microservice-template-ddd.user](microservice-template-ddd/user/README.md). user_rpc
+
+## Flows
+
+- [GET /billing/](flows/api-http-get-billing.md): owned by [microservice-template-ddd](microservice-template-ddd/README.md). Source-derived http execution path for `GET /billing/`. Source-backed cross-protocol continuations are included
+- [GET /book/](flows/api-http-get-book.md): owned by [microservice-template-ddd](microservice-template-ddd/README.md). Source-derived http execution path for `GET /book/`. Source-backed cross-protocol continuations are included
+- [GET /user/](flows/api-http-get-user.md): owned by [microservice-template-ddd](microservice-template-ddd/README.md). Source-derived http execution path for `GET /user/`. Source-backed cross-protocol continuations are included
+- [POST /book/rent/{bookId}](flows/api-http-post-book-rent-bookid.md): owned by [microservice-template-ddd](microservice-template-ddd/README.md). Source-derived http execution path for `POST /book/rent/{bookId}`. Source-backed cross-protocol continuations are included
+
+## Optional
+
+- [Shared types](types.md): types named by more than one aggregate, event or message
+- [book Redis](microservice-template-ddd/book/stores/redis.md): redis store of [Book](microservice-template-ddd/book/README.md). 2 key patterns

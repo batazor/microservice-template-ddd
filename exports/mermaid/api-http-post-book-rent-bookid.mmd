@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    participant p0 as microservice-template-ddd.api
+    actor p1 as client
+    participant p2 as microservice-template-ddd.book
+    participant p3 as microservice-template-ddd.user
+    participant p4 as microservice-template-ddd.billing
+    participant p5 as book-redis
+    p1->>p0: POST /book/rent/{bookId}
+    p0->>p2: Rent
+    p2->>p2: Rent
+    p2->>p3: Get
+    p3->>p3: Get
+    p3-->>p2: GetResponse
+    p2->>p4: Get
+    p4->>p4: Get
+    p4-->>p2: GetResponse
+    p2->>p5: Get
+    alt err != nil
+        p2->>p5: Add
+        p2-->>p0: RentResponse
+        Note over p0: flow ends here
+    else otherwise
+    end
+    p2->>p5: Update
+    p2-->>p0: RentResponse
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+        Note over p1: flow ends here
+    else otherwise
+    end
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+    else otherwise
+    end
+    p0-->>p1: 200 · RentResponse

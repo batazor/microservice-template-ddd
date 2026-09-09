@@ -1,0 +1,1549 @@
+*llms-full.txt: every page of Microservice Template Ddd, one after another. A page begins with a comment naming its file, and the links inside it are relative to that file's directory.*
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+<!-- README.md -->
+
+# Microservice Template Ddd
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+
+## Contexts
+
+| Context | Services |
+| --- | --- |
+| [Microservice Template Ddd](microservice-template-ddd/README.md) | [API](microservice-template-ddd/api/README.md), [Billing](microservice-template-ddd/billing/README.md), [Book](microservice-template-ddd/book/README.md), [User](microservice-template-ddd/user/README.md) |
+
+## Schema modules
+
+| Module | Publisher | Packages |
+| --- | --- | --- |
+| [internal/billing/domain](modules/internal-billing-domain.md) | [microservice-template-ddd.billing](microservice-template-ddd/billing/README.md) | 1 package |
+| [internal/billing/infrastructure/rpc](modules/internal-billing-infrastructure-rpc.md) | [microservice-template-ddd.billing](microservice-template-ddd/billing/README.md) | 1 package |
+| [internal/book/domain](modules/internal-book-domain.md) | [microservice-template-ddd.book](microservice-template-ddd/book/README.md) | 1 package |
+| [internal/book/infrastructure/rpc](modules/internal-book-infrastructure-rpc.md) | [microservice-template-ddd.book](microservice-template-ddd/book/README.md) | 1 package |
+| [internal/user/domain](modules/internal-user-domain.md) | [microservice-template-ddd.user](microservice-template-ddd/user/README.md) | 1 package |
+| [internal/user/infrastructure/rpc](modules/internal-user-infrastructure-rpc.md) | [microservice-template-ddd.user](microservice-template-ddd/user/README.md) | 1 package |
+
+## Flows
+
+| Flow | Owner | Summary |
+| --- | --- | --- |
+| [GET /billing/](flows/api-http-get-billing.md) | [microservice-template-ddd](microservice-template-ddd/README.md) | Source-derived http execution path for `GET /billing/`. Source-backed cross-protocol continuations are included. |
+| [GET /book/](flows/api-http-get-book.md) | [microservice-template-ddd](microservice-template-ddd/README.md) | Source-derived http execution path for `GET /book/`. Source-backed cross-protocol continuations are included. |
+| [GET /user/](flows/api-http-get-user.md) | [microservice-template-ddd](microservice-template-ddd/README.md) | Source-derived http execution path for `GET /user/`. Source-backed cross-protocol continuations are included. |
+| [POST /book/rent/{bookId}](flows/api-http-post-book-rent-bookid.md) | [microservice-template-ddd](microservice-template-ddd/README.md) | Source-derived http execution path for `POST /book/rent/{bookId}`. Source-backed cross-protocol continuations are included. |
+
+<!-- types.md -->
+
+# Shared types
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+Types named by more than one aggregate, event or message. A field that
+refers to one of these is knowably the same shape everywhere it appears.
+
+<a id="type-billing"></a>
+
+## Billing
+
+| Field | Type |
+| --- | --- |
+| `Balance` | `float` |
+
+<a id="type-book"></a>
+
+## Book
+
+| Field | Type |
+| --- | --- |
+| `Title` | `string` |
+| `Author` | `string` |
+| `IsRent` | `bool` |
+
+<a id="type-user"></a>
+
+## User
+
+| Field | Type |
+| --- | --- |
+| `Login` | `string` |
+| `Password` | `string` |
+| `Email` | `string` |
+| `IsActive` | `bool` |
+
+<!-- modules/README.md -->
+
+# Schema modules
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+| Module | Publisher | Packages |
+| --- | --- | --- |
+| [internal/billing/domain](internal-billing-domain.md) | [microservice-template-ddd.billing](../microservice-template-ddd/billing/README.md) | 1 package |
+| [internal/billing/infrastructure/rpc](internal-billing-infrastructure-rpc.md) | [microservice-template-ddd.billing](../microservice-template-ddd/billing/README.md) | 1 package |
+| [internal/book/domain](internal-book-domain.md) | [microservice-template-ddd.book](../microservice-template-ddd/book/README.md) | 1 package |
+| [internal/book/infrastructure/rpc](internal-book-infrastructure-rpc.md) | [microservice-template-ddd.book](../microservice-template-ddd/book/README.md) | 1 package |
+| [internal/user/domain](internal-user-domain.md) | [microservice-template-ddd.user](../microservice-template-ddd/user/README.md) | 1 package |
+| [internal/user/infrastructure/rpc](internal-user-infrastructure-rpc.md) | [microservice-template-ddd.user](../microservice-template-ddd/user/README.md) | 1 package |
+
+<!-- modules/internal-billing-domain.md -->
+
+# internal/billing/domain
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `local:internal/billing/domain`
+- **Publisher:** [microservice-template-ddd.billing](../microservice-template-ddd/billing/README.md)
+- **Source:** `internal/billing/domain`
+
+## Packages
+
+| Package |
+| --- |
+| `billing` |
+
+## Files
+
+| File |
+| --- |
+| `billing.proto` |
+
+## Used by
+
+| Service | Access |
+| --- | --- |
+| [Billing](../microservice-template-ddd/billing/README.md) | publishes |
+
+<!-- modules/internal-billing-infrastructure-rpc.md -->
+
+# internal/billing/infrastructure/rpc
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `local:internal/billing/infrastructure/rpc`
+- **Publisher:** [microservice-template-ddd.billing](../microservice-template-ddd/billing/README.md)
+- **Source:** `internal/billing/infrastructure/rpc`
+
+## Packages
+
+| Package |
+| --- |
+| `billing_rpc` |
+
+## Files
+
+| File |
+| --- |
+| `billing_rpc.proto` |
+
+## Used by
+
+| Service | Access |
+| --- | --- |
+| [Billing](../microservice-template-ddd/billing/README.md) | publishes |
+
+## Interfaces
+
+### billing_rpc.BillingRPC
+
+- **Source:** `internal/billing/infrastructure/rpc/billing_rpc.proto:13`
+- **Module:** [local:internal/billing/infrastructure/rpc](internal-billing-infrastructure-rpc.md)
+
+| Method | Request | Response |
+| --- | --- | --- |
+| `Get` | `GetRequest` | `GetResponse` |
+
+<a id="message-billing"></a>
+<details><summary>Billing</summary>
+
+| Field | Type |
+| --- | --- |
+| `Balance` | `float` |
+
+</details>
+
+<a id="message-getrequest"></a>
+<details><summary>GetRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-getresponse"></a>
+<details><summary>GetResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `Billing` | `Payload` |
+
+</details>
+
+<a id="message-payload"></a>
+<details><summary>Payload</summary>
+
+| Field | Type |
+| --- | --- |
+| `Billing` | [`Billing`](../types.md#type-billing) |
+
+</details>
+
+<!-- modules/internal-book-domain.md -->
+
+# internal/book/domain
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `local:internal/book/domain`
+- **Publisher:** [microservice-template-ddd.book](../microservice-template-ddd/book/README.md)
+- **Source:** `internal/book/domain`
+
+## Packages
+
+| Package |
+| --- |
+| `book` |
+
+## Files
+
+| File |
+| --- |
+| `book.proto` |
+
+## Used by
+
+| Service | Access |
+| --- | --- |
+| [Book](../microservice-template-ddd/book/README.md) | publishes |
+
+<!-- modules/internal-book-infrastructure-rpc.md -->
+
+# internal/book/infrastructure/rpc
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `local:internal/book/infrastructure/rpc`
+- **Publisher:** [microservice-template-ddd.book](../microservice-template-ddd/book/README.md)
+- **Source:** `internal/book/infrastructure/rpc`
+
+## Packages
+
+| Package |
+| --- |
+| `book_rpc` |
+
+## Files
+
+| File |
+| --- |
+| `book_rpc.proto` |
+
+## Used by
+
+| Service | Access |
+| --- | --- |
+| [Book](../microservice-template-ddd/book/README.md) | publishes |
+
+## Interfaces
+
+### book_rpc.BookRPC
+
+- **Source:** `internal/book/infrastructure/rpc/book_rpc.proto:9`
+- **Module:** [local:internal/book/infrastructure/rpc](internal-book-infrastructure-rpc.md)
+
+| Method | Request | Response |
+| --- | --- | --- |
+| `Get` | `GetRequest` | `GetResponse` |
+| `Rent` | `RentRequest` | `RentResponse` |
+
+<a id="message-book"></a>
+<details><summary>Book</summary>
+
+| Field | Type |
+| --- | --- |
+| `Title` | `string` |
+| `Author` | `string` |
+| `IsRent` | `bool` |
+
+</details>
+
+<a id="message-getrequest"></a>
+<details><summary>GetRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-getresponse"></a>
+<details><summary>GetResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `Book` | [`Book`](../types.md#type-book) |
+
+</details>
+
+<a id="message-rentrequest"></a>
+<details><summary>RentRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-rentresponse"></a>
+<details><summary>RentResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `Book` | [`Book`](../types.md#type-book) |
+
+</details>
+
+<!-- modules/internal-user-domain.md -->
+
+# internal/user/domain
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `local:internal/user/domain`
+- **Publisher:** [microservice-template-ddd.user](../microservice-template-ddd/user/README.md)
+- **Source:** `internal/user/domain`
+
+## Packages
+
+| Package |
+| --- |
+| `user` |
+
+## Files
+
+| File |
+| --- |
+| `user.proto` |
+
+## Used by
+
+| Service | Access |
+| --- | --- |
+| [User](../microservice-template-ddd/user/README.md) | publishes |
+
+<!-- modules/internal-user-infrastructure-rpc.md -->
+
+# internal/user/infrastructure/rpc
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `local:internal/user/infrastructure/rpc`
+- **Publisher:** [microservice-template-ddd.user](../microservice-template-ddd/user/README.md)
+- **Source:** `internal/user/infrastructure/rpc`
+
+## Packages
+
+| Package |
+| --- |
+| `user_rpc` |
+
+## Files
+
+| File |
+| --- |
+| `user_rpc.proto` |
+
+## Used by
+
+| Service | Access |
+| --- | --- |
+| [User](../microservice-template-ddd/user/README.md) | publishes |
+
+## Interfaces
+
+### user_rpc.UserRPC
+
+- **Source:** `internal/user/infrastructure/rpc/user_rpc.proto:9`
+- **Module:** [local:internal/user/infrastructure/rpc](internal-user-infrastructure-rpc.md)
+
+| Method | Request | Response |
+| --- | --- | --- |
+| `Get` | `GetRequest` | `GetResponse` |
+
+<a id="message-getrequest"></a>
+<details><summary>GetRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-getresponse"></a>
+<details><summary>GetResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `User` | [`User`](../types.md#type-user) |
+
+</details>
+
+<a id="message-user"></a>
+<details><summary>User</summary>
+
+| Field | Type |
+| --- | --- |
+| `Login` | `string` |
+| `Password` | `string` |
+| `Email` | `string` |
+| `IsActive` | `bool` |
+
+</details>
+
+<!-- microservice-template-ddd/README.md -->
+
+# Microservice Template Ddd
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd`
+- **Kind:** system
+
+## Components
+
+| Component | Kind | Technologies | Path |
+| --- | --- | --- | --- |
+| [API](api/README.md) | service | Go, Docker | `.` |
+| [Billing](billing/README.md) | service | Go, Docker | `.` |
+| [Book](book/README.md) | service | Go, Docker | `.` |
+| [User](user/README.md) | service | Go, Docker | `.` |
+
+<!-- microservice-template-ddd/api/README.md -->
+
+# API
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.api`
+- **Group:** [Microservice Template Ddd](../README.md)
+- **Repo:** [`microservice-template-ddd`](https://microservice-template-ddd)
+- **Path:** `./`
+- **Kind:** service
+- **Technologies:** Go, Docker
+
+## microservice-template by ddd
+
+DDD example use micriservices.
+
+#### Getting Started
+
+```
+# Get help
+make help
+
+# Run services
+make run
+
+# Stop services
+make down
+```
+
+###### Prerequisites
+
++ docker
++ docker-compose
++ protoc 3.7.1+
+
+#### Service
+
+| Name        | Port  | Description Endpoint          |
+|-------------|-------|-------------------------------|
+| traefik     | 80    | HTTP                          |
+| traefik     | 443   | HTTPS                         |
+| traefik     | 8060  | Dashboard                     |
+| api         | 7070  | HTTP API                      |
+| user        | 50051 | gRPC Server                   |
+| billing     | 50051 | gRPC Server                   |
+
+
+#### Architecture
+
+```
+.
+├── /cmd/                       # Run service endpoint
+│   ├── /user/                  # User service
+│   ├── /book/                  # Book service
+│   └── /billing/               # Billing service
+├── /pkg/                       # The public source code of the application
+├── /internal/                  # The private source code of the application
+│   └── /bookService/           # Book service source code
+│       ├── /useCases/          # Write business logic [./application]
+│       ├── /domian/            # Entity struct that represent mapping to data model
+│       └── /infrastructure/    # Solves backend technical topics
+│           ├── /store/         # Store delivery [../repository]
+│           ├── /rpc/           # RPC delivery
+│           └── /mq/            # MQ delivery
+├── /ops/                       # All infrastructure configuration for IoC
+├── .gitignore                  # A gitignore file specifies untracked files
+└── README.md                   # README
+```
+
+#### HTTP API
+
++ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for
+  test HTTP API
+
+#### Request example
+
+![example](./docs/request.png)
+
+###### Opentracing example request
+
+![example](./docs/tracer1.png)
+![example](./docs/tracer2.png)
+
+## Consumes
+
+| Call | Peer | Status | Source |
+| --- | --- | --- | --- |
+| `billing_rpc.BillingRPC/Get` | [microservice-template-ddd.billing](../billing/README.md) | declared | `internal/billing/infrastructure/rpc/billing_rpc_grpc.pb.go` |
+| `book_rpc.BookRPC/Get` | [microservice-template-ddd.book](../book/README.md) | declared | `internal/book/infrastructure/rpc/book_rpc_grpc.pb.go` |
+| `book_rpc.BookRPC/Rent` | [microservice-template-ddd.book](../book/README.md) | declared | `internal/book/infrastructure/rpc/book_rpc_grpc.pb.go` |
+| `user_rpc.UserRPC/Get` | [microservice-template-ddd.user](../user/README.md) | declared | `internal/user/infrastructure/rpc/user_rpc_grpc.pb.go` |
+
+## Commands
+
+| Run | Does | Body | Source |
+| --- | --- | --- | --- |
+| `make default` | — | — | `Makefile:8` |
+| `make Makefile` | — | — | `Makefile:9` |
+| `make help` | Display this help screen | `@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)` | `Makefile:25` |
+
+<!-- microservice-template-ddd/billing/README.md -->
+
+# Billing
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.billing`
+- **Group:** [Microservice Template Ddd](../README.md)
+- **Repo:** [`microservice-template-ddd`](https://microservice-template-ddd)
+- **Path:** `./`
+- **Kind:** service
+- **Technologies:** Go, Docker
+
+## microservice-template by ddd
+
+DDD example use micriservices.
+
+#### Getting Started
+
+```
+# Get help
+make help
+
+# Run services
+make run
+
+# Stop services
+make down
+```
+
+###### Prerequisites
+
++ docker
++ docker-compose
++ protoc 3.7.1+
+
+#### Service
+
+| Name        | Port  | Description Endpoint          |
+|-------------|-------|-------------------------------|
+| traefik     | 80    | HTTP                          |
+| traefik     | 443   | HTTPS                         |
+| traefik     | 8060  | Dashboard                     |
+| api         | 7070  | HTTP API                      |
+| user        | 50051 | gRPC Server                   |
+| billing     | 50051 | gRPC Server                   |
+
+
+#### Architecture
+
+```
+.
+├── /cmd/                       # Run service endpoint
+│   ├── /user/                  # User service
+│   ├── /book/                  # Book service
+│   └── /billing/               # Billing service
+├── /pkg/                       # The public source code of the application
+├── /internal/                  # The private source code of the application
+│   └── /bookService/           # Book service source code
+│       ├── /useCases/          # Write business logic [./application]
+│       ├── /domian/            # Entity struct that represent mapping to data model
+│       └── /infrastructure/    # Solves backend technical topics
+│           ├── /store/         # Store delivery [../repository]
+│           ├── /rpc/           # RPC delivery
+│           └── /mq/            # MQ delivery
+├── /ops/                       # All infrastructure configuration for IoC
+├── .gitignore                  # A gitignore file specifies untracked files
+└── README.md                   # README
+```
+
+#### HTTP API
+
++ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for
+  test HTTP API
+
+#### Request example
+
+![example](./docs/request.png)
+
+###### Opentracing example request
+
+![example](./docs/tracer1.png)
+![example](./docs/tracer2.png)
+
+## Aggregates
+
+| Aggregate | Root | Commands | Queries | Events |
+| --- | --- | --- | --- | --- |
+| [Billing](aggregates/billing.md) | `Billing` | 0 commands | 0 queries | 0 events |
+
+## Provides
+
+### billing_rpc.BillingRPC
+
+- **Source:** `internal/billing/infrastructure/rpc/billing_rpc.proto:13`
+- **Module:** [local:internal/billing/infrastructure/rpc](../../modules/internal-billing-infrastructure-rpc.md)
+
+| Method | Request | Response |
+| --- | --- | --- |
+| `Get` | `GetRequest` | `GetResponse` |
+
+<a id="message-billing"></a>
+<details><summary>Billing</summary>
+
+| Field | Type |
+| --- | --- |
+| `Balance` | `float` |
+
+</details>
+
+<a id="message-getrequest"></a>
+<details><summary>GetRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-getresponse"></a>
+<details><summary>GetResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `Billing` | `Payload` |
+
+</details>
+
+<a id="message-payload"></a>
+<details><summary>Payload</summary>
+
+| Field | Type |
+| --- | --- |
+| `Billing` | [`Billing`](../../types.md#type-billing) |
+
+</details>
+
+## Schema modules
+
+| Module | Access | Packages |
+| --- | --- | --- |
+| [internal/billing/domain](../../modules/internal-billing-domain.md) | publishes | billing |
+| [internal/billing/infrastructure/rpc](../../modules/internal-billing-infrastructure-rpc.md) | publishes | billing_rpc |
+
+## Commands
+
+| Run | Does | Body | Source |
+| --- | --- | --- | --- |
+| `make default` | — | — | `Makefile:8` |
+| `make Makefile` | — | — | `Makefile:9` |
+| `make help` | Display this help screen | `@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)` | `Makefile:25` |
+
+<!-- microservice-template-ddd/billing/aggregates/billing.md -->
+
+# Billing
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.billing.billing`
+- **Service:** [Billing](../README.md)
+- **Root:** `Billing`
+
+## Entities
+
+### Billing — aggregate root
+
+| Field | Type |
+| --- | --- |
+| `state` | `protoimpl.MessageState` |
+| `sizeCache` | `protoimpl.SizeCache` |
+| `unknownFields` | `protoimpl.UnknownFields` |
+| `Balance` | `float32` |
+
+<!-- microservice-template-ddd/book/README.md -->
+
+# Book
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.book`
+- **Group:** [Microservice Template Ddd](../README.md)
+- **Repo:** [`microservice-template-ddd`](https://microservice-template-ddd)
+- **Path:** `./`
+- **Kind:** service
+- **Technologies:** Go, Docker
+
+## microservice-template by ddd
+
+DDD example use micriservices.
+
+#### Getting Started
+
+```
+# Get help
+make help
+
+# Run services
+make run
+
+# Stop services
+make down
+```
+
+###### Prerequisites
+
++ docker
++ docker-compose
++ protoc 3.7.1+
+
+#### Service
+
+| Name        | Port  | Description Endpoint          |
+|-------------|-------|-------------------------------|
+| traefik     | 80    | HTTP                          |
+| traefik     | 443   | HTTPS                         |
+| traefik     | 8060  | Dashboard                     |
+| api         | 7070  | HTTP API                      |
+| user        | 50051 | gRPC Server                   |
+| billing     | 50051 | gRPC Server                   |
+
+
+#### Architecture
+
+```
+.
+├── /cmd/                       # Run service endpoint
+│   ├── /user/                  # User service
+│   ├── /book/                  # Book service
+│   └── /billing/               # Billing service
+├── /pkg/                       # The public source code of the application
+├── /internal/                  # The private source code of the application
+│   └── /bookService/           # Book service source code
+│       ├── /useCases/          # Write business logic [./application]
+│       ├── /domian/            # Entity struct that represent mapping to data model
+│       └── /infrastructure/    # Solves backend technical topics
+│           ├── /store/         # Store delivery [../repository]
+│           ├── /rpc/           # RPC delivery
+│           └── /mq/            # MQ delivery
+├── /ops/                       # All infrastructure configuration for IoC
+├── .gitignore                  # A gitignore file specifies untracked files
+└── README.md                   # README
+```
+
+#### HTTP API
+
++ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for
+  test HTTP API
+
+#### Request example
+
+![example](./docs/request.png)
+
+###### Opentracing example request
+
+![example](./docs/tracer1.png)
+![example](./docs/tracer2.png)
+
+## Aggregates
+
+| Aggregate | Root | Commands | Queries | Events |
+| --- | --- | --- | --- | --- |
+| [Book](aggregates/book.md) | `Book` | 0 commands | 0 queries | 0 events |
+
+## Provides
+
+### book_rpc.BookRPC
+
+- **Source:** `internal/book/infrastructure/rpc/book_rpc.proto:9`
+- **Module:** [local:internal/book/infrastructure/rpc](../../modules/internal-book-infrastructure-rpc.md)
+
+| Method | Request | Response |
+| --- | --- | --- |
+| `Get` | `GetRequest` | `GetResponse` |
+| `Rent` | `RentRequest` | `RentResponse` |
+
+<a id="message-book"></a>
+<details><summary>Book</summary>
+
+| Field | Type |
+| --- | --- |
+| `Title` | `string` |
+| `Author` | `string` |
+| `IsRent` | `bool` |
+
+</details>
+
+<a id="message-getrequest"></a>
+<details><summary>GetRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-getresponse"></a>
+<details><summary>GetResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `Book` | [`Book`](../../types.md#type-book) |
+
+</details>
+
+<a id="message-rentrequest"></a>
+<details><summary>RentRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-rentresponse"></a>
+<details><summary>RentResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `Book` | [`Book`](../../types.md#type-book) |
+
+</details>
+
+## Consumes
+
+| Call | Peer | Status | Source |
+| --- | --- | --- | --- |
+| `billing_rpc.BillingRPC/Get` | [microservice-template-ddd.billing](../billing/README.md) | declared | `internal/billing/infrastructure/rpc/billing_rpc_grpc.pb.go` |
+| `user_rpc.UserRPC/Get` | [microservice-template-ddd.user](../user/README.md) | declared | `internal/user/infrastructure/rpc/user_rpc_grpc.pb.go` |
+
+## Schema modules
+
+| Module | Access | Packages |
+| --- | --- | --- |
+| [internal/book/domain](../../modules/internal-book-domain.md) | publishes | book |
+| [internal/book/infrastructure/rpc](../../modules/internal-book-infrastructure-rpc.md) | publishes | book_rpc |
+
+## Stores
+
+| Store | Kind | Access | Schema |
+| --- | --- | --- | --- |
+| [book Redis](stores/redis.md) | redis | owns | 2 key patterns |
+
+## Commands
+
+| Run | Does | Body | Source |
+| --- | --- | --- | --- |
+| `make default` | — | — | `Makefile:8` |
+| `make Makefile` | — | — | `Makefile:9` |
+| `make help` | Display this help screen | `@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)` | `Makefile:25` |
+
+<!-- microservice-template-ddd/book/aggregates/book.md -->
+
+# Book
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.book.book`
+- **Service:** [Book](../README.md)
+- **Root:** `Book`
+
+## Entities
+
+### Book — aggregate root
+
+| Field | Type |
+| --- | --- |
+| `state` | `protoimpl.MessageState` |
+| `sizeCache` | `protoimpl.SizeCache` |
+| `unknownFields` | `protoimpl.UnknownFields` |
+| `Title` | `string` |
+| `Author` | `string` |
+| `IsRent` | `bool` |
+
+<!-- microservice-template-ddd/user/README.md -->
+
+# User
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.user`
+- **Group:** [Microservice Template Ddd](../README.md)
+- **Repo:** [`microservice-template-ddd`](https://microservice-template-ddd)
+- **Path:** `./`
+- **Kind:** service
+- **Technologies:** Go, Docker
+
+## microservice-template by ddd
+
+DDD example use micriservices.
+
+#### Getting Started
+
+```
+# Get help
+make help
+
+# Run services
+make run
+
+# Stop services
+make down
+```
+
+###### Prerequisites
+
++ docker
++ docker-compose
++ protoc 3.7.1+
+
+#### Service
+
+| Name        | Port  | Description Endpoint          |
+|-------------|-------|-------------------------------|
+| traefik     | 80    | HTTP                          |
+| traefik     | 443   | HTTPS                         |
+| traefik     | 8060  | Dashboard                     |
+| api         | 7070  | HTTP API                      |
+| user        | 50051 | gRPC Server                   |
+| billing     | 50051 | gRPC Server                   |
+
+
+#### Architecture
+
+```
+.
+├── /cmd/                       # Run service endpoint
+│   ├── /user/                  # User service
+│   ├── /book/                  # Book service
+│   └── /billing/               # Billing service
+├── /pkg/                       # The public source code of the application
+├── /internal/                  # The private source code of the application
+│   └── /bookService/           # Book service source code
+│       ├── /useCases/          # Write business logic [./application]
+│       ├── /domian/            # Entity struct that represent mapping to data model
+│       └── /infrastructure/    # Solves backend technical topics
+│           ├── /store/         # Store delivery [../repository]
+│           ├── /rpc/           # RPC delivery
+│           └── /mq/            # MQ delivery
+├── /ops/                       # All infrastructure configuration for IoC
+├── .gitignore                  # A gitignore file specifies untracked files
+└── README.md                   # README
+```
+
+#### HTTP API
+
++ Import [Postman link](./docs/microservice-template-ddd.postman_collection.json) for
+  test HTTP API
+
+#### Request example
+
+![example](./docs/request.png)
+
+###### Opentracing example request
+
+![example](./docs/tracer1.png)
+![example](./docs/tracer2.png)
+
+## Aggregates
+
+| Aggregate | Root | Commands | Queries | Events |
+| --- | --- | --- | --- | --- |
+| [User](aggregates/user.md) | `User` | 0 commands | 0 queries | 0 events |
+
+## Provides
+
+### user_rpc.UserRPC
+
+- **Source:** `internal/user/infrastructure/rpc/user_rpc.proto:9`
+- **Module:** [local:internal/user/infrastructure/rpc](../../modules/internal-user-infrastructure-rpc.md)
+
+| Method | Request | Response |
+| --- | --- | --- |
+| `Get` | `GetRequest` | `GetResponse` |
+
+<a id="message-getrequest"></a>
+<details><summary>GetRequest</summary>
+
+| Field | Type |
+| --- | --- |
+| `Id` | `string` |
+
+</details>
+
+<a id="message-getresponse"></a>
+<details><summary>GetResponse</summary>
+
+| Field | Type |
+| --- | --- |
+| `User` | [`User`](../../types.md#type-user) |
+
+</details>
+
+<a id="message-user"></a>
+<details><summary>User</summary>
+
+| Field | Type |
+| --- | --- |
+| `Login` | `string` |
+| `Password` | `string` |
+| `Email` | `string` |
+| `IsActive` | `bool` |
+
+</details>
+
+## Schema modules
+
+| Module | Access | Packages |
+| --- | --- | --- |
+| [internal/user/domain](../../modules/internal-user-domain.md) | publishes | user |
+| [internal/user/infrastructure/rpc](../../modules/internal-user-infrastructure-rpc.md) | publishes | user_rpc |
+
+## Commands
+
+| Run | Does | Body | Source |
+| --- | --- | --- | --- |
+| `make default` | — | — | `Makefile:8` |
+| `make Makefile` | — | — | `Makefile:9` |
+| `make help` | Display this help screen | `@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)` | `Makefile:25` |
+
+<!-- microservice-template-ddd/user/aggregates/user.md -->
+
+# User
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.user.user`
+- **Service:** [User](../README.md)
+- **Root:** `User`
+
+## Entities
+
+### User — aggregate root
+
+| Field | Type |
+| --- | --- |
+| `state` | `protoimpl.MessageState` |
+| `sizeCache` | `protoimpl.SizeCache` |
+| `unknownFields` | `protoimpl.UnknownFields` |
+| `Login` | `string` |
+| `Password` | `string` |
+| `Email` | `string` |
+| `IsActive` | `bool` |
+
+<!-- microservice-template-ddd/book/stores/redis.md -->
+
+# book Redis
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `microservice-template-ddd.book.redis`
+- **Kind:** redis
+- **Owner:** [microservice-template-ddd.book](../README.md)
+- **Source:** `internal/db/redis/redis.go:27`
+
+## Redis key patterns
+
+| Pattern | Operations | Value | TTL | Aggregate | Source |
+| --- | --- | --- | --- | --- | --- |
+| `{id}` | read | `domain.Book` | — | [microservice-template-ddd.book.book](../aggregates/book.md) | `internal/book/infrastructure/store/redis/redis.go:28` |
+| `{in.Title}` | write | `domain.Book` | `none` | [microservice-template-ddd.book.book](../aggregates/book.md) | `internal/book/infrastructure/store/redis/redis.go:59` |
+
+## Redis accesses
+
+| Pattern | Operation | Method | Value | TTL | Source |
+| --- | --- | --- | --- | --- | --- |
+| `{id}` | read | `Store.Get` | `domain.Book` | — | `internal/book/infrastructure/store/redis/redis.go:28` |
+| `{in.Title}` | write | `Store.Add` | `domain.Book` | `none` | `internal/book/infrastructure/store/redis/redis.go:59` |
+| `{in.Title}` | write | `Store.Update` | `domain.Book` | `none` | `internal/book/infrastructure/store/redis/redis.go:75` |
+
+<!-- flows/README.md -->
+
+# Flows
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+| Flow | Owner | Summary |
+| --- | --- | --- |
+| [GET /billing/](api-http-get-billing.md) | [microservice-template-ddd](../microservice-template-ddd/README.md) | Source-derived http execution path for `GET /billing/`. Source-backed cross-protocol continuations are included. |
+| [GET /book/](api-http-get-book.md) | [microservice-template-ddd](../microservice-template-ddd/README.md) | Source-derived http execution path for `GET /book/`. Source-backed cross-protocol continuations are included. |
+| [GET /user/](api-http-get-user.md) | [microservice-template-ddd](../microservice-template-ddd/README.md) | Source-derived http execution path for `GET /user/`. Source-backed cross-protocol continuations are included. |
+| [POST /book/rent/{bookId}](api-http-post-book-rent-bookid.md) | [microservice-template-ddd](../microservice-template-ddd/README.md) | Source-derived http execution path for `POST /book/rent/{bookId}`. Source-backed cross-protocol continuations are included. |
+
+<!-- flows/api-http-get-billing.md -->
+
+# GET /billing/
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `flow.api-http-get-billing`
+- **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)
+- **Trigger:** `http` · GET /billing/
+- **Root confidence:** high
+- **Source:** `internal/api/http/routes_billing.go`
+
+Source-derived http execution path for `GET /billing/`. Source-backed cross-protocol continuations are included.
+
+## Participants
+
+| Participant | Kind | Context |
+| --- | --- | --- |
+| `microservice-template-ddd.api` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `client` | actor | — |
+| `microservice-template-ddd.billing` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+
+## Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant p0 as microservice-template-ddd.api
+    actor p1 as client
+    participant p2 as microservice-template-ddd.billing
+    p1->>p0: GET /billing/
+    p0->>p2: Get
+    p2->>p2: Get
+    p2-->>p0: GetResponse
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+        Note over p1: flow ends here
+    else otherwise
+    end
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+    else otherwise
+    end
+    p0-->>p1: 200 · GetResponse
+```
+
+## Steps
+
+<a id="step-s1"></a>
+1. **client** → **microservice-template-ddd.api** — GET /billing/
+   status: declared · `internal/api/http/routes_billing.go:18`
+<a id="step-s2"></a>
+2. **microservice-template-ddd.api** → **microservice-template-ddd.billing** — Get
+   `billing_rpc.BillingRPC/Get` · status: declared · `internal/api/http/routes_billing.go:33`
+<a id="step-continuation-billing-grpc-billing-rpc-billingrpc-get-s2-s1"></a>
+3. **microservice-template-ddd.billing** ↺ **microservice-template-ddd.billing** — Get
+   status: declared · `internal/billing/infrastructure/rpc/grpc.go:46`
+<a id="step-response-s2"></a>
+4. **microservice-template-ddd.billing** → **microservice-template-ddd.api** — GetResponse
+   status: declared · Synthesized from the proven synchronous unary gRPC return.
+
+> **One of**
+>
+> *err != nil — *ends the flow**
+>
+> <a id="step-s3"></a>
+> 5. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_billing.go:36` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200.
+>
+> *otherwise*
+
+
+> **One of**
+>
+> *err != nil*
+>
+> <a id="step-s5"></a>
+> 6. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_billing.go:44` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.
+>
+> *otherwise*
+
+<a id="step-s7"></a>
+7. **microservice-template-ddd.api** → **client** — 200 · GetResponse
+   status: declared · `internal/api/http/routes_billing.go:47` · HTTP · 200 · `application/json` · protojson · success · body derived from `billing_rpc.BillingRPC/Get`
+
+<!-- flows/api-http-get-book.md -->
+
+# GET /book/
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `flow.api-http-get-book`
+- **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)
+- **Trigger:** `http` · GET /book/
+- **Root confidence:** high
+- **Source:** `internal/api/http/routes_book.go`
+
+Source-derived http execution path for `GET /book/`. Source-backed cross-protocol continuations are included.
+
+## Participants
+
+| Participant | Kind | Context |
+| --- | --- | --- |
+| `microservice-template-ddd.api` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `client` | actor | — |
+| `microservice-template-ddd.book` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `book-redis` | store | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+
+## Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant p0 as microservice-template-ddd.api
+    actor p1 as client
+    participant p2 as microservice-template-ddd.book
+    participant p3 as book-redis
+    p1->>p0: GET /book/
+    p0->>p2: Get
+    p2->>p2: Get
+    p2->>p3: READ `{id}`
+    alt err != nil
+        p2->>p3: WRITE `{in.Title}`
+        p2-->>p0: GetResponse
+        Note over p0: flow ends here
+    else otherwise
+    end
+    p2-->>p0: GetResponse
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+        Note over p1: flow ends here
+    else otherwise
+    end
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+    else otherwise
+    end
+    p0-->>p1: 200 · GetResponse
+```
+
+## Steps
+
+<a id="step-s1"></a>
+1. **client** → **microservice-template-ddd.api** — GET /book/
+   status: declared · `internal/api/http/routes_book.go:18`
+<a id="step-s2"></a>
+2. **microservice-template-ddd.api** → **microservice-template-ddd.book** — Get
+   `book_rpc.BookRPC/Get` · status: declared · `internal/api/http/routes_book.go:36`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-get-s2-s1"></a>
+3. **microservice-template-ddd.book** ↺ **microservice-template-ddd.book** — Get
+   status: declared · `internal/book/infrastructure/rpc/book.go:8`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-get-s2-s2"></a>
+4. **microservice-template-ddd.book** → **book-redis** — READ `{id}`
+   status: declared · `internal/book/application/rent.go:36`
+
+> **One of**
+>
+> *err != nil — *ends the flow**
+>
+> <a id="step-continuation-book-grpc-book-rpc-bookrpc-get-s2-s3"></a>
+> 5. **microservice-template-ddd.book** → **book-redis** — WRITE `{in.Title}`
+>    status: declared · `internal/book/application/rent.go:39`
+> <a id="step-response-s2"></a>
+> 6. **microservice-template-ddd.book** → **microservice-template-ddd.api** — GetResponse
+>    status: declared · Synthesized from the proven synchronous unary gRPC return.
+>
+> *otherwise*
+
+<a id="step-response-s2-exit-2"></a>
+7. **microservice-template-ddd.book** → **microservice-template-ddd.api** — GetResponse
+   status: declared · Synthesized from the proven synchronous unary gRPC return.
+
+> **One of**
+>
+> *err != nil — *ends the flow**
+>
+> <a id="step-s3"></a>
+> 8. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_book.go:39` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200.
+>
+> *otherwise*
+
+
+> **One of**
+>
+> *err != nil*
+>
+> <a id="step-s5"></a>
+> 9. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_book.go:47` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.
+>
+> *otherwise*
+
+<a id="step-s7"></a>
+10. **microservice-template-ddd.api** → **client** — 200 · GetResponse
+   status: declared · `internal/api/http/routes_book.go:50` · HTTP · 200 · `application/json` · protojson · success · body derived from `book_rpc.BookRPC/Get`
+
+<!-- flows/api-http-get-user.md -->
+
+# GET /user/
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `flow.api-http-get-user`
+- **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)
+- **Trigger:** `http` · GET /user/
+- **Root confidence:** high
+- **Source:** `internal/api/http/routes_user.go`
+
+Source-derived http execution path for `GET /user/`. Source-backed cross-protocol continuations are included.
+
+## Participants
+
+| Participant | Kind | Context |
+| --- | --- | --- |
+| `microservice-template-ddd.api` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `client` | actor | — |
+| `microservice-template-ddd.user` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+
+## Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant p0 as microservice-template-ddd.api
+    actor p1 as client
+    participant p2 as microservice-template-ddd.user
+    p1->>p0: GET /user/
+    p0->>p2: Get
+    p2->>p2: Get
+    p2-->>p0: GetResponse
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+        Note over p1: flow ends here
+    else otherwise
+    end
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+    else otherwise
+    end
+    p0-->>p1: 200 · GetResponse
+```
+
+## Steps
+
+<a id="step-s1"></a>
+1. **client** → **microservice-template-ddd.api** — GET /user/
+   status: declared · `internal/api/http/routes_user.go:18`
+<a id="step-s2"></a>
+2. **microservice-template-ddd.api** → **microservice-template-ddd.user** — Get
+   `user_rpc.UserRPC/Get` · status: declared · `internal/api/http/routes_user.go:33`
+<a id="step-continuation-user-grpc-user-rpc-userrpc-get-s2-s1"></a>
+3. **microservice-template-ddd.user** ↺ **microservice-template-ddd.user** — Get
+   status: declared · `internal/user/infrastructure/rpc/grpc.go:46`
+<a id="step-response-s2"></a>
+4. **microservice-template-ddd.user** → **microservice-template-ddd.api** — GetResponse
+   status: declared · Synthesized from the proven synchronous unary gRPC return.
+
+> **One of**
+>
+> *err != nil — *ends the flow**
+>
+> <a id="step-s3"></a>
+> 5. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_user.go:36` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200.
+>
+> *otherwise*
+
+
+> **One of**
+>
+> *err != nil*
+>
+> <a id="step-s5"></a>
+> 6. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_user.go:44` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.
+>
+> *otherwise*
+
+<a id="step-s7"></a>
+7. **microservice-template-ddd.api** → **client** — 200 · GetResponse
+   status: declared · `internal/api/http/routes_user.go:47` · HTTP · 200 · `application/json` · protojson · success · body derived from `user_rpc.UserRPC/Get`
+
+<!-- flows/api-http-post-book-rent-bookid.md -->
+
+# POST /book/rent/{bookId}
+
+*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+
+- **Id:** `flow.api-http-post-book-rent-bookid`
+- **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)
+- **Trigger:** `http` · POST /book/rent/{bookId}
+- **Root confidence:** high
+- **Source:** `internal/api/http/routes_book.go`
+
+Source-derived http execution path for `POST /book/rent/{bookId}`. Source-backed cross-protocol continuations are included.
+
+## Participants
+
+| Participant | Kind | Context |
+| --- | --- | --- |
+| `microservice-template-ddd.api` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `client` | actor | — |
+| `microservice-template-ddd.book` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `microservice-template-ddd.user` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `microservice-template-ddd.billing` | service | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+| `book-redis` | store | [microservice-template-ddd](../microservice-template-ddd/README.md) |
+
+## Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant p0 as microservice-template-ddd.api
+    actor p1 as client
+    participant p2 as microservice-template-ddd.book
+    participant p3 as microservice-template-ddd.user
+    participant p4 as microservice-template-ddd.billing
+    participant p5 as book-redis
+    p1->>p0: POST /book/rent/{bookId}
+    p0->>p2: Rent
+    p2->>p2: Rent
+    p2->>p3: Get
+    p3->>p3: Get
+    p3-->>p2: GetResponse
+    p2->>p4: Get
+    p4->>p4: Get
+    p4-->>p2: GetResponse
+    p2->>p5: READ `{id}`
+    alt err != nil
+        p2->>p5: WRITE `{in.Title}`
+        p2-->>p0: RentResponse
+        Note over p0: flow ends here
+    else otherwise
+    end
+    p2->>p5: WRITE `{in.Title}`
+    p2-->>p0: RentResponse
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+        Note over p1: flow ends here
+    else otherwise
+    end
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+    else otherwise
+    end
+    p0-->>p1: 200 · RentResponse
+```
+
+## Steps
+
+<a id="step-s1"></a>
+1. **client** → **microservice-template-ddd.api** — POST /book/rent/{bookId}
+   status: declared · `internal/api/http/routes_book.go:23`
+<a id="step-s2"></a>
+2. **microservice-template-ddd.api** → **microservice-template-ddd.book** — Rent
+   `book_rpc.BookRPC/Rent` · status: declared · `internal/api/http/routes_book.go:65`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-s1"></a>
+3. **microservice-template-ddd.book** ↺ **microservice-template-ddd.book** — Rent
+   status: declared · `internal/book/infrastructure/rpc/rent.go:8`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-s2"></a>
+4. **microservice-template-ddd.book** → **microservice-template-ddd.user** — Get
+   `user_rpc.UserRPC/Get` · status: declared · `internal/book/application/rent.go:53`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-continuation-user-grpc-user-rpc-userrpc-get-s2-s1"></a>
+5. **microservice-template-ddd.user** ↺ **microservice-template-ddd.user** — Get
+   status: declared · `internal/user/infrastructure/rpc/grpc.go:46`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-response-s2"></a>
+6. **microservice-template-ddd.user** → **microservice-template-ddd.book** — GetResponse
+   status: declared · Synthesized from the proven synchronous unary gRPC return.
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-s3"></a>
+7. **microservice-template-ddd.book** → **microservice-template-ddd.billing** — Get
+   `billing_rpc.BillingRPC/Get` · status: declared · `internal/book/application/rent.go:59`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-continuation-billing-grpc-billing-rpc-billingrpc-get-s3-s1"></a>
+8. **microservice-template-ddd.billing** ↺ **microservice-template-ddd.billing** — Get
+   status: declared · `internal/billing/infrastructure/rpc/grpc.go:46`
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-response-s3"></a>
+9. **microservice-template-ddd.billing** → **microservice-template-ddd.book** — GetResponse
+   status: declared · Synthesized from the proven synchronous unary gRPC return.
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-s4"></a>
+10. **microservice-template-ddd.book** → **book-redis** — READ `{id}`
+   status: declared · `internal/book/application/rent.go:36`
+
+> **One of**
+>
+> *err != nil — *ends the flow**
+>
+> <a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-s5"></a>
+> 11. **microservice-template-ddd.book** → **book-redis** — WRITE `{in.Title}`
+>    status: declared · `internal/book/application/rent.go:39`
+> <a id="step-response-s2"></a>
+> 12. **microservice-template-ddd.book** → **microservice-template-ddd.api** — RentResponse
+>    status: declared · Synthesized from the proven synchronous unary gRPC return.
+>
+> *otherwise*
+
+<a id="step-continuation-book-grpc-book-rpc-bookrpc-rent-s2-s7"></a>
+13. **microservice-template-ddd.book** → **book-redis** — WRITE `{in.Title}`
+   status: declared · `internal/book/application/rent.go:76`
+<a id="step-response-s2-exit-2"></a>
+14. **microservice-template-ddd.book** → **microservice-template-ddd.api** — RentResponse
+   status: declared · Synthesized from the proven synchronous unary gRPC return.
+
+> **One of**
+>
+> *err != nil — *ends the flow**
+>
+> <a id="step-s3"></a>
+> 15. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_book.go:68` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200.
+>
+> *otherwise*
+
+
+> **One of**
+>
+> *err != nil*
+>
+> <a id="step-s5"></a>
+> 16. **microservice-template-ddd.api** → **client** — 200 · Error
+>    status: declared · `internal/api/http/routes_book.go:76` · HTTP · 200 · `application/json` · json · error · fields: error: string · warning: Error response has no explicit non-2xx status; net/http will send 200. Execution continues after writing the error body and may append another response.
+>
+> *otherwise*
+
+<a id="step-s7"></a>
+17. **microservice-template-ddd.api** → **client** — 200 · RentResponse
+   status: declared · `internal/api/http/routes_book.go:79` · HTTP · 200 · `application/json` · protojson · success · body derived from `book_rpc.BookRPC/Rent`

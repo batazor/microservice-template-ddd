@@ -1,0 +1,31 @@
+sequenceDiagram
+    autonumber
+    participant p0 as microservice-template-ddd.api
+    actor p1 as client
+    participant p2 as microservice-template-ddd.book
+    participant p3 as book-redis
+    p1->>p0: GET /book/
+    p0->>p2: Get
+    p2->>p2: Get
+    p2->>p3: Get
+    alt err != nil
+        p2->>p3: Add
+        p2-->>p0: GetResponse
+        Note over p0: flow ends here
+    else otherwise
+    end
+    p2-->>p0: GetResponse
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+        Note over p1: flow ends here
+    else otherwise
+    end
+    alt err != nil
+        rect rgba(183, 100, 107, 0.12)
+            p0-->>p1: 200 · Error
+        end
+    else otherwise
+    end
+    p0-->>p1: 200 · GetResponse

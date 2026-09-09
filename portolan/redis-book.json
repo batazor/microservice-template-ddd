@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-09-09T01:20:07Z",
+  "commit": "498f577",
+  "contexts": [
+    {
+      "id": "microservice-template-ddd",
+      "slug": "microservice-template-ddd",
+      "name": "",
+      "summary": "",
+      "services": [
+        {
+          "id": "microservice-template-ddd.book",
+          "slug": "book",
+          "name": "",
+          "repo": "",
+          "path": "",
+          "readme": "",
+          "provides": [],
+          "consumes": [],
+          "aggregates": [],
+          "stores": [
+            "microservice-template-ddd.book.redis"
+          ]
+        }
+      ]
+    }
+  ],
+  "defs": {},
+  "flows": [],
+  "adrs": [],
+  "stores": [
+    {
+      "id": "microservice-template-ddd.book.redis",
+      "slug": "redis",
+      "name": "book Redis",
+      "kind": "redis",
+      "owner": "microservice-template-ddd.book",
+      "tables": [],
+      "keyspaces": [
+        {
+          "pattern": "{id}",
+          "operations": [
+            "read"
+          ],
+          "value": "domain.Book",
+          "source": "internal/book/infrastructure/store/redis/redis.go:28",
+          "accesses": [
+            {
+              "operation": "read",
+              "method": "Store.Get",
+              "value": "domain.Book",
+              "source": "internal/book/infrastructure/store/redis/redis.go:28"
+            }
+          ]
+        },
+        {
+          "pattern": "{in.Title}",
+          "operations": [
+            "write"
+          ],
+          "ttl": "none",
+          "value": "domain.Book",
+          "source": "internal/book/infrastructure/store/redis/redis.go:59",
+          "accesses": [
+            {
+              "operation": "write",
+              "method": "Store.Add",
+              "ttl": "none",
+              "value": "domain.Book",
+              "source": "internal/book/infrastructure/store/redis/redis.go:59"
+            },
+            {
+              "operation": "write",
+              "method": "Store.Update",
+              "ttl": "none",
+              "value": "domain.Book",
+              "source": "internal/book/infrastructure/store/redis/redis.go:75"
+            }
+          ]
+        }
+      ],
+      "source": "internal/db/redis/redis.go:27"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "project": [
+    "project.json"
+  ],
+  "redis": [
+    "redis-book.json"
+  ],
+  "go-domain:go-domain-api.json": [
+    "go-domain-api.json"
+  ],
+  "go-domain:go-domain-billing.json": [
+    "go-domain-billing.json"
+  ],
+  "go-domain:go-domain-book.json": [
+    "go-domain-book.json"
+  ],
+  "go-domain:go-domain-user.json": [
+    "go-domain-user.json"
+  ],
+  "proto:proto-billing.json": [
+    "proto-billing.json"
+  ],
+  "proto:proto-book.json": [
+    "proto-book.json"
+  ],
+  "proto:proto-user.json": [
+    "proto-user.json"
+  ]
+}

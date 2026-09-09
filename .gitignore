@@ -30,3 +30,7 @@ coverage.txt
 
 # Logs
 *.log
+
+# Portolan local build state
+.portolan/
+dist/

@@ -1,0 +1,206 @@
+{
+  "$schema": "https://raw.githubusercontent.com/shortlink-org/portolan/0.2.2/schema/portolan.schema.json",
+  "sources": [
+    "portolan/*.json"
+  ],
+  "projects": [
+    {
+      "id": "microservice-template-ddd",
+      "name": "Microservice Template Ddd",
+      "root": ".",
+      "group": "microservice-template-ddd",
+      "components": [
+        "api",
+        "billing",
+        "book",
+        "user"
+      ]
+    }
+  ],
+  "extract": [
+    {
+      "plugin": "project",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "group": "microservice-template-ddd",
+        "groupKind": "system",
+        "componentKind": "service",
+        "components": [
+          {
+            "slug": "api",
+            "name": "API",
+            "kind": "service"
+          },
+          {
+            "slug": "billing",
+            "name": "Billing",
+            "kind": "service"
+          },
+          {
+            "slug": "book",
+            "name": "Book",
+            "kind": "service"
+          },
+          {
+            "slug": "user",
+            "name": "User",
+            "kind": "service"
+          }
+        ],
+        "componentName": "Microservice Template Ddd",
+        "out": "project.json"
+      }
+    },
+    {
+      "plugin": "go-domain",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "api",
+        "scope": "api",
+        "peers": {
+          "billing": "microservice-template-ddd.billing",
+          "billing_rpc": "microservice-template-ddd.billing",
+          "book": "microservice-template-ddd.book",
+          "book_rpc": "microservice-template-ddd.book",
+          "user": "microservice-template-ddd.user",
+          "user_rpc": "microservice-template-ddd.user"
+        },
+        "serviceName": "API",
+        "out": "go-domain-api.json"
+      }
+    },
+    {
+      "plugin": "go-domain",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "billing",
+        "scope": "billing",
+        "peers": {
+          "billing": "microservice-template-ddd.billing",
+          "billing_rpc": "microservice-template-ddd.billing",
+          "book": "microservice-template-ddd.book",
+          "book_rpc": "microservice-template-ddd.book",
+          "user": "microservice-template-ddd.user",
+          "user_rpc": "microservice-template-ddd.user"
+        },
+        "serviceName": "Billing",
+        "out": "go-domain-billing.json"
+      }
+    },
+    {
+      "plugin": "go-domain",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "book",
+        "scope": "book",
+        "peers": {
+          "billing": "microservice-template-ddd.billing",
+          "billing_rpc": "microservice-template-ddd.billing",
+          "book": "microservice-template-ddd.book",
+          "book_rpc": "microservice-template-ddd.book",
+          "user": "microservice-template-ddd.user",
+          "user_rpc": "microservice-template-ddd.user"
+        },
+        "store": "redis",
+        "serviceName": "Book",
+        "out": "go-domain-book.json"
+      }
+    },
+    {
+      "plugin": "go-domain",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "user",
+        "scope": "user",
+        "peers": {
+          "billing": "microservice-template-ddd.billing",
+          "billing_rpc": "microservice-template-ddd.billing",
+          "book": "microservice-template-ddd.book",
+          "book_rpc": "microservice-template-ddd.book",
+          "user": "microservice-template-ddd.user",
+          "user_rpc": "microservice-template-ddd.user"
+        },
+        "serviceName": "User",
+        "out": "go-domain-user.json"
+      }
+    },
+    {
+      "plugin": "redis",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "book",
+        "store": "redis",
+        "out": "redis-book.json"
+      }
+    },
+    {
+      "plugin": "proto",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "billing",
+        "paths": [
+          "internal/billing/domain",
+          "internal/billing/infrastructure/rpc"
+        ],
+        "out": "proto-billing.json"
+      }
+    },
+    {
+      "plugin": "proto",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "book",
+        "paths": [
+          "internal/book/domain",
+          "internal/book/infrastructure/rpc"
+        ],
+        "out": "proto-book.json"
+      }
+    },
+    {
+      "plugin": "proto",
+      "in": ".",
+      "out": "portolan",
+      "options": {
+        "context": "microservice-template-ddd",
+        "service": "user",
+        "paths": [
+          "internal/user/domain",
+          "internal/user/infrastructure/rpc"
+        ],
+        "out": "proto-user.json"
+      }
+    }
+  ],
+  "generate": [
+    {
+      "plugin": "markdown",
+      "out": "docs",
+      "options": {
+        "title": "Microservice Template Ddd"
+      }
+    },
+    {
+      "plugin": "mermaid",
+      "out": "exports/mermaid",
+      "options": {
+        "title": "Microservice Template Ddd flows"
+      }
+    }
+  ]
+}

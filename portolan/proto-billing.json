@@ -1,0 +1,126 @@
+{
+  "generatedAt": "2026-09-09T01:20:07Z",
+  "commit": "498f577",
+  "contexts": [
+    {
+      "id": "microservice-template-ddd",
+      "slug": "microservice-template-ddd",
+      "name": "",
+      "summary": "",
+      "services": [
+        {
+          "id": "microservice-template-ddd.billing",
+          "slug": "billing",
+          "name": "",
+          "repo": "",
+          "path": "",
+          "readme": "",
+          "provides": [
+            {
+              "id": "billing_rpc.BillingRPC",
+              "methods": [
+                {
+                  "name": "Get",
+                  "request": "GetRequest",
+                  "response": "GetResponse"
+                }
+              ],
+              "source": "internal/billing/infrastructure/rpc/billing_rpc.proto:13",
+              "messages": [
+                {
+                  "name": "GetRequest",
+                  "fields": [
+                    {
+                      "name": "Id",
+                      "type": "string",
+                      "doc": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "GetResponse",
+                  "fields": [
+                    {
+                      "name": "Billing",
+                      "type": "Payload",
+                      "doc": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "Payload",
+                  "fields": [
+                    {
+                      "name": "Billing",
+                      "type": "Billing",
+                      "doc": "",
+                      "ref": "Billing"
+                    }
+                  ]
+                },
+                {
+                  "name": "Billing",
+                  "fields": [
+                    {
+                      "name": "Balance",
+                      "type": "float",
+                      "doc": ""
+                    }
+                  ]
+                }
+              ],
+              "module": "local:internal/billing/infrastructure/rpc"
+            }
+          ],
+          "consumes": [],
+          "aggregates": [],
+          "modules": [
+            "local:internal/billing/domain",
+            "local:internal/billing/infrastructure/rpc"
+          ]
+        }
+      ]
+    }
+  ],
+  "defs": {
+    "Billing": {
+      "fields": [
+        {
+          "name": "Balance",
+          "type": "float",
+          "doc": ""
+        }
+      ]
+    }
+  },
+  "flows": [],
+  "adrs": [],
+  "modules": [
+    {
+      "id": "local:internal/billing/domain",
+      "slug": "internal-billing-domain",
+      "name": "internal/billing/domain",
+      "owner": "microservice-template-ddd.billing",
+      "packages": [
+        "billing"
+      ],
+      "files": [
+        "billing.proto"
+      ],
+      "source": "internal/billing/domain"
+    },
+    {
+      "id": "local:internal/billing/infrastructure/rpc",
+      "slug": "internal-billing-infrastructure-rpc",
+      "name": "internal/billing/infrastructure/rpc",
+      "owner": "microservice-template-ddd.billing",
+      "packages": [
+        "billing_rpc"
+      ],
+      "files": [
+        "billing_rpc.proto"
+      ],
+      "source": "internal/billing/infrastructure/rpc"
+    }
+  ]
+}

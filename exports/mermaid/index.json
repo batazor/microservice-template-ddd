@@ -1,0 +1,37 @@
+{
+  "flows": [
+    {
+      "id": "flow.api-http-get-billing",
+      "slug": "api-http-get-billing",
+      "name": "GET /billing/",
+      "owner": "microservice-template-ddd",
+      "source": "internal/api/http/routes_billing.go",
+      "diagram": "api-http-get-billing.mmd"
+    },
+    {
+      "id": "flow.api-http-get-book",
+      "slug": "api-http-get-book",
+      "name": "GET /book/",
+      "owner": "microservice-template-ddd",
+      "source": "internal/api/http/routes_book.go",
+      "diagram": "api-http-get-book.mmd"
+    },
+    {
+      "id": "flow.api-http-get-user",
+      "slug": "api-http-get-user",
+      "name": "GET /user/",
+      "owner": "microservice-template-ddd",
+      "source": "internal/api/http/routes_user.go",
+      "diagram": "api-http-get-user.mmd"
+    },
+    {
+      "id": "flow.api-http-post-book-rent-bookid",
+      "slug": "api-http-post-book-rent-bookid",
+      "name": "POST /book/rent/{bookId}",
+      "owner": "microservice-template-ddd",
+      "source": "internal/api/http/routes_book.go",
+      "diagram": "api-http-post-book-rent-bookid.mmd"
+    }
+  ],
+  "version": 1
+}

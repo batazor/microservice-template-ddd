@@ -1,0 +1,10 @@
+{
+  "mermaid": [
+    "README.md",
+    "api-http-get-billing.mmd",
+    "api-http-get-book.mmd",
+    "api-http-get-user.mmd",
+    "api-http-post-book-rent-bookid.mmd",
+    "index.json"
+  ]
+}

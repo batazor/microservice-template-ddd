@@ -1,0 +1,146 @@
+{
+  "generatedAt": "2026-09-09T01:20:07Z",
+  "commit": "498f577",
+  "contexts": [
+    {
+      "id": "microservice-template-ddd",
+      "slug": "microservice-template-ddd",
+      "name": "",
+      "summary": "",
+      "services": [
+        {
+          "id": "microservice-template-ddd.user",
+          "slug": "user",
+          "name": "",
+          "repo": "",
+          "path": "",
+          "readme": "",
+          "provides": [
+            {
+              "id": "user_rpc.UserRPC",
+              "methods": [
+                {
+                  "name": "Get",
+                  "request": "GetRequest",
+                  "response": "GetResponse"
+                }
+              ],
+              "source": "internal/user/infrastructure/rpc/user_rpc.proto:9",
+              "messages": [
+                {
+                  "name": "GetRequest",
+                  "fields": [
+                    {
+                      "name": "Id",
+                      "type": "string",
+                      "doc": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "GetResponse",
+                  "fields": [
+                    {
+                      "name": "User",
+                      "type": "User",
+                      "doc": "",
+                      "ref": "User"
+                    }
+                  ]
+                },
+                {
+                  "name": "User",
+                  "fields": [
+                    {
+                      "name": "Login",
+                      "type": "string",
+                      "doc": ""
+                    },
+                    {
+                      "name": "Password",
+                      "type": "string",
+                      "doc": ""
+                    },
+                    {
+                      "name": "Email",
+                      "type": "string",
+                      "doc": ""
+                    },
+                    {
+                      "name": "IsActive",
+                      "type": "bool",
+                      "doc": ""
+                    }
+                  ]
+                }
+              ],
+              "module": "local:internal/user/infrastructure/rpc"
+            }
+          ],
+          "consumes": [],
+          "aggregates": [],
+          "modules": [
+            "local:internal/user/domain",
+            "local:internal/user/infrastructure/rpc"
+          ]
+        }
+      ]
+    }
+  ],
+  "defs": {
+    "User": {
+      "fields": [
+        {
+          "name": "Login",
+          "type": "string",
+          "doc": ""
+        },
+        {
+          "name": "Password",
+          "type": "string",
+          "doc": ""
+        },
+        {
+          "name": "Email",
+          "type": "string",
+          "doc": ""
+        },
+        {
+          "name": "IsActive",
+          "type": "bool",
+          "doc": ""
+        }
+      ]
+    }
+  },
+  "flows": [],
+  "adrs": [],
+  "modules": [
+    {
+      "id": "local:internal/user/domain",
+      "slug": "internal-user-domain",
+      "name": "internal/user/domain",
+      "owner": "microservice-template-ddd.user",
+      "packages": [
+        "user"
+      ],
+      "files": [
+        "user.proto"
+      ],
+      "source": "internal/user/domain"
+    },
+    {
+      "id": "local:internal/user/infrastructure/rpc",
+      "slug": "internal-user-infrastructure-rpc",
+      "name": "internal/user/infrastructure/rpc",
+      "owner": "microservice-template-ddd.user",
+      "packages": [
+        "user_rpc"
+      ],
+      "files": [
+        "user_rpc.proto"
+      ],
+      "source": "internal/user/infrastructure/rpc"
+    }
+  ]
+}
