@@ -1,12 +1,12 @@
 *llms-full.txt: every page of Microservice Template Ddd, one after another. A page begins with a comment naming its file, and the links inside it are relative to that file's directory.*
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 <!-- README.md -->
 
 # Microservice Template Ddd
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 
 ## Contexts
@@ -39,7 +39,7 @@
 
 # Shared types
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 Types named by more than one aggregate, event or message. A field that
 refers to one of these is knowably the same shape everywhere it appears.
@@ -77,7 +77,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # Schema modules
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 | Module | Publisher | Packages |
 | --- | --- | --- |
@@ -92,7 +92,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # internal/billing/domain
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `local:internal/billing/domain`
 - **Publisher:** [microservice-template-ddd.billing](../microservice-template-ddd/billing/README.md)
@@ -120,7 +120,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # internal/billing/infrastructure/rpc
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `local:internal/billing/infrastructure/rpc`
 - **Publisher:** [microservice-template-ddd.billing](../microservice-template-ddd/billing/README.md)
@@ -195,7 +195,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # internal/book/domain
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `local:internal/book/domain`
 - **Publisher:** [microservice-template-ddd.book](../microservice-template-ddd/book/README.md)
@@ -223,7 +223,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # internal/book/infrastructure/rpc
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `local:internal/book/infrastructure/rpc`
 - **Publisher:** [microservice-template-ddd.book](../microservice-template-ddd/book/README.md)
@@ -310,7 +310,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # internal/user/domain
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `local:internal/user/domain`
 - **Publisher:** [microservice-template-ddd.user](../microservice-template-ddd/user/README.md)
@@ -338,7 +338,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # internal/user/infrastructure/rpc
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `local:internal/user/infrastructure/rpc`
 - **Publisher:** [microservice-template-ddd.user](../microservice-template-ddd/user/README.md)
@@ -407,7 +407,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # Microservice Template Ddd
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd`
 - **Kind:** system
@@ -425,7 +425,7 @@ refers to one of these is knowably the same shape everywhere it appears.
 
 # API
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.api`
 - **Group:** [Microservice Template Ddd](../README.md)
@@ -526,7 +526,7 @@ make down
 
 # Billing
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.billing`
 - **Group:** [Microservice Template Ddd](../README.md)
@@ -678,7 +678,7 @@ make down
 
 # Billing
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.billing.billing`
 - **Service:** [Billing](../README.md)
@@ -699,7 +699,7 @@ make down
 
 # Book
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.book`
 - **Group:** [Microservice Template Ddd](../README.md)
@@ -876,7 +876,7 @@ make down
 
 # Book
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.book.book`
 - **Service:** [Book](../README.md)
@@ -899,7 +899,7 @@ make down
 
 # User
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.user`
 - **Group:** [Microservice Template Ddd](../README.md)
@@ -1045,7 +1045,7 @@ make down
 
 # User
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.user.user`
 - **Service:** [User](../README.md)
@@ -1069,7 +1069,7 @@ make down
 
 # book Redis
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `microservice-template-ddd.book.redis`
 - **Kind:** redis
@@ -1095,7 +1095,7 @@ make down
 
 # Flows
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 | Flow | Owner | Summary |
 | --- | --- | --- |
@@ -1108,7 +1108,7 @@ make down
 
 # GET /billing/
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `flow.api-http-get-billing`
 - **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)
@@ -1198,7 +1198,7 @@ sequenceDiagram
 
 # GET /book/
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `flow.api-http-get-book`
 - **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)
@@ -1314,7 +1314,7 @@ sequenceDiagram
 
 # GET /user/
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `flow.api-http-get-user`
 - **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)
@@ -1404,7 +1404,7 @@ sequenceDiagram
 
 # POST /book/rent/{bookId}
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 - **Id:** `flow.api-http-post-book-rent-bookid`
 - **Owner:** [microservice-template-ddd](../microservice-template-ddd/README.md)

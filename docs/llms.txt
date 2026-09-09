@@ -2,7 +2,7 @@
 
 > Architecture catalog of Microservice Template Ddd: 1 bounded context, 4 services, 3 aggregates, 1 store, 6 schema modules, 4 flows and 0 decision records, read from the code, the specs and the traces of the estate.
 
-*Generated from the portolan catalog · commit `498f577` · at 2026-09-09T01:20:07Z. Do not edit by hand.*
+*Generated from the portolan catalog · commit `baebd80` · at 2026-09-09T21:28:15+07:00. Do not edit by hand.*
 
 Every link below is a markdown page beside this file. [llms-full.txt](llms-full.txt) is all of those pages in one file, in the order the site lists them.
 
