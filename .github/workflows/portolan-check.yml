@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: shortlink-org/portolan@0.2.2
+      - uses: shortlink-org/portolan@0.6.2
         with:
           command: check
           version: 0.2.2
